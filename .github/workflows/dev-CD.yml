@@ -1,4 +1,4 @@
-name: NONSOOLMATE DEV CD
+name: CD
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
     - name: application.yaml 생성
       run: | 
 					mkdir src/main/resources
-          cd src/main/resources
+					cd src/main/resources
 					touch ./application.yaml
           echo "${{ secrets.DEV_APPLICATION }}" > ./application-deploy.yaml
       working-directory: ${{ env.working-directory }}
@@ -63,5 +63,5 @@ jobs:
         username: ${{ secrets.DEV_SERVER_USER }}
         key: ${{ secrets.DEV_SERVER_KEY }}
         script: |
-	  cd ~
+					cd ~
           ./deploy.sh
