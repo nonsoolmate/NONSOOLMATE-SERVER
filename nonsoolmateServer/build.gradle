@@ -40,6 +40,9 @@ dependencies {
 	// validate
 	implementation 'org.hibernate.validator:hibernate-validator'
 
+	// Health Check
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
