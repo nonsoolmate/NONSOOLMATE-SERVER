@@ -1,4 +1,4 @@
-FROM amd64/temurin:17
+FROM amd64/eclipse-temurin:17-jdk
 
 WORKDIR /app
 
