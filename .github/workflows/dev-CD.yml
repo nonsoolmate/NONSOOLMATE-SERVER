@@ -44,8 +44,8 @@ jobs:
 
     - name: docker image 빌드 및 푸시
       run: |
-        docker build --platform linux/amd64 -t nonsoolmate/nonsoolmateServer .
-        docker push nonsoolmate/nonsoolmateServer
+        docker build --platform linux/amd64 -t nonsoolmate/nonsoolmate-server .
+        docker push nonsoolmate/nonsoolmate-server
       working-directory: ${{ env.working-directory }}
 
   deploy-cd:      
