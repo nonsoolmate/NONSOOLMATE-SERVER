@@ -1,4 +1,4 @@
-package com.nonsoolmate.nonsoolmateServer.global.error;
+package com.nonsoolmate.nonsoolmateServer.global.error.exception;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
