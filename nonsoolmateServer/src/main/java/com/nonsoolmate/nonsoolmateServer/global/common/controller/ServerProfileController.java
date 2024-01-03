@@ -1,4 +1,4 @@
-package com.nonsoolmate.nonsoolmateServer.common.profile;
+package com.nonsoolmate.nonsoolmateServer.global.common.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
