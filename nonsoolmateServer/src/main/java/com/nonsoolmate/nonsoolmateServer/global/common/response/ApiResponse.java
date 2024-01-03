@@ -1,7 +1,7 @@
 package com.nonsoolmate.nonsoolmateServer.global.common.response;
 
 import com.nonsoolmate.nonsoolmateServer.global.success.Success;
-import com.nonsoolmate.nonsoolmateServer.global.error.Error;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.Error;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
