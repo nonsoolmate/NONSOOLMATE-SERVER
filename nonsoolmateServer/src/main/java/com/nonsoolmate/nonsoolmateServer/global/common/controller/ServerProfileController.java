@@ -1,5 +1,7 @@
 package com.nonsoolmate.nonsoolmateServer.global.common.controller;
 
+import com.nonsoolmate.nonsoolmateServer.global.common.response.ApiResponse;
+import com.nonsoolmate.nonsoolmateServer.global.success.Success;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +14,7 @@ public class ServerProfileController {
     private final Environment env;
 
     @GetMapping("/profile")
-    public String getProfile() {
-        return env.getActiveProfiles()[0];
+    public ApiResponse<String> getProfile() {
+        return ApiResponse.success(Success.GET_SERVER_PROFILE ,env.getActiveProfiles()[0]);
     }
 }
