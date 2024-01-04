@@ -1,7 +1,7 @@
-package com.nonsoolmate.nonsoolmateServer.domain.member.domain;
+package com.nonsoolmate.nonsoolmateServer.domain.member.entity;
 
-import com.nonsoolmate.nonsoolmateServer.global.common.enums.PlatformType;
-import com.nonsoolmate.nonsoolmateServer.global.common.enums.Role;
+import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.PlatformType;
+import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
