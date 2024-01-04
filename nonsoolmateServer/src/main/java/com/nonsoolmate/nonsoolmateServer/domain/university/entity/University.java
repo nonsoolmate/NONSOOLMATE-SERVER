@@ -1,4 +1,4 @@
-package com.nonsoolmate.nonsoolmateServer.domain.university.domain;
+package com.nonsoolmate.nonsoolmateServer.domain.university.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
