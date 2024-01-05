@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.Year;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -41,7 +42,7 @@ public class Member {
     @NotNull
     private Role role;
 
-    private Year birthYear;
+    private int birthYear;
 
     @Length(max = 1)
     private String gender;
@@ -54,4 +55,17 @@ public class Member {
     private int ticketCount;
 
     private LocalDateTime ticketPreviousPublicationTime;
+
+    @Builder
+    public Member(Long memberId, String email, String name, PlatformType platformType, Role role, int birthYear,
+                  String gender, String phoneNumber) {
+        this.memberId = memberId;
+        this.email = email;
+        this.name = name;
+        this.platformType = platformType;
+        this.role = role;
+        this.birthYear = birthYear;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+    }
 }
