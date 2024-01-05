@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Getter
@@ -30,7 +31,7 @@ public class Member {
     private String email;
 
     @NotNull
-    private String memberName;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -41,13 +42,22 @@ public class Member {
     private Role role;
 
     @NotNull
-    private Year memberBirthYear;
+    private Year birthYear;
+
+    @NotNull
+    @Length(max = 1)
+    private String gender;
+
+    @NotNull
+    @Length(max = 255)
+    private String profileImage;
+
+    @NotNull
+    @Length(max = 13)
+    private String phoneNumber;
 
     @ColumnDefault("0")
     private int ticketCount;
 
     private LocalDateTime ticketPreviousPublicationTime;
-
-    @NotNull
-    private String phoneNumber;
 }
