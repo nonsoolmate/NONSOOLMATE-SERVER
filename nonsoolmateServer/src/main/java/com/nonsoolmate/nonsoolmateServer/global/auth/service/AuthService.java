@@ -6,7 +6,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.Role;
 import com.nonsoolmate.nonsoolmateServer.domain.member.exception.MemberException;
 import com.nonsoolmate.nonsoolmateServer.domain.member.exception.MemberExceptionType;
 import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
-import com.nonsoolmate.nonsoolmateServer.global.auth.controller.dto.MemberRequestDTO;
+import com.nonsoolmate.nonsoolmateServer.global.auth.controller.dto.request.MemberRequestDTO;
 import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.MemberSignUpVO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

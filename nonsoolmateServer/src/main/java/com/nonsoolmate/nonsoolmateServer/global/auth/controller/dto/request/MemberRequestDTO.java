@@ -1,4 +1,4 @@
-package com.nonsoolmate.nonsoolmateServer.global.auth.controller.dto;
+package com.nonsoolmate.nonsoolmateServer.global.auth.controller.dto.request;
 
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.PlatformType;
 import jakarta.validation.constraints.NotNull;
