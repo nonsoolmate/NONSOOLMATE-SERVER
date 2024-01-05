@@ -16,15 +16,15 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Question {
+public class UniversityExamImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long questionId;
+    private Long universityExamImageId;
 
     @ManyToOne
     @JoinColumn(name = "university_exam_id")
     private UniversityExam universityExam;
 
     @NotNull
-    private String examQuestionImg;
+    private String universityExamImageUrl;
 }
