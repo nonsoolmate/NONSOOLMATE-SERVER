@@ -2,12 +2,10 @@ package com.nonsoolmate.nonsoolmateServer.global.auth.service;
 
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
 import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
-import com.nonsoolmate.nonsoolmateServer.global.auth.controller.dto.MemberRequestDTO;
+import com.nonsoolmate.nonsoolmateServer.global.auth.controller.dto.request.MemberRequestDTO;
 import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.MemberSignUpVO;
 import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.NaverMemberVO;
 import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.enums.AuthType;
-import jakarta.security.auth.message.AuthException;
-import java.util.Map;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
