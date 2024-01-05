@@ -1,7 +1,7 @@
 package com.nonsoolmate.nonsoolmateServer.global.common.response;
 
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.ErrorType;
 import com.nonsoolmate.nonsoolmateServer.global.success.Success;
-import com.nonsoolmate.nonsoolmateServer.global.error.exception.Error;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,11 +23,11 @@ public class ApiResponse<T> {
         return new ApiResponse<T>(success.getHttpStatus(), success.getMessage(), data);
     }
 
-    public static ApiResponse error(Error error) {
-        return new ApiResponse<>(error.getHttpStatus(), error.getMessage());
+    public static ApiResponse error(ErrorType error) {
+        return new ApiResponse<>(error.getHttpStatusCode(), error.getMessage());
     }
 
-    public static <T> ApiResponse<T> error(Error error, T data) {
-        return new ApiResponse<T>(error.getHttpStatus(), error.getMessage(), data);
+    public static <T> ApiResponse<T> error(ErrorType error, T data) {
+        return new ApiResponse<T>(error.getHttpStatusCode(), error.getMessage(), data);
     }
 }
