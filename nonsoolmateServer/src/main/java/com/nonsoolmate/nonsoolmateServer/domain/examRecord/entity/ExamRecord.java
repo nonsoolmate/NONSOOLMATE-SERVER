@@ -2,7 +2,7 @@ package com.nonsoolmate.nonsoolmateServer.domain.examRecord.entity;
 
 import com.nonsoolmate.nonsoolmateServer.domain.examRecord.entity.enums.ExamResultStatus;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
-import com.nonsoolmate.nonsoolmateServer.domain.university.entity.Exam;
+import com.nonsoolmate.nonsoolmateServer.domain.university.entity.UniversityExam;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,7 +29,7 @@ public class ExamRecord {
 
     @ManyToOne
     @JoinColumn(name = "exam_id")
-    private Exam exam;
+    private UniversityExam universityExam;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
