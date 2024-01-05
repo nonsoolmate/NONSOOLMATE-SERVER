@@ -42,7 +42,8 @@ public class Member {
     @NotNull
     private Role role;
 
-    private int birthYear;
+    @Length(max = 4)
+    private String birthYear;
 
     @Length(max = 1)
     private String gender;
@@ -57,9 +58,8 @@ public class Member {
     private LocalDateTime ticketPreviousPublicationTime;
 
     @Builder
-    public Member(Long memberId, String email, String name, PlatformType platformType, Role role, int birthYear,
+    public Member(String email, String name, PlatformType platformType, Role role, String birthYear,
                   String gender, String phoneNumber) {
-        this.memberId = memberId;
         this.email = email;
         this.name = name;
         this.platformType = platformType;
