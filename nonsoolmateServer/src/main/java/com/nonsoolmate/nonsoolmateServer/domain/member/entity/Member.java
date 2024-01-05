@@ -41,16 +41,10 @@ public class Member {
     @NotNull
     private Role role;
 
-    @NotNull
     private Year birthYear;
 
-    @NotNull
     @Length(max = 1)
     private String gender;
-
-    @NotNull
-    @Length(max = 255)
-    private String profileImage;
 
     @NotNull
     @Length(max = 13)
