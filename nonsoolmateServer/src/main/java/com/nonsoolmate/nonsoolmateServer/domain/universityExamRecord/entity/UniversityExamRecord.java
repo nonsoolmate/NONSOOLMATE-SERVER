@@ -1,6 +1,6 @@
-package com.nonsoolmate.nonsoolmateServer.domain.examRecord.entity;
+package com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.entity;
 
-import com.nonsoolmate.nonsoolmateServer.domain.examRecord.entity.enums.ExamResultStatus;
+import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.entity.enums.ExamResultStatus;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
 import com.nonsoolmate.nonsoolmateServer.domain.university.entity.UniversityExam;
 import jakarta.persistence.Entity;
@@ -22,13 +22,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class ExamRecord {
+public class UniversityExamRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long examRecordId;
+    private Long universityExamRecordId;
 
     @ManyToOne
-    @JoinColumn(name = "exam_id")
+    @JoinColumn(name = "university_exam_id")
     private UniversityExam universityExam;
 
     @ManyToOne
