@@ -1,59 +1,62 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.2.1'
-	id 'io.spring.dependency-management' version '1.1.4'
+    id 'java'
+    id 'org.springframework.boot' version '3.2.1'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'com.nonsoolmate'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+    sourceCompatibility = '17'
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	// spring boot
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+    // spring boot
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	// security
-	implementation 'com.auth0:java-jwt:4.2.1'
+    // security
+    implementation 'com.auth0:java-jwt:4.2.1'
 
-	// lombok
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+    // Spring WebFlux
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-	// h2
-	runtimeOnly 'com.h2database:h2'
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
-	// mysql
-	runtimeOnly 'com.mysql:mysql-connector-j'
+    // h2
+    runtimeOnly 'com.h2database:h2'
 
-	// AWS sdk
-	implementation("software.amazon.awssdk:bom:2.21.0")
-	implementation("software.amazon.awssdk:s3:2.21.0")
+    // mysql
+    runtimeOnly 'com.mysql:mysql-connector-j'
 
-	// swagger
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+    // AWS sdk
+    implementation("software.amazon.awssdk:bom:2.21.0")
+    implementation("software.amazon.awssdk:s3:2.21.0")
 
-	// mapper
-	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+    // swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
-	// validate
-	implementation 'org.hibernate.validator:hibernate-validator'
+    // mapper
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
-	// Health Check
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // validate
+    implementation 'org.hibernate.validator:hibernate-validator'
 
-	// test
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // Health Check
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
