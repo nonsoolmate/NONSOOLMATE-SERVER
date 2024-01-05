@@ -22,8 +22,8 @@ public class Question {
     private Long questionId;
 
     @ManyToOne
-    @JoinColumn(name = "exam_id")
-    private Exam exam;
+    @JoinColumn(name = "university_exam_id")
+    private UniversityExam universityExam;
 
     @NotNull
     private String examQuestionImg;
