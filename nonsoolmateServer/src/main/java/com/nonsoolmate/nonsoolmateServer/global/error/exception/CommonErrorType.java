@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum ErrorType {
+public enum ErrorType implements BusinessExceptionType {
     /**
      * 404 Not Found
      */
@@ -20,10 +20,16 @@ public enum ErrorType {
 
     ;
 
-    private final HttpStatus httpStatus;
+    private final HttpStatus status;
     private final String message;
 
-    public int getHttpStatusCode() {
-        return httpStatus.value();
+    @Override
+    public HttpStatus status() {
+        return this.status;
+    }
+
+    @Override
+    public String message() {
+        return this.message;
     }
 }
