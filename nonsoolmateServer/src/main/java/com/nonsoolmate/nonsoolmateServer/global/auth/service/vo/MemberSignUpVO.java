@@ -15,7 +15,7 @@ public record MemberSignUpVO(Long memberId, String email, String name, PlatformT
                 .email(member.getEmail())
                 .name(member.getName())
                 .platformType(platformType)
-                .role(Role.USER)
+                .role(Role.ROLE_USER)
                 .birthYear(member.getBirthYear())
                 .gender(member.getGender())
                 .phoneNumber(member.getPhoneNumber())

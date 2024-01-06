@@ -1,5 +1,6 @@
 package com.nonsoolmate.nonsoolmateServer.global.auth.controller;
 
+import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
 import com.nonsoolmate.nonsoolmateServer.global.auth.controller.dto.request.MemberRequestDTO;
 import com.nonsoolmate.nonsoolmateServer.global.auth.controller.dto.response.MemberAuthResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.global.auth.exception.AuthSucessType;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -26,12 +28,13 @@ public class AuthController {
     private final JwtService jwtService;
 
     @PostMapping("/social/login")
-    public ApiResponse<MemberAuthResponseDTO> login(@RequestHeader(value = "platform-token") final String platformToken,
-                                                    @RequestBody @Valid final
-                                                    MemberRequestDTO request, HttpServletResponse response) {
+    public ApiResponse<MemberAuthResponseDTO> login(
+            @RequestHeader(value = "authorization-code") final String authorizationCode,
+            @RequestBody @Valid final
+            MemberRequestDTO request, HttpServletResponse response) {
         MemberSignUpVO vo = authServiceProvider.getAuthService(request.platformType())
-                .saveMemberOrLogin(platformToken, request);
-        jwtService.setSignedUpMemberToken(vo, response);
+                .saveMemberOrLogin(authorizationCode, request);
+        jwtService.issueToken(vo, response);
         return ApiResponse.success(AuthSucessType.LOGIN_SUCCESS,
                 MemberAuthResponseDTO.of(vo.memberId(), vo.authType(), vo.name()));
     }

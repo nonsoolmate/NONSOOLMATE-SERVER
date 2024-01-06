@@ -20,7 +20,7 @@ public abstract class AuthService {
 
     protected Member getMember(PlatformType platformType, String email) {
         return memberRepository.findByPlatformTypeAndEmail(platformType, email)
-                .orElseThrow(() -> new MemberException(MemberExceptionType.NOT_FOUND_MEMBER));
+                .orElse(null);
     }
 
     protected Member saveUser(MemberRequestDTO request, String email, String name, String birthday, String gender,
@@ -31,7 +31,8 @@ public abstract class AuthService {
 
     private static Member createSocialMember(String email, String name, PlatformType platformType, String birthYear,
                                              String gender, String phoneNumber) {
-        return Member.builder().email(email).name(name).platformType(platformType).role(Role.USER).birthYear(birthYear)
+        return Member.builder().email(email).name(name).platformType(platformType).role(Role.ROLE_USER)
+                .birthYear(birthYear)
                 .gender(gender).phoneNumber(phoneNumber).build();
     }
 }

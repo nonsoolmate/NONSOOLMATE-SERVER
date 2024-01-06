@@ -3,25 +3,38 @@ package com.nonsoolmate.nonsoolmateServer.global.auth.service;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
 import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
 import com.nonsoolmate.nonsoolmateServer.global.auth.controller.dto.request.MemberRequestDTO;
+import com.nonsoolmate.nonsoolmateServer.global.auth.exception.AuthException;
+import com.nonsoolmate.nonsoolmateServer.global.auth.exception.AuthExceptionType;
 import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.MemberSignUpVO;
 import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.NaverMemberVO;
+import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.NaverTokenVO;
 import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.enums.AuthType;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @Service
 public class NaverAuthService extends AuthService {
-    WebClient webClient = WebClient.builder().build();
+
+    @Value("${naver.client-id}")
+    private String clientId;
+    @Value("${naver.client-secret}")
+    private String clientSecret;
+    @Value("${naver.state}")
+    private String state;
 
     public NaverAuthService(MemberRepository memberRepository) {
         super(memberRepository);
     }
 
     @Override
-    public MemberSignUpVO saveMemberOrLogin(String platformToken, MemberRequestDTO request) {
-        NaverMemberVO naverMemberInfo = getNaverMemberInfo(platformToken);
+    public MemberSignUpVO saveMemberOrLogin(String authorizationCode, MemberRequestDTO request) {
+        String accessToken = getAccessToken(authorizationCode, clientId, clientSecret, state).getAccess_token();
+        System.out.println("accessToken = " + accessToken);
+        NaverMemberVO naverMemberInfo = getNaverMemberInfo(accessToken);
 
         Member foundMember = getMember(request.platformType(), naverMemberInfo.getResponse().getEmail());
         if (foundMember != null) {
@@ -38,17 +51,47 @@ public class NaverAuthService extends AuthService {
     // TODO:: 토큰 만료시에 대한 에러 추가
     // TODO:: Auth 패키지 따로 뺄까?
     // TODO:: uri yml로 빼야지..
-    private NaverMemberVO getNaverMemberInfo(String accessToken) {
-        try {
-            return webClient.get()
-                    .uri("https://openapi.naver.com/v1/nid/me")
-                    .headers(headers -> headers.setBearerAuth(accessToken))
-                    .retrieve()
-                    .bodyToMono(NaverMemberVO.class)
-                    .block();
-        } catch (WebClientResponseException e) {
-            // WebClientResponseException이 발생하면 해당 예외를 throw
-            throw new RuntimeException("Error while fetching Naver member info", e);
-        }
+//    private NaverMemberVO getNaverMemberInfo(String accessToken) {
+//        try {
+//            WebClient webClient = WebClient.builder().build();
+//            return webClient.get()
+//                    .uri("https://openapi.naver.com/v1/nid/me")
+//                    .headers(headers -> headers.setBearerAuth(accessToken))
+//                    .retrieve()
+//                    .bodyToMono(NaverMemberVO.class)
+//                    .block();
+//        } catch (WebClientResponseException e) {
+//            throw new AuthException(AuthExceptionType.INVALID_MEMBER_PLATFORM_TOKEN);
+//        }
+//    }
+
+    public NaverMemberVO getNaverMemberInfo(String accessToken) {
+        WebClient webClient = WebClient.builder().build();
+        return webClient.post()
+                .uri("https://openapi.naver.com/v1/nid/me")
+                .header("Authorization", "Bearer " + accessToken)
+                .retrieve()
+                .bodyToMono(NaverMemberVO.class)
+                .block();
+    }
+
+    private NaverTokenVO getAccessToken(String authorizationCode, String clientId, String clientSecret, String state) {
+        WebClient webClient = WebClient.builder().build();
+        return webClient.post()
+                .uri(uriBuilder ->
+                        uriBuilder
+                                .scheme("https")  // 스킴을 명시적으로 지정
+                                .host("nid.naver.com")  // 호스트를 명시적으로 지정
+                                .path("/oauth2.0/token")
+                                .queryParam("grant_type", "authorization_code")
+                                .queryParam("client_id", clientId)
+                                .queryParam("client_secret", clientSecret)
+                                .queryParam("code", authorizationCode)
+                                .queryParam("state", state)
+                                .build()
+                )
+                .retrieve()
+                .bodyToMono(NaverTokenVO.class)
+                .block();
     }
 }
