@@ -22,6 +22,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({Exception.class})
     protected ApiResponse handleServerException(Exception ex) {
         log.error(ex.getMessage());
+        ex.printStackTrace();
         return ApiResponse.error(CommonErrorType.INTERNAL_SERVER_ERROR);
     }
 

@@ -76,11 +76,11 @@ public class JwtService {
                 .sign(Algorithm.HMAC512(secretKey));
     }
 
-    public void setSignedUpMemberToken(MemberSignUpVO vo, HttpServletResponse response) {
+    public void issueToken(MemberSignUpVO vo, HttpServletResponse response) {
         String accessToken = createAccessToken(vo.email(), vo.memberId());
         response.setHeader(accessHeader, accessToken);
 
-        if (vo.role().equals(Role.USER)) {
+        if (vo.role().equals(Role.ROLE_USER)) {
             String refreshToken = createRefreshToken();
             updateRefreshTokenByMemberId(vo.memberId(), refreshToken);
             response.setHeader(refreshHeader, refreshToken);
@@ -131,7 +131,7 @@ public class JwtService {
                     .asString());
         } catch (Exception e) {
             log.error("액세스 토큰이 유효하지 않습니다.");
-            return Optional.empty();
+            return null;
         }
     }
 
