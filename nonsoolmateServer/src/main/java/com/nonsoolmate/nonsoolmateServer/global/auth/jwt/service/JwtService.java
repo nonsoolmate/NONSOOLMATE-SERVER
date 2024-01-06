@@ -2,7 +2,9 @@ package com.nonsoolmate.nonsoolmateServer.global.auth.jwt.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.Role;
 import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
+import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.MemberSignUpVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -41,6 +43,7 @@ public class JwtService {
     private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
     private static final String EMAIL_CLAIM = "email";
+    private static final String MEMBER_ID_CLAIM = "memberId";
     private static final String BEARER = "Bearer ";
 
     private final MemberRepository memberRepository;
@@ -48,7 +51,7 @@ public class JwtService {
     /**
      * AccessToken 생성 메소드
      */
-    public String createAccessToken(String email) {
+    public String createAccessToken(String email, Long memberId) {
         Date now = new Date();
         return JWT.create() // JWT 토큰을 생성하는 빌더 반환
                 .withSubject(ACCESS_TOKEN_SUBJECT) // JWT의 Subject 지정 -> AccessToken이므로 AccessToken
@@ -57,6 +60,7 @@ public class JwtService {
                 //클레임으로는 저희는 email 하나만 사용합니다.
                 //추가적으로 식별자나, 이름 등의 정보를 더 추가하셔도 됩니다.
                 //추가하실 경우 .withClaim(클래임 이름, 클래임 값) 으로 설정해주시면 됩니다
+                .withClaim(MEMBER_ID_CLAIM, memberId)
                 .withClaim(EMAIL_CLAIM, email)
                 .sign(Algorithm.HMAC512(secretKey)); // HMAC512 알고리즘 사용, application-jwt.yml에서 지정한 secret 키로 암호화
     }
@@ -72,14 +76,15 @@ public class JwtService {
                 .sign(Algorithm.HMAC512(secretKey));
     }
 
-    /**
-     * AccessToken 헤더에 실어서 보내기
-     */
-    public void sendAccessToken(HttpServletResponse response, String accessToken) {
-        response.setStatus(HttpServletResponse.SC_OK);
-
+    public void setSignedUpMemberToken(MemberSignUpVO vo, HttpServletResponse response) {
+        String accessToken = createAccessToken(vo.email(), vo.memberId());
         response.setHeader(accessHeader, accessToken);
-        log.info("재발급된 Access Token : {}", accessToken);
+
+        if (vo.role().equals(Role.USER)) {
+            String refreshToken = createRefreshToken();
+            updateRefreshTokenByMemberId(vo.memberId(), refreshToken);
+            response.setHeader(refreshHeader, refreshToken);
+        }
     }
 
     /**
@@ -167,5 +172,16 @@ public class JwtService {
             log.error("유효하지 않은 토큰입니다. {}", e.getMessage());
             return false;
         }
+    }
+
+    // TODO: Redis 사용해서 refresh token 관리
+    public void updateRefreshTokenByMemberId(Long memberId, String refreshToken) {
+        memberRepository
+                .findById(memberId)
+                .ifPresent(
+                        member -> {
+                            //member.updateRefreshToken(refreshToken);
+                            memberRepository.saveAndFlush(member);
+                        });
     }
 }

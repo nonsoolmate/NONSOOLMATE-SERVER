@@ -5,12 +5,8 @@ import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.PlatformType
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.Role;
 import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.enums.AuthType;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Builder
-@Getter
 public record MemberSignUpVO(Long memberId, String email, String name, PlatformType platformType, Role role,
                              String birthYear, String gender, String phoneNumber, AuthType authType) {
     public static MemberSignUpVO of(Member member, PlatformType platformType, AuthType authtype) {

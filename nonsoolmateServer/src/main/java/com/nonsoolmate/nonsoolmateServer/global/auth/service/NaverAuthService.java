@@ -6,18 +6,17 @@ import com.nonsoolmate.nonsoolmateServer.global.auth.controller.dto.request.Memb
 import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.MemberSignUpVO;
 import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.NaverMemberVO;
 import com.nonsoolmate.nonsoolmateServer.global.auth.service.vo.enums.AuthType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @Service
 public class NaverAuthService extends AuthService {
+    WebClient webClient = WebClient.builder().build();
 
-    private final WebClient webClient;
-
-    public NaverAuthService(MemberRepository memberRepository, WebClient webClient) {
+    public NaverAuthService(MemberRepository memberRepository) {
         super(memberRepository);
-        this.webClient = webClient;
     }
 
     @Override

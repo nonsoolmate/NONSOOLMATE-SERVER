@@ -22,13 +22,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({Exception.class})
     protected ApiResponse handleServerException(Exception ex) {
         log.error(ex.getMessage());
-        return ApiResponse.error(ErrorType.INTERNAL_SERVER_ERROR);
+        return ApiResponse.error(CommonErrorType.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     protected ApiResponse handleNotFoundException(final NoHandlerFoundException ex) {
         HashMap<String, String> pathMap = new HashMap<>();
         pathMap.put("path", ex.getRequestURL());
-        return ApiResponse.error(ErrorType.NOT_FOUND_PATH, pathMap);
+        return ApiResponse.error(CommonErrorType.NOT_FOUND_PATH, pathMap);
     }
 }

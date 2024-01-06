@@ -1,7 +1,7 @@
 package com.nonsoolmate.nonsoolmateServer.global.common.response;
 
-import com.nonsoolmate.nonsoolmateServer.global.error.exception.ErrorType;
-import com.nonsoolmate.nonsoolmateServer.global.success.Success;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessExceptionType;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessSucessType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,19 +15,19 @@ public class ApiResponse<T> {
     private final String message;
     private T data;
 
-    public static ApiResponse success(Success success) {
-        return new ApiResponse<>(success.getHttpStatus(), success.getMessage());
+    public static ApiResponse success(BusinessSucessType successType) {
+        return new ApiResponse<>(successType.getHttpStatusCode(), successType.message());
     }
 
-    public static <T> ApiResponse<T> success(Success success, T data) {
-        return new ApiResponse<T>(success.getHttpStatus(), success.getMessage(), data);
+    public static <T> ApiResponse<T> success(BusinessSucessType successType, T data) {
+        return new ApiResponse<T>(successType.getHttpStatusCode(), successType.message(), data);
     }
 
-    public static ApiResponse error(ErrorType error) {
-        return new ApiResponse<>(error.getHttpStatusCode(), error.getMessage());
+    public static ApiResponse error(BusinessExceptionType exceptionType) {
+        return new ApiResponse<>(exceptionType.getHttpStatusCode(), exceptionType.message());
     }
 
-    public static <T> ApiResponse<T> error(ErrorType error, T data) {
-        return new ApiResponse<T>(error.getHttpStatusCode(), error.getMessage(), data);
+    public static <T> ApiResponse<T> error(BusinessExceptionType exceptionType, T data) {
+        return new ApiResponse<T>(exceptionType.getHttpStatusCode(), exceptionType.message(), data);
     }
 }
