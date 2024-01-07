@@ -22,9 +22,11 @@ dependencies {
 
     // security
     implementation 'com.auth0:java-jwt:4.2.1'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // Spring WebFlux
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
 
     // lombok
     compileOnly 'org.projectlombok:lombok'
@@ -55,6 +57,8 @@ dependencies {
 
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
 }
 
 tasks.named('test') {
