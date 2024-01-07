@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -24,12 +25,7 @@ public class SecurityConfig {
             "/webjars/**",
 
             // Authentication
-            "/login/**",
             "/auth/**",
-            "/oauth2/**",
-            "/api/v1/auth/**", // 자체 로그인 요청
-            "/api/v1/oauth2/**", // OAuth 소셜 로그인 요청
-            "/login",
 
             // client
             "/","/css/**","/images/**","/js/**","/favicon.ico","/h2-console/**"
