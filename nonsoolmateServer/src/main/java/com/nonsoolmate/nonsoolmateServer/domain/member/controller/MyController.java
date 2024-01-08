@@ -7,7 +7,6 @@ import com.nonsoolmate.nonsoolmateServer.domain.member.exception.MemberSuccessTy
 import com.nonsoolmate.nonsoolmateServer.domain.member.service.MemberService;
 import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
 import com.nonsoolmate.nonsoolmateServer.global.security.AuthUser;
-import com.nonsoolmate.nonsoolmateServer.global.security.CustomAuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
