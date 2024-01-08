@@ -12,8 +12,6 @@ import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.vo.MemberSignUpVO;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.Role;
 import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
-
-import com.nonsoolmate.nonsoolmateServer.external.oauth.service.vo.enums.AuthType;
 import com.nonsoolmate.nonsoolmateServer.external.redis.repository.RedisTokenRepository;
 import com.nonsoolmate.nonsoolmateServer.global.jwt.service.vo.RefreshTokenVO;
 import io.jsonwebtoken.Claims;
@@ -26,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -52,7 +49,7 @@ public class JwtService {
     private String refreshHeader;
 
     private final MemberRepository memberRepository;
-    private final com.nonsoolmate.nonsoolmateServer.global.auth.jwt.service.JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
     private final RedisTokenRepository redisTokenRepository;
 
 
@@ -77,9 +74,10 @@ public class JwtService {
         }
 
         Claims tokenClaims = jwtTokenProvider.getTokenClaims(accessToken);
-        RefreshTokenVO foundRefreshToken = redisTokenRepository.findByMemberIdOrElseThrowException(String.valueOf(tokenClaims.get(MEMBER_ID_CLAIM)));
+        RefreshTokenVO foundRefreshToken = redisTokenRepository.findByMemberIdOrElseThrowException(
+                String.valueOf(tokenClaims.get(MEMBER_ID_CLAIM)));
 
-        if(!foundRefreshToken.getRefreshToken().equals(refreshToken)){
+        if (!foundRefreshToken.getRefreshToken().equals(refreshToken)) {
             throw new AuthException(INVALID_REFRESH_TOKEN);
         }
 
@@ -127,14 +125,14 @@ public class JwtService {
 
     public void updateRefreshTokenByMemberId(Long memberId, String newRefreshToken) {
         redisTokenRepository.findByMemberId(String.valueOf(memberId))
-                        .ifPresent(refreshToken -> {
-                            refreshToken.updateBlack(true);
-                        });
+                .ifPresent(refreshToken -> {
+                    refreshToken.updateBlack(true);
+                });
         log.info("newRefreshToken = {}", newRefreshToken);
         redisTokenRepository.save(RefreshTokenVO.builder()
-                        .memberId(String.valueOf(memberId))
-                        .black(false)
-                        .refreshToken(newRefreshToken)
-                        .build());
+                .memberId(String.valueOf(memberId))
+                .black(false)
+                .refreshToken(newRefreshToken)
+                .build());
     }
 }
