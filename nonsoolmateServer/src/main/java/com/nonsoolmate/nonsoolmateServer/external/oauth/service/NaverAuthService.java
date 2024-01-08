@@ -9,10 +9,12 @@ import com.nonsoolmate.nonsoolmateServer.external.oauth.service.vo.NaverMemberVO
 import com.nonsoolmate.nonsoolmateServer.external.oauth.service.vo.NaverTokenVO;
 import com.nonsoolmate.nonsoolmateServer.external.oauth.service.vo.enums.AuthType;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional(readOnly = true)
 public class NaverAuthService extends AuthService {
 
     @Value("${naver.client-id}")
@@ -27,6 +29,7 @@ public class NaverAuthService extends AuthService {
     }
 
     @Override
+    @Transactional
     public MemberSignUpVO saveMemberOrLogin(String authorizationCode, MemberRequestDTO request) {
         String accessToken = getAccessToken(authorizationCode, clientId, clientSecret, state).getAccess_token();
         NaverMemberVO naverMemberInfo = getNaverMemberInfo(accessToken);
