@@ -2,16 +2,19 @@ package com.nonsoolmate.nonsoolmateServer.domain.auth.controller;
 
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.request.MemberRequestDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.response.MemberAuthResponseDTO;
-import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthSucessType;
+import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.response.MemberReissueResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.global.jwt.service.JwtService;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.AuthServiceProvider;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.vo.MemberSignUpVO;
 import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
+import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthSuccessType;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -34,6 +37,25 @@ public class AuthController {
         MemberSignUpVO vo = authServiceProvider.getAuthService(request.platformType())
                 .saveMemberOrLogin(authorizationCode, request);
         MemberAuthResponseDTO memberAuthResponseDTO = jwtService.issueToken(vo, response);
-        return ResponseEntity.ok().body(ApiResponse.success(AuthSucessType.LOGIN_SUCCESS, memberAuthResponseDTO));
+        return ResponseEntity.ok().body(ApiResponse.success(AuthSuccessType.LOGIN_SUCCESS, memberAuthResponseDTO));
+    }
+
+    @PostMapping("/reissue")
+    public ResponseEntity<ApiResponse<MemberReissueResponseDTO>> reissue(HttpServletRequest request, HttpServletResponse response){
+        MemberReissueResponseDTO memberReissueResponseDTO = jwtService.reissueToken(request, response);
+        return ResponseEntity.ok().body(ApiResponse.success(AuthSuccessType.REISSUE_SUCCESS, memberReissueResponseDTO));
+    }
+
+    @GetMapping("/authTest")
+    public String authTest(HttpServletRequest request, HttpServletResponse response) {
+
+        try{
+            response.sendRedirect("https://nid.naver.com/oauth2.0/authorize?&client_id=l1su6a1jp2mTKIXQBqZD&redirect_uri=http://localhost:8080/login/oauth2/code/naver&response_type=code");
+        }
+        catch (Exception e){
+            System.out.println("e = " + e);
+        }
+
+        return "SUCCESS";
     }
 }
