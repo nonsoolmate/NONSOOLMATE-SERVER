@@ -1,9 +1,8 @@
-package com.nonsoolmate.nonsoolmateServer.global.auth.jwt.service;
+package com.nonsoolmate.nonsoolmateServer.global.jwt.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Header;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
