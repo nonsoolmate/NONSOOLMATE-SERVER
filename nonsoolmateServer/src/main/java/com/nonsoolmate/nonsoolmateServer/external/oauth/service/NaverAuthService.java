@@ -29,7 +29,6 @@ public class NaverAuthService extends AuthService {
     }
 
     @Override
-    @Transactional
     public MemberSignUpVO saveMemberOrLogin(String authorizationCode, MemberRequestDTO request) {
         String accessToken = getAccessToken(authorizationCode, clientId, clientSecret, state).getAccess_token();
         NaverMemberVO naverMemberInfo = getNaverMemberInfo(accessToken);
