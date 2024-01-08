@@ -59,7 +59,7 @@ public class JwtService {
     public MemberAuthResponseDTO issueToken(MemberSignUpVO vo, HttpServletResponse response) {
         String accessToken = jwtTokenProvider.createAccessToken(vo.email(), vo.memberId(), accessTokenExpirationPeriod);
 
-        if (vo.role().equals(Role.ROLE_USER)) {
+        if (vo.role().equals(Role.USER)) {
             String refreshToken = jwtTokenProvider.createRefreshToken(refreshTokenExpirationPeriod);
             updateRefreshTokenByMemberId(vo.memberId(), refreshToken);
             return MemberAuthResponseDTO.of(vo.memberId(), vo.authType(), vo.name(), accessToken, refreshToken);
@@ -92,7 +92,7 @@ public class JwtService {
 
         updateRefreshTokenByMemberId(memberId, newRefreshToken);
 
-        return MemberReissueResponseDTO.of(memberId, AuthType.LOGIN, newAccessToken, newRefreshToken);
+        return MemberReissueResponseDTO.of(memberId, newAccessToken, newRefreshToken);
     }
 
 

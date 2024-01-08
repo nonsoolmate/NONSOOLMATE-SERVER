@@ -1,4 +1,4 @@
-package com.nonsoolmate.nonsoolmateServer.global.auth.domain;
+package com.nonsoolmate.nonsoolmateServer.global.security;
 
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.Role;
