@@ -33,8 +33,7 @@ public class AuthController {
             MemberRequestDTO request, HttpServletResponse response) {
         MemberSignUpVO vo = authServiceProvider.getAuthService(request.platformType())
                 .saveMemberOrLogin(authorizationCode, request);
-        jwtService.issueToken(vo, response);
-        return ResponseEntity.ok().body(ApiResponse.success(AuthSucessType.LOGIN_SUCCESS,
-                MemberAuthResponseDTO.of(vo.memberId(), vo.authType(), vo.name())));
+        MemberAuthResponseDTO memberAuthResponseDTO = jwtService.issueToken(vo, response);
+        return ResponseEntity.ok().body(ApiResponse.success(AuthSucessType.LOGIN_SUCCESS, memberAuthResponseDTO));
     }
 }
