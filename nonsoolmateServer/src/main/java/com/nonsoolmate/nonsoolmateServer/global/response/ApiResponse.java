@@ -1,4 +1,4 @@
-package com.nonsoolmate.nonsoolmateServer.global.common.response;
+package com.nonsoolmate.nonsoolmateServer.global.response;
 
 import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessExceptionType;
 import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessSucessType;
