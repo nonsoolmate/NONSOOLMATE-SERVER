@@ -53,7 +53,7 @@ public class AuthController {
             response.sendRedirect("https://nid.naver.com/oauth2.0/authorize?&client_id=l1su6a1jp2mTKIXQBqZD&redirect_uri=http://localhost:8080/login/oauth2/code/naver&response_type=code");
         }
         catch (Exception e){
-            System.out.println("e = " + e);
+            log.info("authTest = {}", e);
         }
 
         return "SUCCESS";
