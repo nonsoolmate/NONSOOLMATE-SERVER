@@ -6,7 +6,7 @@ import static com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExcept
 
 import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthException;
 import com.nonsoolmate.nonsoolmateServer.global.jwt.service.JwtService;
-import com.nonsoolmate.nonsoolmateServer.global.jwt.service.MemberAuthService;
+import com.nonsoolmate.nonsoolmateServer.global.security.service.MemberAuthService;
 import com.nonsoolmate.nonsoolmateServer.global.jwt.utils.RequestUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -30,7 +30,7 @@ public abstract class AuthService {
 
     private static Member createSocialMember(String email, String name, PlatformType platformType, String birthYear,
                                              String gender, String phoneNumber) {
-        return Member.builder().email(email).name(name).platformType(platformType).role(Role.ROLE_USER)
+        return Member.builder().email(email).name(name).platformType(platformType).role(Role.USER)
                 .birthYear(birthYear)
                 .gender(gender).phoneNumber(phoneNumber).build();
     }
