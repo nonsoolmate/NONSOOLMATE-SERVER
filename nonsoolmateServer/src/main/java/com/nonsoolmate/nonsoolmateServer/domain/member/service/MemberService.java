@@ -1,7 +1,11 @@
 package com.nonsoolmate.nonsoolmateServer.domain.member.service;
 
+<<<<<<< HEAD
 import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.NameResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.TicketResponseDTO;
+=======
+import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.nicknameResponseDTO;
+>>>>>>> 6409e08 ([FEAT] MemberService 내 getName() 구현)
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
 import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
 import com.nonsoolmate.nonsoolmateServer.global.security.CustomAuthUser;
