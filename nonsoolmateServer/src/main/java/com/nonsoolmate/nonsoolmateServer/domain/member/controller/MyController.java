@@ -1,6 +1,7 @@
 package com.nonsoolmate.nonsoolmateServer.domain.member.controller;
 
 import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.NameResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.TicketResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.member.exception.MemberSuccessType;
 import com.nonsoolmate.nonsoolmateServer.domain.member.service.MemberService;
 import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
@@ -20,5 +21,11 @@ public class MyController {
     public ResponseEntity<ApiResponse<NameResponseDTO>> getName() {
         return ResponseEntity.ok()
                 .body(ApiResponse.success(MemberSuccessType.GET_MEMBER_NAME_SUCCESS, memberService.getNickname()));
+    }
+
+    @GetMapping("/ticket")
+    public ResponseEntity<ApiResponse<TicketResponseDTO>> getTicket() {
+        return ResponseEntity.ok()
+                .body(ApiResponse.success(MemberSuccessType.GET_MEMBER_TICKET_SUCCESS, memberService.getTicket()));
     }
 }
