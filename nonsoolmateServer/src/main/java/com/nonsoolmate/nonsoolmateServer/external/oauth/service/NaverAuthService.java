@@ -44,23 +44,6 @@ public class NaverAuthService extends AuthService {
         return MemberSignUpVO.of(savedMember, request.platformType(), AuthType.SIGN_UP);
     }
 
-    // TODO:: 토큰 만료시에 대한 에러 추가
-    // TODO:: Auth 패키지 따로 뺄까?
-    // TODO:: uri yml로 빼야지..
-//    private NaverMemberVO getNaverMemberInfo(String accessToken) {
-//        try {
-//            WebClient webClient = WebClient.builder().build();
-//            return webClient.get()
-//                    .uri("https://openapi.naver.com/v1/nid/me")
-//                    .headers(headers -> headers.setBearerAuth(accessToken))
-//                    .retrieve()
-//                    .bodyToMono(NaverMemberVO.class)
-//                    .block();
-//        } catch (WebClientResponseException e) {
-//            throw new AuthException(AuthExceptionType.INVALID_MEMBER_PLATFORM_TOKEN);
-//        }
-//    }
-
     public NaverMemberVO getNaverMemberInfo(String accessToken) {
         WebClient webClient = WebClient.builder().build();
         return webClient.post()
