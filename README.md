@@ -34,8 +34,7 @@
 - 해제: 문제이미지 & 해제 PDF 조회<br>
 - 첨삭: 문제이미지_해제PDF 조회<br>
 - 첨삭: 첨삭PDF_해제PDF 조회<br>
-- 액세스 토큰 재발급<br>
-- 리프레시 토큰 재발급<br>
+- 토큰 재발급
 </td>
 </tr>
 	</table>
@@ -68,48 +67,56 @@
 ~~~
 📦 nonsoolmateServer
 ├── 📂 domain
-│   ├─ 📂 member
-│   │     └─ 📂 controller
-│   ├─ 📂 member
-│   │     ├─ 📂 controller
-│   │     ├─ 📂 entity
-│   │     ├─ 📂 exception
-│   │     ├─ 📂 repository
-│   │     └─ 📂 service
-│   ├─ 📂 selectUniversity
-│   │     ├─ 📂 controller
-│   │     ├─ 📂 entity
-│   │     ├─ 📂 exception
-│   │     ├─ 📂 repository
-│   │     └─ 📂 service
-│   ├─ 📂 university
-│   │     ├─ 📂 controller
-│   │     ├─ 📂 entity
-│   │     ├─ 📂 exception
-│   │     ├─ 📂 repository
-│   │     └─ 📂 service
-│   └─ 📂 universityExamRecord
-│         ├─ 📂 controller
-│         ├─ 📂 entity
-│         ├─ 📂 exception
-│         ├─ 📂 repository
-│         └─ 📂 service
-├── 📂 global
-│   ├─ 📂 jwt
+│   ├─ 📂 auth
+│   │  ├─ 📂 controller
+│   │  ├─ 📂 exception
 │   │  └─ 📂 service
-│   └─ 📂 security
-│      ├─ 📂 handler
-│      ├─ 📂 filter
-│      └─ 📂 config
-└─ 📂 external
-       ├─ 📂 s3
-       │  ├─ 📂 config
-       │  └─ 📂 service
-       ├─ 📂 redis
-       │  ├─ 📂 config
-       │  └─ 📂 service
-       └─ 📂 oauth
-          └─ 📂 service
+│   ├─ 📂 member
+│   │  ├─ 📂 controller
+│   │  ├─ 📂 entity
+│   │  ├─ 📂 exception
+│   │  ├─ 📂 repository
+│   │  └─ 📂 service
+│   ├─ 📂 selectUniversity
+│   │  ├─ 📂 controller
+│   │  ├─ 📂 entity
+│   │  ├─ 📂 exception
+│   │  ├─ 📂 repository
+│   │  └─ 📂 service
+│   ├─ 📂 university
+│   │  ├─ 📂 controller
+│   │  ├─ 📂 entity
+│   │  ├─ 📂 exception
+│   │  ├─ 📂 repository
+│   │  └─ 📂 service
+│   └─ 📂 universityExamRecord
+│      ├─ 📂 controller
+│      ├─ 📂 entity
+│      ├─ 📂 exception
+│      ├─ 📂 repository
+│      └─ 📂 service
+├── 📂 external
+│   ├─ 📂 aws
+│   │  ├─ 📂 config
+│   │  └─ 📂 service
+│   ├─ 📂 oauth
+│   │  └─ 📂 service
+│   ├─ 📂 redis
+│   │  ├─ 📂 config
+│   │  └─ 📂 service
+│   └─ 📂 swagger
+│      └─ 📂 config     
+└─ 📂 global
+    ├─ 📂 common
+    ├─ 📂 error 
+    ├─ 📂 jwt
+    │ └─ 📂 service
+    ├─ 📂 security
+    │  ├─ 📂 handler
+    │  ├─ 📂 filter
+    │  └─ 📂 config
+    └─ 📂 util
+       └─ 📂 mapper
 ~~~
 <br><br>
 
