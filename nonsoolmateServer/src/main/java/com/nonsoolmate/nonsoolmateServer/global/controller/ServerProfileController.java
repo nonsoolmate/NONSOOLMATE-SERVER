@@ -1,6 +1,6 @@
-package com.nonsoolmate.nonsoolmateServer.global.common.controller;
+package com.nonsoolmate.nonsoolmateServer.global.controller;
 
-import com.nonsoolmate.nonsoolmateServer.global.common.response.ApiResponse;
+import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
 import com.nonsoolmate.nonsoolmateServer.global.error.exception.CommonSuccessType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;

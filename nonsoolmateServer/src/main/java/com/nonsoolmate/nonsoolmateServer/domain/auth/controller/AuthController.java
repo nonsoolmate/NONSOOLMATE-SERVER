@@ -6,7 +6,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthSucessType;
 import com.nonsoolmate.nonsoolmateServer.global.jwt.service.JwtService;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.AuthServiceProvider;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.vo.MemberSignUpVO;
-import com.nonsoolmate.nonsoolmateServer.global.common.response.ApiResponse;
+import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
