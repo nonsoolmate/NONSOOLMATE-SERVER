@@ -24,11 +24,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Getter
 @Slf4j
+@Transactional(readOnly = true)
 public class JwtService {
     private static final String AUTH_USER = "memberId";
     private static final String BEARER = "Bearer ";
@@ -52,7 +54,7 @@ public class JwtService {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTokenRepository redisTokenRepository;
 
-
+    @Transactional
     public MemberAuthResponseDTO issueToken(MemberSignUpVO vo, HttpServletResponse response) {
         String accessToken = jwtTokenProvider.createAccessToken(vo.email(), vo.memberId(), accessTokenExpirationPeriod);
 
@@ -123,6 +125,7 @@ public class JwtService {
     }
 
 
+    @Transactional
     public void updateRefreshTokenByMemberId(Long memberId, String newRefreshToken) {
         redisTokenRepository.findByMemberId(String.valueOf(memberId))
                 .ifPresent(refreshToken -> {
