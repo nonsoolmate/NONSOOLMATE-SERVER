@@ -2,6 +2,9 @@ package com.nonsoolmate.nonsoolmateServer.global.jwt.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.response.MemberAuthResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthException;
+import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.Role;
 import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.vo.MemberSignUpVO;
@@ -76,15 +79,16 @@ public class JwtService {
                 .sign(Algorithm.HMAC512(secretKey));
     }
 
-    public void issueToken(MemberSignUpVO vo, HttpServletResponse response) {
+    public MemberAuthResponseDTO issueToken(MemberSignUpVO vo, HttpServletResponse response) {
         String accessToken = createAccessToken(vo.email(), vo.memberId());
-        response.setHeader(accessHeader, accessToken);
 
         if (vo.role().equals(Role.ROLE_USER)) {
             String refreshToken = createRefreshToken();
             updateRefreshTokenByMemberId(vo.memberId(), refreshToken);
-            response.setHeader(refreshHeader, refreshToken);
+            return MemberAuthResponseDTO.of(vo.memberId(), vo.authType(), vo.name(), accessToken, refreshToken);
         }
+
+        throw new AuthException(AuthExceptionType.UNAUTHORIZED_MEMBER_LOGIN);
     }
 
     /**
