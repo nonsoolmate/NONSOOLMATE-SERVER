@@ -1,6 +1,7 @@
 package com.nonsoolmate.nonsoolmateServer.domain.member.service;
 
 import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.NameResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.TicketResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
 import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
 import com.nonsoolmate.nonsoolmateServer.global.security.util.SecurityUtil;
@@ -17,5 +18,10 @@ public class MemberService {
     public NameResponseDTO getNickname() {
         Member member = SecurityUtil.getLoginMember();
         return NameResponseDTO.of(member.getName());
+    }
+
+    public TicketResponseDTO getTicket() {
+        Member member = SecurityUtil.getLoginMember();
+        return TicketResponseDTO.of(member.getName(), member.getTicketCount());
     }
 }
