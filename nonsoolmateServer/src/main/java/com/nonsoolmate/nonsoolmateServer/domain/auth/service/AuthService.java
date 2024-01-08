@@ -6,10 +6,10 @@ import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.Role;
 import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.request.MemberRequestDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.vo.MemberSignUpVO;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public abstract class AuthService {
     private final MemberRepository memberRepository;
@@ -21,6 +21,7 @@ public abstract class AuthService {
                 .orElse(null);
     }
 
+    @Transactional
     protected Member saveUser(MemberRequestDTO request, String email, String name, String birthday, String gender,
                               String phoneNumber) {
         Member newMember = createSocialMember(email, name, request.platformType(), birthday, gender, phoneNumber);
