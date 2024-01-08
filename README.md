@@ -107,7 +107,8 @@
 │   └─ 📂 swagger
 │      └─ 📂 config     
 └─ 📂 global
-    ├─ 📂 common
+    ├─ 📂 controller
+    ├─ 📂 response
     ├─ 📂 error 
     ├─ 📂 jwt
     │ └─ 📂 service
