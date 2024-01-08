@@ -3,6 +3,7 @@ package com.nonsoolmate.nonsoolmateServer.global.error;
 import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
 import com.nonsoolmate.nonsoolmateServer.global.error.exception.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,22 +15,23 @@ import java.util.HashMap;
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler({BusinessException.class})
-    protected ResponseEntity<ErrorResponse> handleCustomException(BusinessException ex) {
+    protected ResponseEntity<ApiResponse> handleCustomException(BusinessException ex) {
         log.error("🚨 BusinessException occured: {} 🚨", ex.getMessage());
-        return ResponseEntity.status(ex.getHttpStatus()).body(ErrorResponse.of(ex.getExceptionType()));
+        return ResponseEntity.status(ex.getExceptionType().status()).body(ApiResponse.error(ex.getExceptionType()));
     }
 
     @ExceptionHandler({Exception.class})
-    protected ApiResponse handleServerException(Exception ex) {
+    protected ResponseEntity<ApiResponse> handleServerException(Exception ex) {
         log.error(ex.getMessage());
-        ex.printStackTrace();
-        return ApiResponse.error(CommonErrorType.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                .body(ApiResponse.error(CommonErrorType.INTERNAL_SERVER_ERROR));
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    protected ApiResponse handleNotFoundException(final NoHandlerFoundException ex) {
+    protected ResponseEntity<ApiResponse> handleNotFoundException(final NoHandlerFoundException ex) {
         HashMap<String, String> pathMap = new HashMap<>();
         pathMap.put("path", ex.getRequestURL());
-        return ApiResponse.error(CommonErrorType.NOT_FOUND_PATH, pathMap);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.error(CommonErrorType.NOT_FOUND_PATH, pathMap));
     }
 }

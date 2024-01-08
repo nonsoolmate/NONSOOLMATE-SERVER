@@ -10,9 +10,4 @@ public class BusinessException extends RuntimeException {
         super(exceptionType.message());
         this.exceptionType = exceptionType;
     }
-
-    public int getHttpStatus() {
-        return exceptionType.status().value();
-    }
-
 }

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -26,14 +27,14 @@ public class AuthController {
     private final JwtService jwtService;
 
     @PostMapping("/social/login")
-    public ApiResponse<MemberAuthResponseDTO> login(
+    public ResponseEntity<ApiResponse<MemberAuthResponseDTO>> login(
             @RequestHeader(value = "authorization-code") final String authorizationCode,
             @RequestBody @Valid final
             MemberRequestDTO request, HttpServletResponse response) {
         MemberSignUpVO vo = authServiceProvider.getAuthService(request.platformType())
                 .saveMemberOrLogin(authorizationCode, request);
         jwtService.issueToken(vo, response);
-        return ApiResponse.success(AuthSucessType.LOGIN_SUCCESS,
-                MemberAuthResponseDTO.of(vo.memberId(), vo.authType(), vo.name()));
+        return ResponseEntity.ok().body(ApiResponse.success(AuthSucessType.LOGIN_SUCCESS,
+                MemberAuthResponseDTO.of(vo.memberId(), vo.authType(), vo.name())));
     }
 }
