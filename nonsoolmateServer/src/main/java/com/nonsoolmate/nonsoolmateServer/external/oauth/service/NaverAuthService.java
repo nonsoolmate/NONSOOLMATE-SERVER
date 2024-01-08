@@ -29,10 +29,9 @@ public class NaverAuthService extends AuthService {
     @Override
     public MemberSignUpVO saveMemberOrLogin(String authorizationCode, MemberRequestDTO request) {
         String accessToken = getAccessToken(authorizationCode, clientId, clientSecret, state).getAccess_token();
-        System.out.println("accessToken = " + accessToken);
         NaverMemberVO naverMemberInfo = getNaverMemberInfo(accessToken);
-
         Member foundMember = getMember(request.platformType(), naverMemberInfo.getResponse().getEmail());
+
         if (foundMember != null) {
             return MemberSignUpVO.of(foundMember, request.platformType(), AuthType.LOGIN);
         }
