@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public abstract class AuthService {
     private final MemberRepository memberRepository;
 
+    @Transactional
     public abstract MemberSignUpVO saveMemberOrLogin(String platformType, MemberRequestDTO request);
 
     protected Member getMember(PlatformType platformType, String email) {
