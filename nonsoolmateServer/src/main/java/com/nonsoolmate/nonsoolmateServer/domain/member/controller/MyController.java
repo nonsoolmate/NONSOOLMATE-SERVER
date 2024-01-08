@@ -1,21 +1,8 @@
 package com.nonsoolmate.nonsoolmateServer.domain.member.controller;
 
-<<<<<<< HEAD
 import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.NameResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.TicketResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.NameResponseDTO;
-import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.TicketResponseDTO;
-=======
-import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.nicknameResponseDTO;
->>>>>>> a7a4415 ([FEAT] MyController 개발)
-=======
-import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.NameResponseDTO;
->>>>>>> 0660a64 ([REFACTOR] nickname -> name 네이밍 리팩터링)
->>>>>>> 726184a ([REFACTOR] nickname -> name 네이밍 리팩터링)
 import com.nonsoolmate.nonsoolmateServer.domain.member.exception.MemberSuccessType;
 import com.nonsoolmate.nonsoolmateServer.domain.member.service.MemberService;
 import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
