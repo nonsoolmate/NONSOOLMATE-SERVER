@@ -4,7 +4,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.N
 import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.TicketResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
 import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
-import com.nonsoolmate.nonsoolmateServer.global.security.util.SecurityUtil;
+import com.nonsoolmate.nonsoolmateServer.global.security.CustomAuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,13 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    public NameResponseDTO getNickname() {
-        Member member = SecurityUtil.getLoginMember();
+    public NameResponseDTO getNickname(Member member) {
         return NameResponseDTO.of(member.getName());
     }
 
-    public TicketResponseDTO getTicket() {
-        Member member = SecurityUtil.getLoginMember();
+    public TicketResponseDTO getTicket(Member member) {
         return TicketResponseDTO.of(member.getName(), member.getTicketCount());
     }
 }
