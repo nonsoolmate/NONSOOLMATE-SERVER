@@ -34,7 +34,7 @@ public class SecurityConfig {
             "/auth/**", "/login/**","/authTest",
 
             // client
-            "/","/css/**","/images/**","/js/**","/favicon.ico","/h2-console/**"
+            "/","/css/**","/images/**","/js/**","/favicon.ico","/h2-console/**", "/actuator/health"
     };
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
