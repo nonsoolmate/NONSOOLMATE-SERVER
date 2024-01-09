@@ -25,6 +25,7 @@ public class SelectUniversityService {
     private final UniversityRepository universityRepository;
     private final UniversityExamRepository universityExamRepository;
     private final UniversityExamRecordRepository universityExamRecordRepository;
+    private final static String BEFORE_EXAM = "시험 응시 전";
 
 
     public List<SelectUniversityResponseDTO> getSelectUniversities(Member member) {
@@ -60,7 +61,7 @@ public class SelectUniversityService {
 
     private SelectUniversityExamsResponseDTO getSelectUniversityExamsResponseDTO(SelectUniversity selectUniversity,
                                                                                  Member member) {
-        List<SelectUniversityExamResponseDTO> selectUniversityExamResponseDTOS = new ArrayList<>();
+        List<SelectUniversityExamResponseDTO> selectUniversityExamResponseDTOS;
 
         List<UniversityExam> universityExams = universityExamRepository.findAllByUniversity(
                 selectUniversity.getUniversity());
@@ -80,7 +81,7 @@ public class SelectUniversityService {
             universityExamRecord = universityExamRecordRepository.findByUniversityExamAndMember(universityExam, member)
                     .orElse(null);
             String status =
-                    universityExamRecord == null ? "시험 응시 전" : universityExamRecord.getExamResultStatus().getStatus();
+                    universityExamRecord == null ? BEFORE_EXAM : universityExamRecord.getExamResultStatus().getStatus();
             selectUniversityExamResponseDTOS.add(
                     SelectUniversityExamResponseDTO.of(universityExam.getUniversityExamId(),
                             universityExam.getExamName(), universityExam.getExamTimeLimit(), status));
