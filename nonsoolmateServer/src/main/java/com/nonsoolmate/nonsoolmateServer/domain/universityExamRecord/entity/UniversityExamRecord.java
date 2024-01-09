@@ -38,7 +38,7 @@ public class UniversityExamRecord {
     private ExamResultStatus examResultStatus;
 
     @NotNull
-    private Time timeTakeExam;
+    private int timeTakeExam;
 
     @NotNull
     private String examRecordSheetUrl;
