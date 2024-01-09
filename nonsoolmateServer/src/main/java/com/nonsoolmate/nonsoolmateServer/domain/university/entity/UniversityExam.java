@@ -36,8 +36,8 @@ public class UniversityExam {
     private String examAnswerUrl;
 
     @NotNull
-    private Year examYear;
+    private int examYear;
 
     @NotNull
-    private Time examTimeLimit;
+    private int examTimeLimit;
 }
