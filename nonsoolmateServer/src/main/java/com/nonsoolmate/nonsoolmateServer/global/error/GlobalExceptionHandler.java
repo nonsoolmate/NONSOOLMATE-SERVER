@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({Exception.class})
     protected ResponseEntity<ApiResponse> handleServerException(Exception ex) {
         log.error(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiResponse.error(CommonErrorType.INTERNAL_SERVER_ERROR));
     }
 
