@@ -14,6 +14,7 @@ public class CustomAuthUser implements UserDetails {
 
     private final Member member;
     private final Role authority;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -26,7 +27,7 @@ public class CustomAuthUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return member.getName();
     }
 
     @Override

@@ -7,13 +7,16 @@ import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberReposito
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.request.MemberRequestDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.vo.MemberSignUpVO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = true)
+@Service
 @RequiredArgsConstructor
 public abstract class AuthService {
     private final MemberRepository memberRepository;
 
+    @Transactional
     public abstract MemberSignUpVO saveMemberOrLogin(String platformType, MemberRequestDTO request);
 
     protected Member getMember(PlatformType platformType, String email) {

@@ -41,7 +41,8 @@ public class AuthController {
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity<ApiResponse<MemberReissueResponseDTO>> reissue(HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<ApiResponse<MemberReissueResponseDTO>> reissue(HttpServletRequest request,
+                                                                         HttpServletResponse response) {
         MemberReissueResponseDTO memberReissueResponseDTO = jwtService.reissueToken(request, response);
         return ResponseEntity.ok().body(ApiResponse.success(AuthSuccessType.REISSUE_SUCCESS, memberReissueResponseDTO));
     }
@@ -49,10 +50,10 @@ public class AuthController {
     @GetMapping("/authTest")
     public String authTest(HttpServletRequest request, HttpServletResponse response) {
 
-        try{
-            response.sendRedirect("https://nid.naver.com/oauth2.0/authorize?&client_id=l1su6a1jp2mTKIXQBqZD&redirect_uri=http://localhost:8080/login/oauth2/code/naver&response_type=code");
-        }
-        catch (Exception e){
+        try {
+            response.sendRedirect(
+                    "https://nid.naver.com/oauth2.0/authorize?&client_id=iuUGaSHmzPMxKmNlc0BD&redirect_uri=http://localhost:8080/login/oauth2/code/naver&response_type=code");
+        } catch (Exception e) {
             log.info("authTest = {}", e);
         }
 
