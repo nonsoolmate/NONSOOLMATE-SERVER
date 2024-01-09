@@ -39,3 +39,4 @@ out/
 ## setting file
 *.yml
 *.yaml
+!**/resoruces/**/data/
