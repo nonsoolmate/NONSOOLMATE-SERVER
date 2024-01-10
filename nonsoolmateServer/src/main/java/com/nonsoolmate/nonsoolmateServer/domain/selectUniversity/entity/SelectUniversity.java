@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +28,10 @@ public class SelectUniversity {
     @ManyToOne
     @JoinColumn(name = "university_id")
     private University university;
+
+    @Builder
+    public SelectUniversity(Member member, University university) {
+        this.member = member;
+        this.university = university;
+    }
 }
