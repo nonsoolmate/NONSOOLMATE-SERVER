@@ -26,6 +26,8 @@ public class SelectUniversityService {
     private final UniversityExamRepository universityExamRepository;
     private final UniversityExamRecordRepository universityExamRecordRepository;
     private final static String BEFORE_EXAM = "시험 응시 전";
+    private final static String LEFT_BRACKET = "(";
+    private final static String RIGHT_BRACKET = ")";
 
 
     public List<SelectUniversityResponseDTO> getSelectUniversities(Member member) {
@@ -41,7 +43,8 @@ public class SelectUniversityService {
                 }
             }
             selectUniversityResponseDTOS.add(SelectUniversityResponseDTO.of(university.getUniversityId(),
-                    university.getUniversityName() + university.getUniversityCollege(), status));
+                    university.getUniversityName() + LEFT_BRACKET + university.getUniversityCollege() + RIGHT_BRACKET,
+                    status));
 
         });
 
