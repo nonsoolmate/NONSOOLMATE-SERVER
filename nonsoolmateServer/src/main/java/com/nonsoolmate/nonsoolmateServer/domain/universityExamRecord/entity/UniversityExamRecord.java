@@ -41,8 +41,8 @@ public class UniversityExamRecord {
     private int timeTakeExam;
 
     @NotNull
-    private String examRecordSheetUrl;
+    private String examRecordSheetFileName;  // 내 답안
 
     @NotNull
-    private String examRecordResultUrl;
+    private String examRecordResultFileName;  // 첨삭
 }
