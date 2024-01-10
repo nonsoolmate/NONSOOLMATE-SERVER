@@ -1,5 +1,8 @@
 package com.nonsoolmate.nonsoolmateServer.domain.university.controller;
 
+import static com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamSuccessType.GET_UNIVERSITY_EXAM_IMAGE_AND_ANSWER_SUCCESS;
+
+import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.UniversityExamImageAndAnswerResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.UniversityExamImageResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.UniversityExamInfoResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamSuccessType;
@@ -36,5 +39,14 @@ public class UniversityExamController {
         Page<UniversityExamImageResponseDTO> images = universityExamService.getUniversityExamImages(id, pageRequest);
         return ResponseEntity.ok()
                 .body(ApiResponse.success(UniversityExamSuccessType.GET_UNIVERSITY_EXAM_IMAGE_SUCCESS, images));
+    }
+
+
+    @GetMapping("{id}/answer")
+    public ResponseEntity<ApiResponse<UniversityExamImageAndAnswerResponseDTO>> getUniversityExamImageAndAnswer(
+            @PathVariable("id") Long universityExamId
+    ) {
+        return ResponseEntity.ok().body(ApiResponse.success(GET_UNIVERSITY_EXAM_IMAGE_AND_ANSWER_SUCCESS,
+                universityExamService.getUniversityExamImageAndAnswer(universityExamId)));
     }
 }
