@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.SystemPropertyCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 @Configuration
 public class AWSConfig {
 
     private static final String AWS_ACCESS_KEY_ID = "aws.accessKeyId";
     private static final String AWS_SECRET_ACCESS_KEY = "aws.secretAccessKey";
+    private static final String AWS_REGION = "aws.region";
 
     private final String accessKey;
     private final String secretKey;
@@ -30,6 +32,7 @@ public class AWSConfig {
     public SystemPropertyCredentialsProvider systemPropertyCredentialsProvider() {
         System.setProperty(AWS_ACCESS_KEY_ID, accessKey);
         System.setProperty(AWS_SECRET_ACCESS_KEY, secretKey);
+        System.setProperty(AWS_REGION, regionString);
         return SystemPropertyCredentialsProvider.create();
     }
 
@@ -41,6 +44,14 @@ public class AWSConfig {
     @Bean
     public S3Client getS3Client() {
         return S3Client.builder()
+                .region(getRegion())
+                .credentialsProvider(systemPropertyCredentialsProvider())
+                .build();
+    }
+
+    @Bean
+    public S3Presigner getS3Presigner() {
+        return S3Presigner.builder()
                 .region(getRegion())
                 .credentialsProvider(systemPropertyCredentialsProvider())
                 .build();
