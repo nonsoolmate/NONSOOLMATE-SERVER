@@ -33,7 +33,7 @@ public class UniversityExam {
     private String examName;
 
     @NotNull
-    private String examAnswerUrl;
+    private String examAnswerFileName;
 
     @NotNull
     private int examYear;
