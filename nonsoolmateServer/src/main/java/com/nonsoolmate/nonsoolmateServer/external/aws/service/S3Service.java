@@ -20,8 +20,7 @@ public class S3Service {
     private String bucketName;
     private final AWSConfig awsConfig;
 
-    // 만료시간 1분
-    private static final Long PRE_SIGNED_URL_EXPIRE_MINUTE = 60L;
+    private static final Long PRE_SIGNED_URL_EXPIRE_MINUTE = 1L;
 
     public String createPresignedGetUrl(String path, String fileName) {
         final String key = path + fileName;
