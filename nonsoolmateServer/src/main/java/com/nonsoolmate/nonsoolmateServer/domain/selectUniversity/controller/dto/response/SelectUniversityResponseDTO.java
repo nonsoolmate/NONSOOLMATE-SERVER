@@ -2,9 +2,9 @@ package com.nonsoolmate.nonsoolmateServer.domain.selectUniversity.controller.dto
 
 
 public record SelectUniversityResponseDTO(
-    Long universityId, String universityName, boolean memberStatus
+    Long universityId, String universityName, String collegeName, boolean memberStatus
 ) {
-    static public SelectUniversityResponseDTO of(Long universityId, String universityName, boolean memberStatus) {
-        return new SelectUniversityResponseDTO(universityId, universityName, memberStatus);
+    static public SelectUniversityResponseDTO of(Long universityId, String universityName, String collegeName, boolean memberStatus) {
+        return new SelectUniversityResponseDTO(universityId, universityName, collegeName, memberStatus);
     }
 }
