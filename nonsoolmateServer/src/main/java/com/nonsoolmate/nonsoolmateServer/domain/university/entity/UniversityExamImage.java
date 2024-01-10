@@ -26,5 +26,5 @@ public class UniversityExamImage {
     private UniversityExam universityExam;
 
     @NotNull
-    private String universityExamImageUrl;
+    private String universityExamImageFileName;
 }
