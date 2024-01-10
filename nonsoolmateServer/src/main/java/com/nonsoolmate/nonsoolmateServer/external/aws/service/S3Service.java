@@ -62,31 +62,11 @@ public class S3Service {
         }catch (FileNotFoundException e){
             log.info("FileNotFoundException = {}", e);
         }catch (IOException e){
-            log.info("");
+            log.info("IOException = {}", e);
         }catch (InvalidKeySpecException e){
-
+            log.info("InvalidKeySpecException = {}", e);
         }
         return signedUrl;
-
-//
-//        try (S3Presigner presigner = S3Presigner.create()) {
-//
-//            GetObjectRequest objectRequest = GetObjectRequest.builder()
-//                    .bucket(bucketName)
-//                    .key(key)
-//                    .build();
-//
-//            GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
-//                    .signatureDuration(Duration.ofMinutes(PRE_SIGNED_URL_EXPIRE_MINUTE))  // The URL will expire in 10 minutes.
-//                    .getObjectRequest(objectRequest)
-//                    .build();
-//
-//            PresignedGetObjectRequest presignedRequest = presigner.presignGetObject(presignRequest);
-//            log.info("Presigned URL: [{}]", presignedRequest.url().toString());
-//            log.info("HTTP method: [{}]", presignedRequest.httpRequest().method());
-//
-//            return presignedRequest.url().toExternalForm();
-//        }
     }
 
 }
