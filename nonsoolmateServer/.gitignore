@@ -40,3 +40,4 @@ out/
 *.yml
 *.yaml
 *.sql
+*.pem
