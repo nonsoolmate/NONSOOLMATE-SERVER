@@ -9,7 +9,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.university.repository.University
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamRecordResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.entity.UniversityExamRecord;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.repository.UniversityExamRecordRepository;
-import com.nonsoolmate.nonsoolmateServer.external.aws.service.S3Service;
+import com.nonsoolmate.nonsoolmateServer.external.aws.service.CloudFrontService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,7 @@ public class UniversityExamRecordService {
 
     private final UniversityExamRecordRepository universityExamRecordRepository;
     private final UniversityExamRepository universityExamRepository;
-    private final S3Service s3Service;
+    private final CloudFrontService cloudFrontService;
 
     public UniversityExamRecordResponseDTO getUniversityExamRecord(Long universityExamId, Member member) {
 
@@ -35,9 +35,9 @@ public class UniversityExamRecordService {
         UniversityExamRecord universityExamRecord = universityExamRecordRepository.findByUniversityExamAndMemberOrElseThrowException(
                 universityExam, member);
 
-        String answerUrl = s3Service.createPresignedGetUrl(EXAM_ANSWER_FOLDER_NAME,
+        String answerUrl = cloudFrontService.createPreSignedGetUrl(EXAM_ANSWER_FOLDER_NAME,
                 universityExam.getExamAnswerFileName());
-        String resultUrl = s3Service.createPresignedGetUrl(EXAM_RESULT_FOLDER_NAME,
+        String resultUrl = cloudFrontService.createPreSignedGetUrl(EXAM_RESULT_FOLDER_NAME,
                 universityExamRecord.getExamRecordResultFileName());
 
         return UniversityExamRecordResponseDTO.of(answerUrl, resultUrl);

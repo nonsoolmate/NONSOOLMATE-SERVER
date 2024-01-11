@@ -19,12 +19,7 @@ import org.springframework.util.ResourceUtils;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class S3Service {
-
-    @Value("${aws-property.s3-bucket-name}")
-    private String bucketName;
-    private final AWSConfig awsConfig;
-
+public class CloudFrontService {
     @Value("${aws-property.distribution-domain}")
     private String distributionDomain;
 
@@ -34,21 +29,14 @@ public class S3Service {
     @Value("${aws-property.key-pair-id}")
     private String keyPairId;
 
-    private static final Long PRE_SIGNED_URL_EXPIRE_MINUTE = 1L;
-
-    public String createPresignedGetUrl(String path, String fileName) {
-        final String key = path + fileName;
-        String s3ObjectKey = key; // S3 객체 키
-
-        // 현재 시간에서 1시간 유효한 URL 생성
-        Duration duration = Duration.ofHours(1);
+    public String createPreSignedGetUrl(String path, String fileName) {
+        String s3ObjectKey = path + fileName; // S3 객체 키
+        Duration duration = Duration.ofMinutes(1);
         Date expirationTime = new Date(System.currentTimeMillis() + duration.toMillis());
-        File privateKeyFile = null;
-        String signedUrl = null;
         SignerUtils.Protocol protocol = SignerUtils.Protocol.https;
+        String signedUrl = null;
         try {
-            privateKeyFile = ResourceUtils.getFile(privateKeyFilePath);
-
+            File privateKeyFile = ResourceUtils.getFile(privateKeyFilePath);
             signedUrl = CloudFrontUrlSigner.getSignedURLWithCannedPolicy(
                     protocol,
                     distributionDomain,
@@ -57,16 +45,13 @@ public class S3Service {
                     keyPairId,
                     expirationTime
             );
-
-            System.out.println("Signed URL: " + signedUrl);
-        }catch (FileNotFoundException e){
-            log.info("FileNotFoundException = {}", e);
-        }catch (IOException e){
-            log.info("IOException = {}", e);
-        }catch (InvalidKeySpecException e){
-            log.info("InvalidKeySpecException = {}", e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return signedUrl;
     }
-
 }
