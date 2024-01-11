@@ -8,7 +8,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.university.entity.UniversityExam
 import com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamException;
 import com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamExceptionType;
 import com.nonsoolmate.nonsoolmateServer.domain.university.repository.UniversityExamImageRepository;
-import com.nonsoolmate.nonsoolmateServer.external.aws.service.S3Service;
+import com.nonsoolmate.nonsoolmateServer.external.aws.service.CloudFrontService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class UniversityExamService {
 
     private final UniversityExamRepository universityExamRepository;
     private final UniversityExamImageRepository universityExamImageRepository;
-    private final S3Service s3Service;
+    private final CloudFrontService cloudFrontService;
 
 
     public UniversityExamInfoResponseDTO getUniversityExam(Long universityExamId) {
@@ -55,7 +55,7 @@ public class UniversityExamService {
                 .orElseThrow(() -> new UniversityExamException(
                         UniversityExamExceptionType.NOT_FOUND_UNIVERSITY_EXAM));
 
-        String examAnswerUrl = s3Service.createPresignedGetUrl(EXAM_ANSWER_PATH,
+        String examAnswerUrl = cloudFrontService.createPreSignedGetUrl(EXAM_ANSWER_PATH,
                 universityExam.getExamAnswerFileName());
         List<UniversityExamImageResponseDTO> examImageUrls = new ArrayList<>();
 
@@ -63,7 +63,7 @@ public class UniversityExamService {
                 universityExam);
 
         UniversityExamImages.stream().forEach(universityExamImage -> {
-            String presignedGetUrl = s3Service.createPresignedGetUrl(EXAM_IMAGE_PATH,
+            String presignedGetUrl = cloudFrontService.createPreSignedGetUrl(EXAM_IMAGE_PATH,
                     universityExamImage.getUniversityExamImageFileName());
 
             examImageUrls.add(
