@@ -4,19 +4,23 @@ import static com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exce
 import static com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.UniversityExamRecordSuccessType.GET_UNIVERSITY_EXAM_RECORD_SUCCESS;
 
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
-import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamSheetPreSignedUrlResponseDTO;
-import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamRecordResponseDTO;
-import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamRecordResultResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.response.UniversityExamSheetPreSignedUrlResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.response.UniversityExamRecordResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.response.UniversityExamRecordResultResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.response.UniversityExamRecordIdResponse;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.UniversityExamRecordSuccessType;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.service.UniversityExamRecordService;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.service.UniversityExamRecordSheetService;
 import com.nonsoolmate.nonsoolmateServer.external.aws.service.vo.PreSignedUrlVO;
 import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
 import com.nonsoolmate.nonsoolmateServer.global.security.AuthUser;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,5 +53,17 @@ public class UniversityExamRecordController {
                 UniversityExamRecordSuccessType.GET_UNIVERSITY_EXAM_RECORD_SHEET_PRESIGNED_SUCCESS,
                 UniversityExamSheetPreSignedUrlResponseDTO.of(universityExamRecordSheetPreSignedUrlVO.getFileName(),
                         universityExamRecordSheetPreSignedUrlVO.getUrl())));
+    }
+
+    @PostMapping("/{id}/sheet")
+    public ResponseEntity<ApiResponse<UniversityExamRecordIdResponse>> createUniversityExamRecord(
+            @PathVariable("id") Long universityExamId,
+            @Valid @RequestBody CreateUniversityExamRequestDTO createUniversityExamRequestDTO,
+            @AuthUser Member member) {
+        return ResponseEntity.ok().body(ApiResponse.success(
+                UniversityExamRecordSuccessType.CREATE_UNIVERSITY_EXAM_RECORD_SUCCESS,
+                UniversityExamRecordIdResponse.of(
+                        universityExamRecordService.createUniversityExamRecord(universityExamId,
+                                createUniversityExamRequestDTO, member))));
     }
 }
