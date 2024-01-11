@@ -35,11 +35,8 @@ public class UniversityExamRecordService {
 
     public UniversityExamRecordResponseDTO getUniversityExamRecord(Long universityExamId, Member member) {
 
-        UniversityExam universityExam = universityExamRepository.findByUniversityExamId(universityExamId)
-                .orElseThrow(() -> new UniversityExamException(NOT_FOUND_UNIVERSITY_EXAM));
-
-        UniversityExamRecord universityExamRecord = universityExamRecordRepository.findByUniversityExamAndMemberOrElseThrowException(
-                universityExam, member);
+        UniversityExam universityExam = getUniversityExam(universityExamId);
+        UniversityExamRecord universityExamRecord = getUniversityExamByUniversityExamAndMember(universityExam, member);
 
         String answerUrl = cloudFrontService.createPreSignedGetUrl(EXAM_ANSWER_FOLDER_NAME,
                 universityExam.getExamAnswerFileName());
@@ -51,11 +48,8 @@ public class UniversityExamRecordService {
 
     public UniversityExamRecordResultResponseDTO getUniversityExamRecordResult(Long universityExamId, Member member) {
 
-        UniversityExam universityExam = universityExamRepository.findByUniversityExamId(universityExamId)
-                .orElseThrow(() -> new UniversityExamException(NOT_FOUND_UNIVERSITY_EXAM));
-
-        UniversityExamRecord universityExamRecord = universityExamRecordRepository.findByUniversityExamAndMemberOrElseThrowException(
-                universityExam, member);
+        UniversityExam universityExam = getUniversityExam(universityExamId);
+        UniversityExamRecord universityExamRecord = getUniversityExamByUniversityExamAndMember(universityExam, member);
 
         String resultUrl = cloudFrontService.createPreSignedGetUrl(EXAM_RESULT_FOLDER_NAME,
                 universityExamRecord.getExamRecordResultFileName());
@@ -96,5 +90,11 @@ public class UniversityExamRecordService {
     private UniversityExam getUniversityExam(Long universityExamId) {
         return universityExamRepository.findByUniversityExamId(universityExamId)
                 .orElseThrow(() -> new UniversityExamException(NOT_FOUND_UNIVERSITY_EXAM));
+    }
+
+    private UniversityExamRecord getUniversityExamByUniversityExamAndMember(UniversityExam universityExam,
+                                                                            Member member) {
+        return universityExamRecordRepository.findByUniversityExamAndMemberOrElseThrowException(
+                universityExam, member);
     }
 }
