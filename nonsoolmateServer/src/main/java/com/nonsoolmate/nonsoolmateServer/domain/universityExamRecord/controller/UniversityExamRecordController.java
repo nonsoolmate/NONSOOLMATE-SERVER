@@ -48,6 +48,6 @@ public class UniversityExamRecordController {
         return ResponseEntity.ok().body(ApiResponse.success(
                 UniversityExamRecordSuccessType.GET_UNIVERSITY_EXAM_RECORD_SHEET_PRESIGNED_SUCCESS,
                 UniversityExamResultPreSignedUrlResponseDTO.of(universityExamRecordSheetPreSignedUrlVO.getFileName(),
-                        universityExamRecordSheetPreSignedUrlVO.getFileName())));
+                        universityExamRecordSheetPreSignedUrlVO.getUrl())));
     }
 }
