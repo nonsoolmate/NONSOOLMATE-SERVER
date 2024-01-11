@@ -2,6 +2,8 @@ package com.nonsoolmate.nonsoolmateServer.external.aws.service;
 
 import com.amazonaws.services.cloudfront.CloudFrontUrlSigner;
 import com.amazonaws.services.cloudfront.util.SignerUtils;
+import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSException;
+import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSExceptionType;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -45,11 +47,11 @@ public class CloudFrontService {
                     expirationTime
             );
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new AWSException(AWSExceptionType.NOT_FOUND_CLOUD_PRIVATE_KEY_FAIL);
         } catch (InvalidKeySpecException e) {
-            throw new RuntimeException(e);
+            throw new AWSException(AWSExceptionType.INVALID_KEY_SPEC_FAIL);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new AWSException(AWSExceptionType.GET_PRESIGNED_URL_AWS_CLOUDFRONT_FAIL);
         }
         return signedUrl;
     }
