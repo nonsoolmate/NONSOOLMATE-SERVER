@@ -60,11 +60,9 @@ public class S3Service {
                     .bucket(bucketName)
                     .key(zipUrl)
                     .build();
-
             S3Client s3Client = awsConfig.getS3Client();
-
             URL url = s3Client.utilities().getUrl(request);
-            if (zipUrl.equals(url.toString())) {
+            if (zipUrl.equals(url.getPath().substring(1))) {
                 return fileName;
             }
             throw new AWSException(AWSExceptionType.NOT_FOUND_FILE_AWS_S3);
