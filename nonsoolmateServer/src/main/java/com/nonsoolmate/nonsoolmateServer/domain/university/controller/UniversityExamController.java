@@ -2,9 +2,9 @@ package com.nonsoolmate.nonsoolmateServer.domain.university.controller;
 
 import static com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamSuccessType.GET_UNIVERSITY_EXAM_IMAGE_AND_ANSWER_SUCCESS;
 
-import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.UniversityExamImageAndAnswerResponseDTO;
-import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.UniversityExamImageResponseDTO;
-import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.UniversityExamInfoResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response.UniversityExamImageAndAnswerResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response.UniversityExamImageResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response.UniversityExamInfoResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamSuccessType;
 import com.nonsoolmate.nonsoolmateServer.domain.university.service.UniversityExamService;
 import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
