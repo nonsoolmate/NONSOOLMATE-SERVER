@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import java.sql.Time;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -44,6 +45,15 @@ public class UniversityExamRecord {
     @NotNull
     private String examRecordSheetFileName;  // 내 답안
 
-    @NotNull
     private String examRecordResultFileName;  // 첨삭
+
+    @Builder
+    public UniversityExamRecord(UniversityExam universityExam, Member member, ExamResultStatus examResultStatus,
+                                int timeTakeExam, String examRecordSheetFileName) {
+        this.universityExam = universityExam;
+        this.member = member;
+        this.examResultStatus = examResultStatus;
+        this.timeTakeExam = timeTakeExam;
+        this.examRecordSheetFileName = examRecordSheetFileName;
+    }
 }
