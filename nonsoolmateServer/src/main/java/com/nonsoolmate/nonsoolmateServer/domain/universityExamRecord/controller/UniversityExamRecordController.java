@@ -8,6 +8,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.response.UniversityExamRecordResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.response.UniversityExamRecordResultResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.response.UniversityExamRecordIdResponse;
+import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.request.CreateUniversityExamRequestDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.UniversityExamRecordSuccessType;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.service.UniversityExamRecordService;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.service.UniversityExamRecordSheetService;
@@ -16,6 +17,7 @@ import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
 import com.nonsoolmate.nonsoolmateServer.global.security.AuthUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,15 +57,13 @@ public class UniversityExamRecordController {
                         universityExamRecordSheetPreSignedUrlVO.getUrl())));
     }
 
-    @PostMapping("/{id}/sheet")
+    @PostMapping("/sheet")
     public ResponseEntity<ApiResponse<UniversityExamRecordIdResponse>> createUniversityExamRecord(
-            @PathVariable("id") Long universityExamId,
             @Valid @RequestBody CreateUniversityExamRequestDTO createUniversityExamRequestDTO,
             @AuthUser Member member) {
-        return ResponseEntity.ok().body(ApiResponse.success(
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(
                 UniversityExamRecordSuccessType.CREATE_UNIVERSITY_EXAM_RECORD_SUCCESS,
-                UniversityExamRecordIdResponse.of(
-                        universityExamRecordService.createUniversityExamRecord(universityExamId,
-                                createUniversityExamRequestDTO, member))));
+                universityExamRecordService.createUniversityExamRecord(
+                        createUniversityExamRequestDTO, member)));
     }
 }
