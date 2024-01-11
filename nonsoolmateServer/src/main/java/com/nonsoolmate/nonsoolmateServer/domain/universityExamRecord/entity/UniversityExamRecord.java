@@ -6,6 +6,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.university.entity.UniversityExam
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,11 +26,11 @@ public class UniversityExamRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long universityExamRecordId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "university_exam_id")
     private UniversityExam universityExam;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
