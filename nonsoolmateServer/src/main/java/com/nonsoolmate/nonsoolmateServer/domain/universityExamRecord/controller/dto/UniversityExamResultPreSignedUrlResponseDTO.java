@@ -1,4 +1,4 @@
-package com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response;
+package com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto;
 
 public record UniversityExamResultPreSignedUrlResponseDTO(String resultFileName, String preSignedUrl) {
     static public UniversityExamResultPreSignedUrlResponseDTO of(String resultFileName, String preSignedUrl) {
