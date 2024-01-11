@@ -1,6 +1,7 @@
 package com.nonsoolmate.nonsoolmateServer.domain.university.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,7 +22,7 @@ public class UniversityExamImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long universityExamImageId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "university_exam_id")
     private UniversityExam universityExam;
 
