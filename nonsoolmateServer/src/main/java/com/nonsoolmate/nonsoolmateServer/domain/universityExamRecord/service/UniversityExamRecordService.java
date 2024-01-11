@@ -8,8 +8,8 @@ import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
 import com.nonsoolmate.nonsoolmateServer.domain.university.entity.UniversityExam;
 import com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamException;
 import com.nonsoolmate.nonsoolmateServer.domain.university.repository.UniversityExamRepository;
-import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamRecordResponseDTO;
-import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamRecordResultResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.response.UniversityExamRecordResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.response.UniversityExamRecordResultResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.entity.UniversityExamRecord;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.repository.UniversityExamRecordRepository;
 import com.nonsoolmate.nonsoolmateServer.external.aws.service.CloudFrontService;
@@ -55,4 +55,5 @@ public class UniversityExamRecordService {
         return UniversityExamRecordResultResponseDTO.of(resultUrl);
     }
 
+    public UniversityExamIdResponseDTO createUniversityExamRecord()
 }

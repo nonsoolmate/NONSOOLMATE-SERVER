@@ -1,4 +1,4 @@
-package com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto;
+package com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.response;
 
 public record UniversityExamRecordResultResponseDTO(
         String examResultUrl
