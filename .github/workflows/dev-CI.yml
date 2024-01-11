@@ -20,10 +20,12 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: application.yaml 생성
+    - name: resources 폴더 내 파일 생성
       run: | 
         mkdir -p src/main/resources
         echo "${{ secrets.DEV_APPLICATION }}" > src/main/resources/application.yaml
+        mkdir -p src/main/resources/key
+                echo "${{ secrets.CLOUDFRONT_PRIVATE_KEY }}" > src/main/resources/key/cloudfront-private-key.pem
       working-directory: ${{ env.working-directory }}
 
     - name: build
