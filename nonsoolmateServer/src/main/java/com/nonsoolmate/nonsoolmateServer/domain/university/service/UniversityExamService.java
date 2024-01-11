@@ -1,8 +1,11 @@
 package com.nonsoolmate.nonsoolmateServer.domain.university.service;
 
-import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.UniversityExamImageAndAnswerResponseDTO;
-import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.UniversityExamImageResponseDTO;
-import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.UniversityExamInfoResponseDTO;
+import static com.nonsoolmate.nonsoolmateServer.external.aws.FolderName.EXAM_ANSWER_FOLDER_NAME;
+import static com.nonsoolmate.nonsoolmateServer.external.aws.FolderName.EXAM_RESULT_FOLDER_NAME;
+
+import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response.UniversityExamImageAndAnswerResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response.UniversityExamImageResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response.UniversityExamInfoResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.university.entity.UniversityExam;
 import com.nonsoolmate.nonsoolmateServer.domain.university.entity.UniversityExamImage;
 import com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamException;
@@ -22,10 +25,6 @@ import com.nonsoolmate.nonsoolmateServer.domain.university.repository.University
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UniversityExamService {
-    private static final String EXAM_ANSWER_PATH = "exam-answer/";
-    private static final String EXAM_IMAGE_PATH = "exam-image/";
-
-
     private final UniversityExamRepository universityExamRepository;
     private final UniversityExamImageRepository universityExamImageRepository;
     private final CloudFrontService cloudFrontService;
@@ -55,7 +54,7 @@ public class UniversityExamService {
                 .orElseThrow(() -> new UniversityExamException(
                         UniversityExamExceptionType.NOT_FOUND_UNIVERSITY_EXAM));
 
-        String examAnswerUrl = cloudFrontService.createPreSignedGetUrl(EXAM_ANSWER_PATH,
+        String examAnswerUrl = cloudFrontService.createPreSignedGetUrl(EXAM_ANSWER_FOLDER_NAME,
                 universityExam.getExamAnswerFileName());
         List<UniversityExamImageResponseDTO> examImageUrls = new ArrayList<>();
 
@@ -63,7 +62,7 @@ public class UniversityExamService {
                 universityExam);
 
         UniversityExamImages.stream().forEach(universityExamImage -> {
-            String presignedGetUrl = cloudFrontService.createPreSignedGetUrl(EXAM_IMAGE_PATH,
+            String presignedGetUrl = cloudFrontService.createPreSignedGetUrl(EXAM_RESULT_FOLDER_NAME,
                     universityExamImage.getUniversityExamImageFileName());
 
             examImageUrls.add(
