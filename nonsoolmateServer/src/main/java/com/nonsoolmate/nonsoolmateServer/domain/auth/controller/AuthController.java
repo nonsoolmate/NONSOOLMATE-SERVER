@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthServiceProvider authServiceProvider;
     private final JwtService jwtService;
+
+    @Value("${spring.security.oauth2.client.naver.client-id}")
+    private String clientId;
+    @Value("${spring.security.oauth2.client.naver.redirect-uri}")
+    private String redirectUri;
 
     @PostMapping("/social/login")
     public ResponseEntity<ApiResponse<MemberAuthResponseDTO>> login(
@@ -49,10 +55,11 @@ public class AuthController {
 
     @GetMapping("/authTest")
     public String authTest(HttpServletRequest request, HttpServletResponse response) {
-
+        String redirectURL = "https://nid.naver.com/oauth2.0/authorize?client_id=" + clientId
+                + "&redirect_uri=" + redirectUri + "&response_type=code";
         try {
             response.sendRedirect(
-                    "https://nid.naver.com/oauth2.0/authorize?&client_id=iuUGaSHmzPMxKmNlc0BD&redirect_uri=http://localhost:8080/login/oauth2/code/naver&response_type=code");
+                    redirectURL);
         } catch (Exception e) {
             log.info("authTest = {}", e);
         }
