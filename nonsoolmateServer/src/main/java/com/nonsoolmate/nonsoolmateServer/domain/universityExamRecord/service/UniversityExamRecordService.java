@@ -1,6 +1,8 @@
 package com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.service;
 
 import static com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamExceptionType.NOT_FOUND_UNIVERSITY_EXAM;
+import static com.nonsoolmate.nonsoolmateServer.external.aws.FolderName.EXAM_ANSWER_FOLDER_NAME;
+import static com.nonsoolmate.nonsoolmateServer.external.aws.FolderName.EXAM_RESULT_FOLDER_NAME;
 
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
 import com.nonsoolmate.nonsoolmateServer.domain.university.entity.UniversityExam;
@@ -18,11 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UniversityExamRecordService {
-
-    private static final String EXAM_ANSWER_FOLDER_NAME = "exam-answer/";
-    private static final String EXAM_RESULT_FOLDER_NAME = "exam-result/";
-
-
     private final UniversityExamRecordRepository universityExamRecordRepository;
     private final UniversityExamRepository universityExamRepository;
     private final CloudFrontService cloudFrontService;
