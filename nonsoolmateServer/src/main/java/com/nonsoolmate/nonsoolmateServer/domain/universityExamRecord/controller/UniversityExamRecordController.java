@@ -4,7 +4,7 @@ import static com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exce
 import static com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.UniversityExamRecordSuccessType.GET_UNIVERSITY_EXAM_RECORD_SUCCESS;
 
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
-import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamResultPreSignedUrlResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamSheetPreSignedUrlResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamRecordResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamRecordResultResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.UniversityExamRecordSuccessType;
@@ -43,11 +43,11 @@ public class UniversityExamRecordController {
     }
 
     @GetMapping("/sheet/presigned")
-    public ResponseEntity<ApiResponse<UniversityExamResultPreSignedUrlResponseDTO>> getUniversityExamSheetPreSignedUrl() {
+    public ResponseEntity<ApiResponse<UniversityExamSheetPreSignedUrlResponseDTO>> getUniversityExamSheetPreSignedUrl() {
         PreSignedUrlVO universityExamRecordSheetPreSignedUrlVO = universityExamRecordSheetService.getUniversityExamRecordSheetPreSignedUrl();
         return ResponseEntity.ok().body(ApiResponse.success(
                 UniversityExamRecordSuccessType.GET_UNIVERSITY_EXAM_RECORD_SHEET_PRESIGNED_SUCCESS,
-                UniversityExamResultPreSignedUrlResponseDTO.of(universityExamRecordSheetPreSignedUrlVO.getFileName(),
+                UniversityExamSheetPreSignedUrlResponseDTO.of(universityExamRecordSheetPreSignedUrlVO.getFileName(),
                         universityExamRecordSheetPreSignedUrlVO.getUrl())));
     }
 }
