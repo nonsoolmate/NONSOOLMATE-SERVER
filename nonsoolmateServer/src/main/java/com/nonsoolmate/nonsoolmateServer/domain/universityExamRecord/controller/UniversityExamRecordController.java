@@ -4,9 +4,13 @@ import static com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exce
 import static com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.UniversityExamRecordSuccessType.GET_UNIVERSITY_EXAM_RECORD_SUCCESS;
 
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
+import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamResultPreSignedUrlResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamRecordResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.UniversityExamRecordResultResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.UniversityExamRecordSuccessType;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.service.UniversityExamRecordService;
+import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.service.UniversityExamRecordSheetService;
+import com.nonsoolmate.nonsoolmateServer.external.aws.service.vo.PreSignedUrlVO;
 import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
 import com.nonsoolmate.nonsoolmateServer.global.security.AuthUser;
 import lombok.RequiredArgsConstructor;
@@ -22,22 +26,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class UniversityExamRecordController {
 
     private final UniversityExamRecordService universityExamRecordService;
+    private final UniversityExamRecordSheetService universityExamRecordSheetService;
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UniversityExamRecordResponseDTO>> getUniversityExamRecord(
-            @PathVariable("id") Long universityExamId,
-            @AuthUser Member member
-    ) {
+            @PathVariable("id") Long universityExamId, @AuthUser Member member) {
         return ResponseEntity.ok().body(ApiResponse.success(GET_UNIVERSITY_EXAM_RECORD_SUCCESS,
                 universityExamRecordService.getUniversityExamRecord(universityExamId, member)));
     }
 
     @GetMapping("/result/{id}")
     public ResponseEntity<ApiResponse<UniversityExamRecordResultResponseDTO>> getUniversityExamRecordResult(
-            @PathVariable("id") Long universityExamId,
-            @AuthUser Member member
-    ){
+            @PathVariable("id") Long universityExamId, @AuthUser Member member) {
         return ResponseEntity.ok().body(ApiResponse.success(GET_UNIVERSITY_EXAM_RECORD_RESULT_SUCCESS,
                 universityExamRecordService.getUniversityExamRecordResult(universityExamId, member)));
+    }
+
+    @GetMapping("/sheet/presigned")
+    public ResponseEntity<ApiResponse<UniversityExamResultPreSignedUrlResponseDTO>> getUniversityExamSheetPreSignedUrl() {
+        PreSignedUrlVO universityExamRecordSheetPreSignedUrlVO = universityExamRecordSheetService.getUniversityExamRecordSheetPreSignedUrl();
+        return ResponseEntity.ok().body(ApiResponse.success(
+                UniversityExamRecordSuccessType.GET_UNIVERSITY_EXAM_RECORD_SHEET_PRESIGNED_SUCCESS,
+                UniversityExamResultPreSignedUrlResponseDTO.of(universityExamRecordSheetPreSignedUrlVO.getFileName(),
+                        universityExamRecordSheetPreSignedUrlVO.getFileName())));
     }
 }
