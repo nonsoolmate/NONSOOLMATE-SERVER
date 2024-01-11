@@ -17,11 +17,11 @@ import org.springframework.stereotype.Service;
 @Transactional(readOnly = true)
 public class NaverAuthService extends AuthService {
 
-    @Value("${naver.client-id}")
+    @Value("${spring.security.oauth2.client.naver.client-id}")
     private String clientId;
-    @Value("${naver.client-secret}")
+    @Value("${spring.security.oauth2.client.naver.client-secret}")
     private String clientSecret;
-    @Value("${naver.state}")
+    @Value("${spring.security.oauth2.client.naver.state}")
     private String state;
 
     public NaverAuthService(MemberRepository memberRepository) {
