@@ -2,7 +2,6 @@ package com.nonsoolmate.nonsoolmateServer.external.aws.service;
 
 import com.amazonaws.services.cloudfront.CloudFrontUrlSigner;
 import com.amazonaws.services.cloudfront.util.SignerUtils;
-import com.nonsoolmate.nonsoolmateServer.external.aws.config.AWSConfig;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
