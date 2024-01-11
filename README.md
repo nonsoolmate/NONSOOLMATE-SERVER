@@ -59,7 +59,8 @@
 <br><br>
 
 ## 🛠️ Architecture Structure
-![nonsoolmate Server Architecture](https://github.com/nonsoolmate/NONSOOLMATE-SERVER/assets/81363864/5f1dd158-2f6f-485e-8ec8-ea39241418e2)
+![image](https://github.com/nonsoolmate/NONSOOLMATE-SERVER/assets/100754581/ec2e9c0d-e3f9-4feb-81f6-c1cb842beb8b)
+
 
 
 <br><br>
@@ -103,6 +104,7 @@
 │   │  └─ 📂 service
 │   ├─ 📂 redis
 │   │  ├─ 📂 config
+│   │  ├─ 📂 repository
 │   │  └─ 📂 service
 │   └─ 📂 swagger
 │      └─ 📂 config     
@@ -111,15 +113,20 @@
     ├─ 📂 response
     ├─ 📂 error 
     ├─ 📂 jwt
-    │ └─ 📂 service
+    │  ├─ 📂 utils
+    │  └─ 📂 service
     ├─ 📂 security
     │  ├─ 📂 handler
+    │  ├─ 📂 service
     │  ├─ 📂 filter
     │  └─ 📂 config
     └─ 📂 util
        └─ 📂 mapper
 ~~~
 <br><br>
+
+## 📚 ERD
+<img width="989" alt="스크린샷 2024-01-11 오후 10 03 04" src="https://github.com/nonsoolmate/NONSOOLMATE-SERVER/assets/100754581/37a67038-30c9-4198-935e-4618872553b6">
 
 ## 🔐 Nonsoolmate Server's Rule
 
@@ -180,7 +187,7 @@ main
 - 아래 3가지는 기억해주세요
  - else 지양하기
  - 우테코 코드 컨벤션 적용하기
- - `**cmd + option + L`**
+ - `cmd + option + L`
 
 ### 3.1 우테코 코드 컨벤션
 
@@ -189,8 +196,8 @@ main
     
 
 ### 3.2 메소드명
-- ***CRUD Create Read Update Delete로 시작하기!***
-    - 예시: readUser createUser readBoard updateUser
+- ***CRUD Create get(Read) Update Delete로 시작하기!***
+    - 예시: getUser(readUser) createUser readBoard updateUser
 - **컨트롤러 & 서비스 메서드명 최대한 비슷하게 네이밍**
 
 ### 3.3 DTO명
