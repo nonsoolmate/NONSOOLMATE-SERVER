@@ -1,4 +1,4 @@
-package com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto;
+package com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response;
 
 import java.util.List;
 
