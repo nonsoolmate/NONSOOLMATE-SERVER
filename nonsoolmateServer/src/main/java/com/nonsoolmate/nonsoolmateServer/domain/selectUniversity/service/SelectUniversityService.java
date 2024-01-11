@@ -32,16 +32,16 @@ public class SelectUniversityService {
 
 
     public List<SelectUniversityResponseDTO> getSelectUniversities(Member member) {
-        List<SelectUniversity> selectUniversities = selectUniversityRepository.findAllByMember(member);
+        List<SelectUniversity> selectUniversities = selectUniversityRepository.findAllByMemberOrderByUniversityNameASCUniversityCollegeAsc(member);
         List<SelectUniversityResponseDTO> selectUniversityResponseDTOS = new ArrayList<>();
 
-        universityRepository.findAll().stream().forEach(university -> {
-            boolean status = false;
+        selectUniversities.stream().forEach(selectUniversity -> {
+            boolean status = true;
 
-            for (SelectUniversity selectUniversity : selectUniversities) {
-                if (university.getUniversityId() == selectUniversity.getUniversity().getUniversityId()) {
-                    status = true;
-                }
+            University university = universityRepository.findByUniversityId(
+                    selectUniversity.getUniversity().getUniversityId()).orElse(null);
+            if(university == null){
+                status = false;
             }
             selectUniversityResponseDTOS.add(SelectUniversityResponseDTO.of(university.getUniversityId(),
                     university.getUniversityName(),university.getUniversityCollege(),
@@ -54,7 +54,7 @@ public class SelectUniversityService {
 
     public List<SelectUniversityExamsResponseDTO> getSelectUniversityExams(Member member) {
         List<SelectUniversityExamsResponseDTO> selectUniversityExamsResponseDTOS = new ArrayList<>();
-        List<SelectUniversity> selectUniversities = selectUniversityRepository.findAllByMember(member);
+        List<SelectUniversity> selectUniversities = selectUniversityRepository.findAllByMemberOrderByUniversityNameASCUniversityCollegeAsc(member);
 
         for (SelectUniversity selectUniversity : selectUniversities) {
             selectUniversityExamsResponseDTOS.add(getSelectUniversityExamsResponseDTO(selectUniversity, member));
