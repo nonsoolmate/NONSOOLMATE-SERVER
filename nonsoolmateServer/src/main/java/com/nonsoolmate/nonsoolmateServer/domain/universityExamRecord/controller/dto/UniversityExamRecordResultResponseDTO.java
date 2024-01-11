@@ -1,9 +1,9 @@
 package com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto;
 
-public record UniversityExamRecordSheetResponseDTO(
+public record UniversityExamRecordResultResponseDTO(
         String examResultUrl
 ) {
-    public static UniversityExamRecordSheetResponseDTO of(String examResultUrl) {
-        return new UniversityExamRecordSheetResponseDTO(examResultUrl);
+    public static UniversityExamRecordResultResponseDTO of(String examResultUrl) {
+        return new UniversityExamRecordResultResponseDTO(examResultUrl);
     }
 }
