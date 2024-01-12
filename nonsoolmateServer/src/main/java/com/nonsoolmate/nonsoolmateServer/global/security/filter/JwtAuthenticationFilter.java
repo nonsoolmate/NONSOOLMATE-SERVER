@@ -37,6 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         if (!RequestUtils.isContainsAccessToken(request)) {
+            filterChain.doFilter(request, response);
             return;
         }
 
@@ -48,7 +49,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             Long memberId = jwtService.extractMemberIdFromAccessToken(authorizationAccessToken);
-
             UserDetails userDetails = memberAuthService.loadUserByUsername(String.valueOf(memberId));
 
             Authentication authentication
