@@ -39,9 +39,9 @@ public class UniversityExamRecordService {
         UniversityExamRecord universityExamRecord = getUniversityExamByUniversityExamAndMember(universityExam, member);
 
         String answerUrl = cloudFrontService.createPreSignedGetUrl(EXAM_ANSWER_FOLDER_NAME,
-                universityExam.getExamAnswerFileName());
+                universityExam.getExamAnswerFileName(), universityExam.getExamTimeLimit());
         String resultUrl = cloudFrontService.createPreSignedGetUrl(EXAM_RESULT_FOLDER_NAME,
-                universityExamRecord.getExamRecordResultFileName());
+                universityExamRecord.getExamRecordResultFileName(), universityExam.getExamTimeLimit());
 
         return UniversityExamRecordResponseDTO.of(answerUrl, resultUrl);
     }
@@ -52,7 +52,7 @@ public class UniversityExamRecordService {
         UniversityExamRecord universityExamRecord = getUniversityExamByUniversityExamAndMember(universityExam, member);
 
         String resultUrl = cloudFrontService.createPreSignedGetUrl(EXAM_RESULT_FOLDER_NAME,
-                universityExamRecord.getExamRecordResultFileName());
+                universityExamRecord.getExamRecordResultFileName(), universityExam.getExamTimeLimit());
 
         return UniversityExamRecordResultResponseDTO.of(resultUrl);
     }
@@ -61,8 +61,8 @@ public class UniversityExamRecordService {
     public UniversityExamRecordIdResponse createUniversityExamRecord(
             CreateUniversityExamRequestDTO request, Member member) {
         UniversityExam universityExam = getUniversityExam(request.universityExamId());
+        String fileName = s3Service.validateURL(EXAM_SHEET_FOLDER_NAME, request.memberSheetFileName());
         try {
-            String fileName = s3Service.validateURL(EXAM_SHEET_FOLDER_NAME, request.memberSheetFileName());
             UniversityExamRecord universityexamRecord = createUniversityExamRecord(universityExam, member,
                     request.memberTakeTimeExam(),
                     fileName);
