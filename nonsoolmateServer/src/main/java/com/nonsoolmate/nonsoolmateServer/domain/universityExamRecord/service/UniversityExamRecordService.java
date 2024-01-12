@@ -6,6 +6,8 @@ import static com.nonsoolmate.nonsoolmateServer.external.aws.FolderName.EXAM_RES
 import static com.nonsoolmate.nonsoolmateServer.external.aws.FolderName.EXAM_SHEET_FOLDER_NAME;
 
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
+import com.nonsoolmate.nonsoolmateServer.domain.member.exception.MemberException;
+import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
 import com.nonsoolmate.nonsoolmateServer.domain.university.entity.UniversityExam;
 import com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamException;
 import com.nonsoolmate.nonsoolmateServer.domain.university.repository.UniversityExamRepository;
@@ -18,6 +20,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.entity.enum
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.UniversityExamRecordException;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.UniversityExamRecordExceptionType;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.repository.UniversityExamRecordRepository;
+import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSException;
 import com.nonsoolmate.nonsoolmateServer.external.aws.service.CloudFrontService;
 import com.nonsoolmate.nonsoolmateServer.external.aws.service.S3Service;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +35,7 @@ public class UniversityExamRecordService {
     private final UniversityExamRepository universityExamRepository;
     private final CloudFrontService cloudFrontService;
     private final S3Service s3Service;
+    private final MemberRepository memberRepository;
 
     public UniversityExamRecordResponseDTO getUniversityExamRecord(Long universityExamId, Member member) {
 
@@ -61,18 +65,30 @@ public class UniversityExamRecordService {
     public UniversityExamRecordIdResponse createUniversityExamRecord(
             CreateUniversityExamRequestDTO request, Member member) {
         UniversityExam universityExam = getUniversityExam(request.universityExamId());
-        String fileName = s3Service.validateURL(EXAM_SHEET_FOLDER_NAME, request.memberSheetFileName());
         try {
+            String fileName = s3Service.validateURL(EXAM_SHEET_FOLDER_NAME, request.memberSheetFileName());
             UniversityExamRecord universityexamRecord = createUniversityExamRecord(universityExam, member,
                     request.memberTakeTimeExam(),
                     fileName);
             UniversityExamRecord saveUniversityUniversityExamRecord = universityExamRecordRepository.save(
                     universityexamRecord);
+            decreaseMemberTicketCount(member);
             return UniversityExamRecordIdResponse.of(saveUniversityUniversityExamRecord.getUniversityExamRecordId());
+        } catch (AWSException | MemberException e) {
+            throw e;
         } catch (RuntimeException e) {
             s3Service.deleteFile(EXAM_SHEET_FOLDER_NAME, request.memberSheetFileName());
             throw new UniversityExamRecordException(
                     UniversityExamRecordExceptionType.CREATE_UNIVERSITY_EXAM_RECORD_FAIL);
+        }
+    }
+
+    private void decreaseMemberTicketCount(Member member) {
+        try {
+            member.decreaseTicket();
+            memberRepository.save(member);
+        } catch (MemberException e) {
+            throw e;
         }
     }
 
