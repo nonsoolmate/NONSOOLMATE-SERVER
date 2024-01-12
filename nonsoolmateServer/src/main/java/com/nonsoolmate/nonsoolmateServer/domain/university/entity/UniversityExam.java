@@ -8,8 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
-import java.sql.Time;
-import java.time.Year;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,14 +28,14 @@ public class UniversityExam {
     private University university;
 
     @NotNull
-    private String examName;
+    private String universityExamName;
 
     @NotNull
-    private String examAnswerFileName;
+    private String universityExamAnswerFileName;
 
     @NotNull
-    private int examYear;
+    private int universityExamYear;
 
     @NotNull
-    private int examTimeLimit;
+    private int universityExamTimeLimit;
 }

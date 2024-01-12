@@ -32,7 +32,8 @@ public class SelectUniversityService {
 
 
     public List<SelectUniversityResponseDTO> getSelectUniversities(Member member) {
-        List<SelectUniversity> selectUniversities = selectUniversityRepository.findAllByMemberOrderByUniversityNameASCUniversityCollegeAsc(member);
+        List<SelectUniversity> selectUniversities = selectUniversityRepository.findAllByMemberOrderByUniversityNameASCUniversityCollegeAsc(
+                member);
         List<SelectUniversityResponseDTO> selectUniversityResponseDTOS = new ArrayList<>();
 
         selectUniversities.stream().forEach(selectUniversity -> {
@@ -40,11 +41,11 @@ public class SelectUniversityService {
 
             University university = universityRepository.findByUniversityId(
                     selectUniversity.getUniversity().getUniversityId()).orElse(null);
-            if(university == null){
+            if (university == null) {
                 status = false;
             }
             selectUniversityResponseDTOS.add(SelectUniversityResponseDTO.of(university.getUniversityId(),
-                    university.getUniversityName(),university.getUniversityCollege(),
+                    university.getUniversityName(), university.getUniversityCollege(),
                     status));
 
         });
@@ -54,7 +55,8 @@ public class SelectUniversityService {
 
     public List<SelectUniversityExamsResponseDTO> getSelectUniversityExams(Member member) {
         List<SelectUniversityExamsResponseDTO> selectUniversityExamsResponseDTOS = new ArrayList<>();
-        List<SelectUniversity> selectUniversities = selectUniversityRepository.findAllByMemberOrderByUniversityNameASCUniversityCollegeAsc(member);
+        List<SelectUniversity> selectUniversities = selectUniversityRepository.findAllByMemberOrderByUniversityNameASCUniversityCollegeAsc(
+                member);
 
         for (SelectUniversity selectUniversity : selectUniversities) {
             selectUniversityExamsResponseDTOS.add(getSelectUniversityExamsResponseDTO(selectUniversity, member));
@@ -88,7 +90,8 @@ public class SelectUniversityService {
                     universityExamRecord == null ? BEFORE_EXAM : universityExamRecord.getExamResultStatus().getStatus();
             selectUniversityExamResponseDTOS.add(
                     SelectUniversityExamResponseDTO.of(universityExam.getUniversityExamId(),
-                            universityExam.getExamName(), universityExam.getExamTimeLimit(), status));
+                            universityExam.getUniversityExamName(), universityExam.getUniversityExamTimeLimit(),
+                            status));
         }
         return selectUniversityExamResponseDTOS;
     }
@@ -105,14 +108,17 @@ public class SelectUniversityService {
         Map<Long, University> universityMap = new HashMap<>();
 
         curUniversityIds.stream().forEach(curUniversityId -> {
-            universityMap.put(curUniversityId, universityRepository.findByUniversityIdOrElseThrowException(curUniversityId));
+            universityMap.put(curUniversityId,
+                    universityRepository.findByUniversityIdOrElseThrowException(curUniversityId));
 
             boolean isPresent = false;
-            for(Long prevUniversityId : prevUniversityIds){
-                if(prevUniversityId == curUniversityId) isPresent = true;
+            for (Long prevUniversityId : prevUniversityIds) {
+                if (prevUniversityId == curUniversityId) {
+                    isPresent = true;
+                }
             }
 
-            if(!isPresent){
+            if (!isPresent) {
                 selectUniversityRepository.save(SelectUniversity
                         .builder()
                         .member(member)
@@ -121,15 +127,18 @@ public class SelectUniversityService {
             }
         });
 
-        prevUniversityIds.stream().forEach(prevUniversityId ->{
-            universityMap.put(prevUniversityId, universityRepository.findByUniversityIdOrElseThrowException(prevUniversityId));
+        prevUniversityIds.stream().forEach(prevUniversityId -> {
+            universityMap.put(prevUniversityId,
+                    universityRepository.findByUniversityIdOrElseThrowException(prevUniversityId));
 
             boolean isPresent = false;
-            for(Long curUniversityId : curUniversityIds){
-                if(prevUniversityId == curUniversityId) isPresent = true;
+            for (Long curUniversityId : curUniversityIds) {
+                if (prevUniversityId == curUniversityId) {
+                    isPresent = true;
+                }
             }
 
-            if(!isPresent){
+            if (!isPresent) {
                 selectUniversityRepository.deleteByMemberAndUniversity(member, universityMap.get(prevUniversityId));
             }
         });
