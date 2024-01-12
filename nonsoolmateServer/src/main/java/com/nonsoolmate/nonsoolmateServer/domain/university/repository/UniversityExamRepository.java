@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UniversityExamRepository extends JpaRepository<UniversityExam, Long> {
     Optional<UniversityExam> findByUniversityExamId(Long universityId);
 
-    List<UniversityExam> findAllByUniversityOrderByUniversityExamYearDescUniversityExamNameAsc(University university);
+    List<UniversityExam> findAllByUniversity(University university);
 }
