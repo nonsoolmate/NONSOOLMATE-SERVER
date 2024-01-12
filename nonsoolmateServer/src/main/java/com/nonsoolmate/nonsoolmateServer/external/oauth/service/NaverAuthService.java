@@ -25,6 +25,12 @@ public class NaverAuthService extends AuthService {
     private String clientSecret;
     @Value("${spring.security.oauth2.client.naver.state}")
     private String state;
+    @Value("${spring.security.oauth2.client.naver.user-info-uri}")
+    private String userInfoUri;
+    @Value("${spring.security.oauth2.client.naver.token-uri.host}")
+    private String tokenUriHost;
+    @Value("${spring.security.oauth2.client.naver.token-uri.path}")
+    private String tokenUriPath;
 
     public NaverAuthService(MemberRepository memberRepository) {
         super(memberRepository);
@@ -52,7 +58,7 @@ public class NaverAuthService extends AuthService {
         WebClient webClient = WebClient.builder().build();
         try {
             return webClient.post()
-                    .uri("https://openapi.naver.com/v1/nid/me")
+                    .uri(userInfoUri)
                     .header("Authorization", "Bearer " + accessToken)
                     .retrieve()
                     .bodyToMono(NaverMemberVO.class)
@@ -68,8 +74,8 @@ public class NaverAuthService extends AuthService {
                 .uri(uriBuilder ->
                         uriBuilder
                                 .scheme("https")  // 스킴을 명시적으로 지정
-                                .host("nid.naver.com")  // 호스트를 명시적으로 지정
-                                .path("/oauth2.0/token")
+                                .host(tokenUriHost)  // 호스트를 명시적으로 지정
+                                .path(tokenUriPath)
                                 .queryParam("grant_type", "authorization_code")
                                 .queryParam("client_id", clientId)
                                 .queryParam("client_secret", clientSecret)
