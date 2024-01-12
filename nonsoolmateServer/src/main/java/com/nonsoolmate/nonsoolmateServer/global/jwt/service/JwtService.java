@@ -3,6 +3,7 @@ package com.nonsoolmate.nonsoolmateServer.global.jwt.service;
 
 import static com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType.INVALID_ACCESS_TOKEN;
 import static com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType.INVALID_REFRESH_TOKEN;
+import static com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType.UNAUTHORIZED_ACCESS_TOKEN;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.response.MemberAuthResponseDTO;
@@ -15,6 +16,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberReposito
 import com.nonsoolmate.nonsoolmateServer.external.redis.repository.RedisTokenRepository;
 import com.nonsoolmate.nonsoolmateServer.global.jwt.service.vo.RefreshTokenVO;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -108,6 +110,8 @@ public class JwtService {
             return !tokenClaims.getExpiration().before(new Date());
         } catch (MalformedJwtException e) {
             throw new AuthException(INVALID_ACCESS_TOKEN);
+        } catch (ExpiredJwtException e){
+            throw new AuthException(UNAUTHORIZED_ACCESS_TOKEN);
         }
     }
 
