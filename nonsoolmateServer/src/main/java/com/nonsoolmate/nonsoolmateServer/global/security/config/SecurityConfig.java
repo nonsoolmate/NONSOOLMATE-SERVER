@@ -1,6 +1,7 @@
 package com.nonsoolmate.nonsoolmateServer.global.security.config;
 
 import com.nonsoolmate.nonsoolmateServer.global.security.filter.JwtAuthenticationFilter;
+import com.nonsoolmate.nonsoolmateServer.global.security.filter.JwtExceptionFilter;
 import io.swagger.v3.oas.models.PathItem.HttpMethod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -38,6 +39,7 @@ public class SecurityConfig {
     };
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtExceptionFilter jwtExceptionFilter;
 
 
     //cors 에러를 대응하기 위한 메소드
@@ -83,7 +85,8 @@ public class SecurityConfig {
                     auth.anyRequest().authenticated();
                 })
                 // 원래 스프링 시큐리티 필터 순서가 LogoutFilter 이후에 로그인 필터 동작
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
 
 
         return http.build();
