@@ -28,4 +28,7 @@ public class UniversityExamImage {
 
     @NotNull
     private String universityExamImageFileName;
+
+    @NotNull
+    private int page;
 }
