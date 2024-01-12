@@ -12,7 +12,7 @@ public enum AuthExceptionType implements BusinessExceptionType {
     /**
      * 400 Bad Request
      */
-    INVALID_MEMBER_PLATFORM_TOKEN(HttpStatus.BAD_REQUEST, "유효하지 않은 플랫폼 토큰입니다."),
+    INVALID_MEMBER_PLATFORM_AUTHORIZATION_CODE(HttpStatus.BAD_REQUEST, "유효하지 않은 플랫폼 인가코드입니다."),
     INVALID_ACCESS_TOKEN(HttpStatus.BAD_REQUEST, "유효하지 않은 액세스 토큰입니다."),
     INVALID_REFRESH_TOKEN(HttpStatus.BAD_REQUEST, "유효하지 않은 리프레시 토큰입니다."),
 
@@ -21,7 +21,6 @@ public enum AuthExceptionType implements BusinessExceptionType {
      */
     UNAUTHORIZED_MEMBER_LOGIN(HttpStatus.UNAUTHORIZED, "로그인에 실패하였습니다."),
     UNAUTHORIZED_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "기한이 만료된 액세스 토큰입니다."),
-
 
     /**
      * 404 Not Found
