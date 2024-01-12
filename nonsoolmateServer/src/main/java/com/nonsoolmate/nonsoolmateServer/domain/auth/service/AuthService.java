@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public abstract class AuthService {
@@ -24,7 +23,6 @@ public abstract class AuthService {
                 .orElse(null);
     }
 
-    @Transactional
     protected Member saveUser(MemberRequestDTO request, String email, String name, String birthday, String gender,
                               String phoneNumber) {
         Member newMember = createSocialMember(email, name, request.platformType(), birthday, gender, phoneNumber);
