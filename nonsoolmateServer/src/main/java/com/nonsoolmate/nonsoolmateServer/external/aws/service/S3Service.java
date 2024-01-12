@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetUrlRequest;
+import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
+import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
@@ -56,16 +58,18 @@ public class S3Service {
     public String validateURL(final String prefix, final String fileName) {
         try {
             String zipUrl = prefix + fileName;
-            GetUrlRequest request = GetUrlRequest.builder()
+            S3Client s3Client = awsConfig.getS3Client();
+
+            HeadObjectRequest request = HeadObjectRequest.builder()
                     .bucket(bucketName)
                     .key(zipUrl)
                     .build();
-            S3Client s3Client = awsConfig.getS3Client();
-            URL url = s3Client.utilities().getUrl(request);
-            if (zipUrl.equals(url.getPath().substring(1))) {
-                return fileName;
+
+            HeadObjectResponse response = s3Client.headObject(request);
+            if (response == null) {
+                throw new AWSException(AWSExceptionType.NOT_FOUND_FILE_AWS_S3);
             }
-            throw new AWSException(AWSExceptionType.NOT_FOUND_FILE_AWS_S3);
+            return fileName;
         } catch (S3Exception e) {
             throw new AWSException(AWSExceptionType.NOT_FOUND_FILE_AWS_S3);
         }
