@@ -3,7 +3,6 @@ package com.nonsoolmate.nonsoolmateServer.global.jwt.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -59,10 +58,6 @@ public class JwtTokenProvider {
 
 
     public Claims getTokenClaims(final String token) {
-        JwtParser build = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build();
-
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
