@@ -1,5 +1,7 @@
 package com.nonsoolmate.nonsoolmateServer.external.oauth.service;
 
+import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthException;
+import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.AuthService;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
 import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
@@ -43,16 +45,21 @@ public class NaverAuthService extends AuthService {
                 naverMemberInfo.getResponse().getMobile());
 
         return MemberSignUpVO.of(savedMember, request.platformType(), AuthType.SIGN_UP);
+
     }
 
     public NaverMemberVO getNaverMemberInfo(String accessToken) {
         WebClient webClient = WebClient.builder().build();
-        return webClient.post()
-                .uri("https://openapi.naver.com/v1/nid/me")
-                .header("Authorization", "Bearer " + accessToken)
-                .retrieve()
-                .bodyToMono(NaverMemberVO.class)
-                .block();
+        try {
+            return webClient.post()
+                    .uri("https://openapi.naver.com/v1/nid/me")
+                    .header("Authorization", "Bearer " + accessToken)
+                    .retrieve()
+                    .bodyToMono(NaverMemberVO.class)
+                    .block();
+        } catch (Exception e) {
+            throw new AuthException(AuthExceptionType.INVALID_MEMBER_PLATFORM_AUTHORIZATION_CODE);
+        }
     }
 
     private NaverTokenVO getAccessToken(String authorizationCode, String clientId, String clientSecret, String state) {
