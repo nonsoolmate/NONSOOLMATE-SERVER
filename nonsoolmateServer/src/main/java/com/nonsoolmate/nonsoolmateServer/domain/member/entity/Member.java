@@ -2,6 +2,8 @@ package com.nonsoolmate.nonsoolmateServer.domain.member.entity;
 
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.PlatformType;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.Role;
+import com.nonsoolmate.nonsoolmateServer.domain.member.exception.MemberException;
+import com.nonsoolmate.nonsoolmateServer.domain.member.exception.MemberExceptionType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -62,5 +64,12 @@ public class Member {
         this.birthYear = birthYear;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
+    }
+
+    public void decreaseTicket() {
+        if (this.ticketCount <= 0) {
+            throw new MemberException(MemberExceptionType.MEMBER_USE_TICKET_FAIL);
+        }
+        this.ticketCount -= 1;
     }
 }
