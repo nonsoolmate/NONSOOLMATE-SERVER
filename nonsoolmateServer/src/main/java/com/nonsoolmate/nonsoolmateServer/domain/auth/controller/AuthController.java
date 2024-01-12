@@ -3,6 +3,7 @@ package com.nonsoolmate.nonsoolmateServer.domain.auth.controller;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.request.MemberRequestDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.response.MemberAuthResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.response.MemberReissueResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.external.oauth.service.vo.enums.AuthType;
 import com.nonsoolmate.nonsoolmateServer.global.jwt.service.JwtService;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.AuthServiceProvider;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.vo.MemberSignUpVO;
@@ -14,6 +15,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,8 +44,12 @@ public class AuthController {
             MemberRequestDTO request, HttpServletResponse response) {
         MemberSignUpVO vo = authServiceProvider.getAuthService(request.platformType())
                 .saveMemberOrLogin(authorizationCode, request);
-        MemberAuthResponseDTO memberAuthResponseDTO = jwtService.issueToken(vo, response);
-        return ResponseEntity.ok().body(ApiResponse.success(AuthSuccessType.LOGIN_SUCCESS, memberAuthResponseDTO));
+        MemberAuthResponseDTO responseDTO = jwtService.issueToken(vo, response);
+        if (responseDTO.authType().equals(AuthType.SIGN_UP)) {
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(ApiResponse.success(AuthSuccessType.SIGN_UP_SUCCESS, responseDTO));
+        }
+        return ResponseEntity.ok().body(ApiResponse.success(AuthSuccessType.LOGIN_SUCCESS, responseDTO));
     }
 
     @PostMapping("/reissue")
