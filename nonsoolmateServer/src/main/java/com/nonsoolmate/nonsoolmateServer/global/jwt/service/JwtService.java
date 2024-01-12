@@ -15,6 +15,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberReposito
 import com.nonsoolmate.nonsoolmateServer.external.redis.repository.RedisTokenRepository;
 import com.nonsoolmate.nonsoolmateServer.global.jwt.service.vo.RefreshTokenVO;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -105,8 +106,8 @@ public class JwtService {
         try {
             Claims tokenClaims = jwtTokenProvider.getTokenClaims(atk);
             return !tokenClaims.getExpiration().before(new Date());
-        } catch (Exception e) {
-            return false;
+        } catch (MalformedJwtException e) {
+            throw new AuthException(INVALID_ACCESS_TOKEN);
         }
     }
 
