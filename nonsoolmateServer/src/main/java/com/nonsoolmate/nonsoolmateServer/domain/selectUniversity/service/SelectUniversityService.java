@@ -69,7 +69,7 @@ public class SelectUniversityService {
                                                                                  Member member) {
         List<SelectUniversityExamResponseDTO> selectUniversityExamResponseDTOS;
 
-        List<UniversityExam> universityExams = universityExamRepository.findAllByUniversityOrderByUniversityExamYearDescUniversityExamNameAsc(
+        List<UniversityExam> universityExams = universityExamRepository.findAllByUniversity(
                 selectUniversity.getUniversity());
 
         selectUniversityExamResponseDTOS = getSelectUniversityExamResponseDTOS(universityExams, member);
@@ -88,18 +88,12 @@ public class SelectUniversityService {
                     .orElse(null);
             String status =
                     universityExamRecord == null ? BEFORE_EXAM : universityExamRecord.getExamResultStatus().getStatus();
-            String universityExamName = getUniversityExamNameForMyPage(universityExam.getUniversityExamYear(),
-                    universityExam.getUniversityExamName());
             selectUniversityExamResponseDTOS.add(
                     SelectUniversityExamResponseDTO.of(universityExam.getUniversityExamId(),
-                            universityExamName, universityExam.getUniversityExamTimeLimit(),
+                            universityExam.getUniversityExamName(), universityExam.getUniversityExamTimeLimit(),
                             status));
         }
         return selectUniversityExamResponseDTOS;
-    }
-
-    public String getUniversityExamNameForMyPage(int universityExamYear, String universityExamName) {
-        return universityExamYear + " " + universityExamName;
     }
 
     public SelectUniversityUpdateResponseDTO patchSelectUniversities(
