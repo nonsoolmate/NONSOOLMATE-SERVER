@@ -13,6 +13,8 @@ public interface UniversityRepository extends JpaRepository<University, Long> {
 
     Optional<University> findByUniversityId(Long universityId);
 
+    List<University> findAllByOrderByUniversityNameAscUniversityCollegeAsc();
+
     default University findByUniversityIdOrElseThrowException(Long universityId){
         return findByUniversityId(universityId).orElseThrow(
                 ()-> new SelectUniversityException(INVALID_SELECTED_UNIVERSITY));
