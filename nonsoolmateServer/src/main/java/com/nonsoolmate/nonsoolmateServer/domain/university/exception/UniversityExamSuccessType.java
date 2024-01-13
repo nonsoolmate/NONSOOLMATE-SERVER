@@ -10,7 +10,7 @@ public enum UniversityExamSuccessType implements BusinessSucessType {
     /**
      * 200 OK
      */
-    GET_UNIVERSITY_EXAM_SUCCESS(HttpStatus.OK, "대학 조회에 성공했습니다"),
+    GET_UNIVERSITY_EXAM_SUCCESS(HttpStatus.OK, "대학 시험 정보 조회에 성공했습니다"),
     GET_UNIVERSITY_EXAM_IMAGE_SUCCESS(HttpStatus.OK, "대학 시험 이미지 조회에 성공했습니다"),
     GET_UNIVERSITY_EXAM_IMAGE_AND_ANSWER_SUCCESS(HttpStatus.OK, "대학 시험 이미지 및 해제 PDF 조회에 성공했습니다");
 
