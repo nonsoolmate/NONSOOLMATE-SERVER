@@ -36,19 +36,20 @@ public class SelectUniversityService {
                 member);
         List<SelectUniversityResponseDTO> selectUniversityResponseDTOS = new ArrayList<>();
 
-        selectUniversities.stream().forEach(selectUniversity -> {
-            boolean status = true;
+        universityRepository.findAll().stream().forEach(university -> {
+            boolean status = false;
 
-            University university = universityRepository.findByUniversityId(
-                    selectUniversity.getUniversity().getUniversityId()).orElse(null);
-            if (university == null) {
-                status = false;
+            for(SelectUniversity selectUniversity : selectUniversities){
+                if(selectUniversity.getUniversity().getUniversityId() == university.getUniversityId()){
+                    status = true;
+                }
             }
+
             selectUniversityResponseDTOS.add(SelectUniversityResponseDTO.of(university.getUniversityId(),
                     university.getUniversityName(), university.getUniversityCollege(),
                     status));
-
         });
+
 
         return selectUniversityResponseDTOS;
     }
