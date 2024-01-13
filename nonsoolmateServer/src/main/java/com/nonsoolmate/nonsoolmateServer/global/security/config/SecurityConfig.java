@@ -49,8 +49,8 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://nonsoolmate.com", "localhost:3000")
-                        .allowedOriginPatterns("https://nonsoolmate.com", "localhost:3000")
+                        .allowedOrigins("https://nonsoolmate.com", "localhost:5173")
+                        .allowedOriginPatterns("https://nonsoolmate.com", "localhost:5173")
                         .allowedMethods(
                                 HttpMethod.GET.name(),
                                 HttpMethod.POST.name(),
