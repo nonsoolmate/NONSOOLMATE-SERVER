@@ -2,6 +2,7 @@ package com.nonsoolmate.nonsoolmateServer.external.aws.service;
 
 import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSException;
 import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSExceptionType;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,8 +32,7 @@ public class CloudFrontService {
 
     public String createPreSignedGetUrl(String path, String fileName, int expireTime) {
         try {
-            String encodedFileName = URLEncoder.encode(fileName, "UTF-8");
-            String resourcePath = path + encodedFileName;
+            String resourcePath = getEncodedResourcePath(path, fileName);
             String cloudFrontUrl = "https://" + distributionDomain + "/" + resourcePath;
             Instant expirationTime = Instant.now().plus(expireTime, ChronoUnit.MINUTES);
             Path keyPath = Paths.get(privateKeyFilePath);
@@ -50,5 +50,10 @@ public class CloudFrontService {
             log.info("createPreSignedGetUrl = {}", e);
             throw new AWSException(AWSExceptionType.GET_PRESIGNED_URL_AWS_CLOUDFRONT_FAIL);
         }
+    }
+
+    private String getEncodedResourcePath(String path, String fileName) throws UnsupportedEncodingException {
+        String encodedFileName = URLEncoder.encode(fileName, "UTF-8");
+        return path + encodedFileName;
     }
 }
