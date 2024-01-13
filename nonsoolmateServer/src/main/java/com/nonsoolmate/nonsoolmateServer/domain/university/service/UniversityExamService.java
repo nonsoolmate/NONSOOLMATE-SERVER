@@ -66,7 +66,7 @@ public class UniversityExamService {
                 universityExam);
 
         UniversityExamImages.stream().forEach(universityExamImage -> {
-            String preSignedGetUrl = cloudFrontService.createPreSignedGetUrl(EXAM_RESULT_FOLDER_NAME,
+            String preSignedGetUrl = cloudFrontService.createPreSignedGetUrl(EXAM_IMAGE_FOLDER_NAME,
                     universityExamImage.getUniversityExamImageFileName(), universityExam.getUniversityExamTimeLimit());
             examImageUrls.add(
                     UniversityExamImageResponseDTO.of(preSignedGetUrl));
