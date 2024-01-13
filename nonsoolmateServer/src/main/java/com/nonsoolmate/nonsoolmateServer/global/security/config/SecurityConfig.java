@@ -51,6 +51,7 @@ public class SecurityConfig {
                 registry.addMapping("/**")
                         .allowedOrigins("https://nonsoolmate.com", "localhost:5173")
                         .allowedOriginPatterns("https://nonsoolmate.com", "localhost:5173")
+                        .allowedHeaders("*")
                         .allowedMethods(
                                 HttpMethod.GET.name(),
                                 HttpMethod.POST.name(),
