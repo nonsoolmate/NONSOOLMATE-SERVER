@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UniversityExamController {
     private final UniversityExamService universityExamService;
 
-    @GetMapping("/info/{id}")
+    @GetMapping("/{id}/info")
     public ResponseEntity<ApiResponse<UniversityExamInfoResponseDTO>> getUniversityExam(
             @PathVariable("id") Long universityExamId) {
         return ResponseEntity.ok().body(ApiResponse.success(UniversityExamSuccessType.GET_UNIVERSITY_EXAM_SUCCESS,
