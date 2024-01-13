@@ -32,24 +32,22 @@ public class SelectUniversityService {
 
 
     public List<SelectUniversityResponseDTO> getSelectUniversities(Member member) {
-        List<SelectUniversity> selectUniversities = selectUniversityRepository.findAllByMemberOrderByUniversityNameASCUniversityCollegeAsc(
-                member);
         List<SelectUniversityResponseDTO> selectUniversityResponseDTOS = new ArrayList<>();
 
-        universityRepository.findAll().stream().forEach(university -> {
-            boolean status = false;
+        universityRepository.findAllByOrderByUniversityNameAscUniversityCollegeAsc().stream().forEach(university -> {
+            boolean status = true;
 
-            for(SelectUniversity selectUniversity : selectUniversities){
-                if(selectUniversity.getUniversity().getUniversityId() == university.getUniversityId()){
-                    status = true;
-                }
+            SelectUniversity curUniv = selectUniversityRepository.findByMemberAndUniversity(member, university)
+                    .orElse(null);
+
+            if(curUniv == null){
+                status = false;
             }
 
             selectUniversityResponseDTOS.add(SelectUniversityResponseDTO.of(university.getUniversityId(),
                     university.getUniversityName(), university.getUniversityCollege(),
                     status));
         });
-
 
         return selectUniversityResponseDTOS;
     }
