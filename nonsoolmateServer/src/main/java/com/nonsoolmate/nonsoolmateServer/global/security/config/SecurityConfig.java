@@ -4,6 +4,7 @@ import com.nonsoolmate.nonsoolmateServer.global.security.filter.JwtAuthenticatio
 import com.nonsoolmate.nonsoolmateServer.global.security.filter.JwtExceptionFilter;
 import io.swagger.v3.oas.models.PathItem.HttpMethod;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,6 +39,15 @@ public class SecurityConfig {
             "/","/css/**","/images/**","/js/**","/favicon.ico","/h2-console/**", "/actuator/health"
     };
 
+    @Value("${spring.web.domain.server}")
+    private String serverDomain;
+
+    @Value("${spring.web.domain.client}")
+    private String clientDomain;
+
+    @Value("${spring.web.domain.client-local}")
+    private String clientLocalDomain;
+
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtExceptionFilter jwtExceptionFilter;
 
@@ -49,8 +59,8 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://nonsoolmate.com", "localhost:5173")
-                        .allowedOriginPatterns("https://nonsoolmate.com", "localhost:5173")
+                        .allowedOrigins(serverDomain, clientDomain, clientLocalDomain)
+                        .allowedOriginPatterns(serverDomain, clientDomain, clientLocalDomain)
                         .allowedHeaders("*")
                         .allowedMethods(
                                 HttpMethod.GET.name(),
