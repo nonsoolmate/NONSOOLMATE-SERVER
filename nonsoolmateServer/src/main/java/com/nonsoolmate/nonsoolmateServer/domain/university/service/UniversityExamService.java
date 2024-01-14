@@ -35,15 +35,10 @@ public class UniversityExamService {
         UniversityExam universityExam = universityExamRepository.findByUniversityExamId(universityExamId)
                 .orElseThrow(() -> new UniversityExamException(
                         UniversityExamExceptionType.NOT_FOUND_UNIVERSITY_EXAM));
-        String universityExamName = getUniversityExamName(universityExam);
+        String universityExamName = universityExam.getUniversityAndUniversityExamName();
         return UniversityExamInfoResponseDTO.of(universityExam.getUniversityExamId(),
                 universityExamName,
                 universityExam.getUniversityExamTimeLimit());
-    }
-
-    private String getUniversityExamName(UniversityExam universityExam) {
-        return universityExam.getUniversity().getUniversityName() + " - " + universityExam.getUniversityExamYear() + " "
-                + universityExam.getUniversityExamName();
     }
 
     public Page<UniversityExamImageResponseDTO> getUniversityExamImages(Long id, Pageable pageable) {
@@ -79,7 +74,7 @@ public class UniversityExamService {
         });
 
         return UniversityExamImageAndAnswerResponseDTO.of(
-                getUniversityExamName(universityExam)
+                universityExam.getUniversityAndUniversityExamName()
                 , examImageUrls, examAnswerUrl);
     }
 
