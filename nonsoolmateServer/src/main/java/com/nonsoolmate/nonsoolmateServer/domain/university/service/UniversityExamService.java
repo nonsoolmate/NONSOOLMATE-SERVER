@@ -42,7 +42,8 @@ public class UniversityExamService {
     }
 
     private String getUniversityExamName(UniversityExam universityExam) {
-        return universityExam.getUniversity().getUniversityName() + " - " + universityExam.getUniversityExamYear() + " " + universityExam.getUniversityExamName();
+        return universityExam.getUniversity().getUniversityName() + " - " + universityExam.getUniversityExamYear() + " "
+                + universityExam.getUniversityExamName();
     }
 
     public Page<UniversityExamImageResponseDTO> getUniversityExamImages(Long id, Pageable pageable) {
@@ -78,8 +79,8 @@ public class UniversityExamService {
         });
 
         return UniversityExamImageAndAnswerResponseDTO.of(
-                universityExam.getUniversity().getUniversityName(),
-                universityExam.getUniversityExamName(), universityExam.getUniversityExamYear(), examImageUrls, examAnswerUrl);
+                universityExam.getUniversity().getUniversityName() + " - " + universityExam.getUniversityExamYear() + " " + universityExam.getUniversityExamName()
+                , examImageUrls, examAnswerUrl);
     }
 
 }
