@@ -2,7 +2,6 @@ package com.nonsoolmate.nonsoolmateServer.domain.university.service;
 
 import static com.nonsoolmate.nonsoolmateServer.external.aws.FolderName.EXAM_ANSWER_FOLDER_NAME;
 import static com.nonsoolmate.nonsoolmateServer.external.aws.FolderName.EXAM_IMAGE_FOLDER_NAME;
-import static com.nonsoolmate.nonsoolmateServer.external.aws.FolderName.EXAM_RESULT_FOLDER_NAME;
 
 import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response.UniversityExamImageAndAnswerResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response.UniversityExamImageResponseDTO;
@@ -35,7 +34,7 @@ public class UniversityExamService {
         UniversityExam universityExam = universityExamRepository.findByUniversityExamId(universityExamId)
                 .orElseThrow(() -> new UniversityExamException(
                         UniversityExamExceptionType.NOT_FOUND_UNIVERSITY_EXAM));
-        String universityExamName = universityExam.getUniversityAndUniversityExamName();
+        String universityExamName = universityExam.getUniversityExamFullName();
         return UniversityExamInfoResponseDTO.of(universityExam.getUniversityExamId(),
                 universityExamName,
                 universityExam.getUniversityExamTimeLimit());
@@ -74,7 +73,7 @@ public class UniversityExamService {
         });
 
         return UniversityExamImageAndAnswerResponseDTO.of(
-                universityExam.getUniversityAndUniversityExamName()
+                universityExam.getUniversityExamFullName()
                 , examImageUrls, examAnswerUrl);
     }
 
