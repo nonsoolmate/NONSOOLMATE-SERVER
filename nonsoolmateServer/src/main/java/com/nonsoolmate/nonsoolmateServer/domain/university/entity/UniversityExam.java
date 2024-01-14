@@ -38,4 +38,8 @@ public class UniversityExam {
 
     @NotNull
     private int universityExamTimeLimit;
+
+    public String getUniversityAndUniversityExamName(){
+        return this.getUniversity().getUniversityName() + " - " + this.getUniversityExamYear() + " " + this.getUniversityExamName();
+    }
 }
