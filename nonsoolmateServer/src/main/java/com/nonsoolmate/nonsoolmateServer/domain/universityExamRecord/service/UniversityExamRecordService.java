@@ -47,7 +47,7 @@ public class UniversityExamRecordService {
         String resultUrl = cloudFrontService.createPreSignedGetUrl(EXAM_RESULT_FOLDER_NAME,
                 universityExamRecord.getExamRecordResultFileName(), universityExam.getUniversityExamTimeLimit());
 
-        return UniversityExamRecordResponseDTO.of(answerUrl, resultUrl);
+        return UniversityExamRecordResponseDTO.of(getUniversityExamName(universityExam), answerUrl, resultUrl);
     }
 
     public UniversityExamRecordResultResponseDTO getUniversityExamRecordResult(Long universityExamId, Member member) {
@@ -106,6 +106,11 @@ public class UniversityExamRecordService {
     private UniversityExam getUniversityExam(Long universityExamId) {
         return universityExamRepository.findByUniversityExamId(universityExamId)
                 .orElseThrow(() -> new UniversityExamException(NOT_FOUND_UNIVERSITY_EXAM));
+    }
+
+    private String getUniversityExamName(UniversityExam universityExam) {
+        return universityExam.getUniversity().getUniversityName() + " - " + universityExam.getUniversityExamYear() + " "
+                + universityExam.getUniversityExamName();
     }
 
     private UniversityExamRecord getUniversityExamByUniversityExamAndMember(UniversityExam universityExam,
