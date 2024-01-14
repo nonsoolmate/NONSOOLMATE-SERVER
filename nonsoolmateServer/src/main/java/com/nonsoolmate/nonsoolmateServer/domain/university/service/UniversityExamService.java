@@ -79,7 +79,7 @@ public class UniversityExamService {
 
         return UniversityExamImageAndAnswerResponseDTO.of(
                 universityExam.getUniversity().getUniversityName(),
-                universityExam.getUniversity().getUniversityCollege(), examImageUrls, examAnswerUrl);
+                universityExam.getUniversityExamName(), universityExam.getUniversityExamYear(), examImageUrls, examAnswerUrl);
     }
 
 }
