@@ -3,12 +3,12 @@ package com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.respo
 import java.util.List;
 
 public record UniversityExamImageAndAnswerResponseDTO(
-        String university, String universityExamName, int universityExamYear, List<UniversityExamImageResponseDTO> examQuestionList, String examAnswerUrl
+        String universityExamName, List<UniversityExamImageResponseDTO> examQuestionList, String examAnswerUrl
 ) {
-    static public UniversityExamImageAndAnswerResponseDTO of(String university, String universityExamName, int universityExamYear,
+    static public UniversityExamImageAndAnswerResponseDTO of(String universityExamName,
                                                              List<UniversityExamImageResponseDTO> examQuestionList,
                                                              String examAnswerUrl) {
-        return new UniversityExamImageAndAnswerResponseDTO(university, universityExamName, universityExamYear, examQuestionList, examAnswerUrl);
+        return new UniversityExamImageAndAnswerResponseDTO(universityExamName, examQuestionList, examAnswerUrl);
     }
 }
 
