@@ -79,7 +79,7 @@ public class UniversityExamService {
         });
 
         return UniversityExamImageAndAnswerResponseDTO.of(
-                universityExam.getUniversity().getUniversityName() + " - " + universityExam.getUniversityExamYear() + " " + universityExam.getUniversityExamName()
+                getUniversityExamName(universityExam)
                 , examImageUrls, examAnswerUrl);
     }
 
