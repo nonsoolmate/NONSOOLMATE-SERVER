@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/my")
 @RequiredArgsConstructor
-@Tag(name = "my", description = "멤버와 관련된 API")
-public class MyController {
+public class MyController implements MemberApi{
     private final MemberService memberService;
 
-    @Operation(summary = "마이페이지: 이름", description = "내 이름을 조회합니다.")
     @GetMapping("/name")
     public ResponseEntity<ApiResponse<NameResponseDTO>> getName(@AuthUser Member member) {
         return ResponseEntity.ok()
@@ -30,7 +28,6 @@ public class MyController {
                         memberService.getNickname(member)));
     }
 
-    @Operation(summary = "내 정보 확인: 첨삭권 개수", description = "내 첨삭권 갯수를 조회합니다.")
     @GetMapping("/ticket")
     public ResponseEntity<ApiResponse<TicketResponseDTO>> getTicket(@AuthUser Member member) {
         return ResponseEntity.ok()
