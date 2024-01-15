@@ -15,6 +15,8 @@ import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.service.Uni
 import com.nonsoolmate.nonsoolmateServer.external.aws.service.vo.PreSignedUrlVO;
 import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
 import com.nonsoolmate.nonsoolmateServer.global.security.AuthUser;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,11 +31,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/university/exam-record")
 @RequiredArgsConstructor
+@Tag(name = "UniversityExamRecord", description = "시험 응시 기록과 관련된 API")
 public class UniversityExamRecordController {
 
     private final UniversityExamRecordService universityExamRecordService;
     private final UniversityExamRecordSheetService universityExamRecordSheetService;
 
+
+    @Operation(summary = "첨삭: 첨삭 PDF_해제PDF", description = "첨삭 pdf 및 해제 pdf를 조회합니다.")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UniversityExamRecordResponseDTO>> getUniversityExamRecord(
             @PathVariable("id") Long universityExamId, @AuthUser Member member) {
@@ -41,6 +46,7 @@ public class UniversityExamRecordController {
                 universityExamRecordService.getUniversityExamRecord(universityExamId, member)));
     }
 
+    @Operation(summary = "첨삭: 첨삭 PDF 저장", description = "첨삭 pdf를 조회합니다.")
     @GetMapping("/result/{id}")
     public ResponseEntity<ApiResponse<UniversityExamRecordResultResponseDTO>> getUniversityExamRecordResult(
             @PathVariable("id") Long universityExamId, @AuthUser Member member) {
@@ -48,6 +54,7 @@ public class UniversityExamRecordController {
                 universityExamRecordService.getUniversityExamRecordResult(universityExamId, member)));
     }
 
+    @Operation(summary = "시험 보기: [1] 답안지 업로드 PresignedUrl 조회 API", description = "답안지(시험응시기록) 업로드를 위한 PresignedUrl를 조회합니다.")
     @GetMapping("/sheet/presigned")
     public ResponseEntity<ApiResponse<UniversityExamSheetPreSignedUrlResponseDTO>> getUniversityExamSheetPreSignedUrl() {
         PreSignedUrlVO universityExamRecordSheetPreSignedUrlVO = universityExamRecordSheetService.getUniversityExamRecordSheetPreSignedUrl();
@@ -57,6 +64,7 @@ public class UniversityExamRecordController {
                         universityExamRecordSheetPreSignedUrlVO.getUrl())));
     }
 
+    @Operation(summary = "시험보기: [3] 답안지 업로드 후 시험 기록 API", description = "답안지(시험응시기록) 업로드 후 서버에 기록하기 위해 호출합니다.")
     @PostMapping("/sheet")
     public ResponseEntity<ApiResponse<UniversityExamRecordIdResponse>> createUniversityExamRecord(
             @Valid @RequestBody CreateUniversityExamRequestDTO createUniversityExamRequestDTO,
