@@ -36,7 +36,7 @@ public class UniversityExamRecordController implements UniversityExamRecordApi {
     private final UniversityExamRecordService universityExamRecordService;
     private final UniversityExamRecordSheetService universityExamRecordSheetService;
 
-
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UniversityExamRecordResponseDTO>> getUniversityExamRecord(
             @PathVariable("id") Long universityExamId, @AuthUser Member member) {
@@ -44,6 +44,7 @@ public class UniversityExamRecordController implements UniversityExamRecordApi {
                 universityExamRecordService.getUniversityExamRecord(universityExamId, member)));
     }
 
+    @Override
     @GetMapping("/result/{id}")
     public ResponseEntity<ApiResponse<UniversityExamRecordResultResponseDTO>> getUniversityExamRecordResult(
             @PathVariable("id") Long universityExamId, @AuthUser Member member) {
@@ -51,6 +52,7 @@ public class UniversityExamRecordController implements UniversityExamRecordApi {
                 universityExamRecordService.getUniversityExamRecordResult(universityExamId, member)));
     }
 
+    @Override
     @GetMapping("/sheet/presigned")
     public ResponseEntity<ApiResponse<UniversityExamSheetPreSignedUrlResponseDTO>> getUniversityExamSheetPreSignedUrl() {
         PreSignedUrlVO universityExamRecordSheetPreSignedUrlVO = universityExamRecordSheetService.getUniversityExamRecordSheetPreSignedUrl();
@@ -60,6 +62,7 @@ public class UniversityExamRecordController implements UniversityExamRecordApi {
                         universityExamRecordSheetPreSignedUrlVO.getUrl())));
     }
 
+    @Override
     @PostMapping("/sheet")
     public ResponseEntity<ApiResponse<UniversityExamRecordIdResponse>> createUniversityExamRecord(
             @Valid @RequestBody CreateUniversityExamRequestDTO createUniversityExamRequestDTO,
