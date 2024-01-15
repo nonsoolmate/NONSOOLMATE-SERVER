@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
         })
 @SecuritySchemes({
         @SecurityScheme(name = "Authorization",
-                type = SecuritySchemeType.HTTP,
+                type = SecuritySchemeType.APIKEY,
                 description = "access token",
                 in = SecuritySchemeIn.HEADER,
                 paramName = "Authorization"),
