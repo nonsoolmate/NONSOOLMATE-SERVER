@@ -24,11 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/university/exam")
 @RequiredArgsConstructor
-@Tag(name = "UniversityExam", description = "대학 시험 정보와 관련된 API")
-public class UniversityExamController {
+public class UniversityExamController implements UniversityApi{
     private final UniversityExamService universityExamService;
 
-    @Operation(summary = "시험 보기: 시험 이름 & 제한 시간", description = "시험 응시 화면의 이름 및 제한 시간을 조회합니다.")
     @GetMapping("/{id}/info")
     public ResponseEntity<ApiResponse<UniversityExamInfoResponseDTO>> getUniversityExam(
             @PathVariable("id") Long universityExamId) {
@@ -36,7 +34,6 @@ public class UniversityExamController {
                 universityExamService.getUniversityExam(universityExamId)));
     }
 
-    @Operation(summary = "시험 보기: 문제지 [페이지네이션]", description = "시험 응시 화면의 문제지를 조회합니다.")
     @GetMapping("{id}/image")
     public ResponseEntity<ApiResponse<Page<UniversityExamImageResponseDTO>>> getUniversityExamImages(
             @PathVariable("id") Long id, @RequestParam(defaultValue = "0") int page, Pageable pageable) {
@@ -46,7 +43,6 @@ public class UniversityExamController {
                 .body(ApiResponse.success(UniversityExamSuccessType.GET_UNIVERSITY_EXAM_IMAGE_SUCCESS, images));
     }
 
-    @Operation(summary = "해제: 문제이미지_해제PDF", description = "문제 이미지 및 해제 pdf를 조회합니다.")
     @GetMapping("{id}/answer")
     public ResponseEntity<ApiResponse<UniversityExamImageAndAnswerResponseDTO>> getUniversityExamImageAndAnswer(
             @PathVariable("id") Long universityExamId
