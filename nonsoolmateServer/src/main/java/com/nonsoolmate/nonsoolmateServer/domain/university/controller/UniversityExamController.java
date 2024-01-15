@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UniversityExamController implements UniversityApi{
     private final UniversityExamService universityExamService;
 
+    @Override
     @GetMapping("/{id}/info")
     public ResponseEntity<ApiResponse<UniversityExamInfoResponseDTO>> getUniversityExam(
             @PathVariable("id") Long universityExamId) {
@@ -34,6 +35,7 @@ public class UniversityExamController implements UniversityApi{
                 universityExamService.getUniversityExam(universityExamId)));
     }
 
+    @Override
     @GetMapping("{id}/image")
     public ResponseEntity<ApiResponse<Page<UniversityExamImageResponseDTO>>> getUniversityExamImages(
             @PathVariable("id") Long id, @RequestParam(defaultValue = "0") int page, Pageable pageable) {
@@ -43,6 +45,7 @@ public class UniversityExamController implements UniversityApi{
                 .body(ApiResponse.success(UniversityExamSuccessType.GET_UNIVERSITY_EXAM_IMAGE_SUCCESS, images));
     }
 
+    @Override
     @GetMapping("{id}/answer")
     public ResponseEntity<ApiResponse<UniversityExamImageAndAnswerResponseDTO>> getUniversityExamImageAndAnswer(
             @PathVariable("id") Long universityExamId

@@ -1,5 +1,6 @@
 package com.nonsoolmate.nonsoolmateServer.domain.university.controller;
 
+import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response.UniversityExamImageAndAnswerResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response.UniversityExamImageResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response.UniversityExamInfoResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -26,11 +28,15 @@ public interface UniversityApi {
 
     @Operation(summary = "시험 보기: 시험 이름 & 제한 시간", description = "시험 응시 화면의 이름 및 제한 시간을 조회합니다.")
     ResponseEntity<ApiResponse<UniversityExamInfoResponseDTO>> getUniversityExam(
-            @Parameter(description = "해당 대학교 시험 Id (examId)", required = true) Long universityExamId);
+            @Parameter(description = "해당 대학교 시험 Id (examId)", required = true) @PathVariable("id") Long universityExamId);
 
     @Operation(summary = "시험 보기: 문제지 [페이지네이션]", description = "시험 응시 화면의 문제지를 조회합니다.")
     ResponseEntity<ApiResponse<Page<UniversityExamImageResponseDTO>>> getUniversityExamImages(
-            @Parameter(description = "해당 대학교 시험 Id (examId)", required = true) Long id,
+            @Parameter(description = "해당 대학교 시험 Id (examId)", required = true) @PathVariable("id") Long id,
             @RequestParam(defaultValue = "0") int page,
             Pageable pageable);
+
+    @Operation(summary= "해제: 문제이미지_해제PDF", description = "시험 문제 이미지 및 해제 PDF를 조회합니다.")
+    ResponseEntity<ApiResponse<UniversityExamImageAndAnswerResponseDTO>> getUniversityExamImageAndAnswer(
+            @PathVariable("id") Long universityExamId);
 }
