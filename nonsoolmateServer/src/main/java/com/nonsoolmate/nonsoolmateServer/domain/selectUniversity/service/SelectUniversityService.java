@@ -104,44 +104,37 @@ public class SelectUniversityService {
                 .toList();
         List<Long> curUniversityIds = request.stream().map(req -> req.universityId()).toList();
 
-        deleteSelectUniversity(member, prevUniversityIds, curUniversityIds);
-        addSelectUniversity(member, prevUniversityIds, curUniversityIds);
+        Map<Long, University> universityMap = addSelectUniversity(member, curUniversityIds);
+        deleteSelectUniversity(member, prevUniversityIds, universityMap);
 
         return SelectUniversityUpdateResponseDTO.of(true);
     }
 
-    private void deleteSelectUniversity(Member member, List<Long> prevUniversityIds, List<Long> curUniversityIds) {
+    private void deleteSelectUniversity(Member member, List<Long> prevUniversityIds,
+                                        Map<Long, University> universityMap) {
 
-        prevUniversityIds.stream().forEach(prevUniversityId -> {
-            University foundUniversity = universityRepository.findByUniversityIdOrElseThrowException(prevUniversityId);
-
-            boolean isPresent = false;
-            for (Long curUniversityId : curUniversityIds) {
-                if (prevUniversityId == curUniversityId) {
-                    isPresent = true;
-                }
-            }
-
-            if (!isPresent) {
-                selectUniversityRepository.deleteByMemberAndUniversity(member, foundUniversity);
-            }
-        });
+        prevUniversityIds.stream()
+                .filter(prevUniversityId -> !universityMap.containsKey(prevUniversityId))
+                .forEach(prevUniversityId -> {
+                    University foundUniversity = universityRepository.findByUniversityIdOrElseThrowException(
+                            prevUniversityId);
+                    selectUniversityRepository.deleteByMemberAndUniversity(member, foundUniversity);
+                });
     }
 
-    private void addSelectUniversity(Member member, List<Long> prevUniversityIds, List<Long> curUniversityIds) {
+    private Map<Long, University> addSelectUniversity(Member member, List<Long> curUniversityIds) {
+
+        Map<Long, University> universityMap = new HashMap<>();
 
         curUniversityIds.stream().forEach(curUniversityId -> {
             University foundUniversity = universityRepository.findByUniversityIdOrElseThrowException(
                     curUniversityId);
+            universityMap.put(curUniversityId, foundUniversity);
 
-            boolean isPresent = false;
-            for (Long prevUniversityId : prevUniversityIds) {
-                if (prevUniversityId == curUniversityId) {
-                    isPresent = true;
-                }
-            }
+            SelectUniversity curSelectedUniversity = selectUniversityRepository.findByMemberAndUniversity(member,
+                    foundUniversity).orElse(null);
 
-            if (!isPresent) {
+            if (curSelectedUniversity == null) {
                 selectUniversityRepository.save(SelectUniversity
                         .builder()
                         .member(member)
@@ -149,5 +142,7 @@ public class SelectUniversityService {
                         .build());
             }
         });
+
+        return universityMap;
     }
 }
