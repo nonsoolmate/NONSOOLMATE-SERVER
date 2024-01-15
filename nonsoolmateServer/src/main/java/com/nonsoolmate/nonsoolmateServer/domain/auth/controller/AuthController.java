@@ -9,6 +9,8 @@ import com.nonsoolmate.nonsoolmateServer.domain.auth.service.AuthServiceProvider
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.vo.MemberSignUpVO;
 import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthSuccessType;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @Slf4j
+@Tag(name = "auth", description = "인증 관련 API")
 public class AuthController {
     private final AuthServiceProvider authServiceProvider;
     private final JwtService jwtService;
@@ -37,6 +40,7 @@ public class AuthController {
     @Value("${spring.security.oauth2.client.naver.redirect-uri}")
     private String redirectUri;
 
+    @Operation(summary = "소셜 로그인", description = "네이버 소셜 로그인을 합니다.")
     @PostMapping("/social/login")
     public ResponseEntity<ApiResponse<MemberAuthResponseDTO>> login(
             @RequestHeader(value = "authorization-code") final String authorizationCode,
@@ -52,6 +56,7 @@ public class AuthController {
         return ResponseEntity.ok().body(ApiResponse.success(AuthSuccessType.LOGIN_SUCCESS, responseDTO));
     }
 
+    @Operation(summary = "액세스 토큰 & 리프레시 토큰 재발급", description = "액세스 토큰 및 리프레시 토큰을 재발급 받습니다.")
     @PostMapping("/reissue")
     public ResponseEntity<ApiResponse<MemberReissueResponseDTO>> reissue(HttpServletRequest request,
                                                                          HttpServletResponse response) {
