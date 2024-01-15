@@ -13,7 +13,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Tag(name = "SelectUniversity", description = "목표 대학과 관련된 API")
@@ -37,5 +40,5 @@ public interface SelectUniversityApi {
     @Operation(summary = "목표대학 설정: 리스트 선택", description = "내 목표 대학들 리스트를 업데이트(수정) 합니다.")
     ResponseEntity<ApiResponse<SelectUniversityUpdateResponseDTO>> patchSelectUniversities(
             @AuthUser Member member,
-            @Parameter(description = "선택 대학교 Id", required = true) List<SelectUniversityRequestDTO> request);
+            @Parameter(description = "선택 대학교 Id", required = true) @RequestBody @Valid List<SelectUniversityRequestDTO> request);
 }

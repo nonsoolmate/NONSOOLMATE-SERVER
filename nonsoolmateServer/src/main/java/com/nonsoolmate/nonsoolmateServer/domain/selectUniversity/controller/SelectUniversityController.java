@@ -31,6 +31,7 @@ public class SelectUniversityController implements SelectUniversityApi {
 
     private final SelectUniversityService selectUniversityService;
 
+    @Override
     @GetMapping
     public ResponseEntity<ApiResponse<List<SelectUniversityResponseDTO>>> getSelectUniversities(
             @AuthUser Member member) {
@@ -39,6 +40,7 @@ public class SelectUniversityController implements SelectUniversityApi {
                 selectUniversityService.getSelectUniversities(member)));
     }
 
+    @Override
     @GetMapping("/exam")
     public ResponseEntity<ApiResponse<List<SelectUniversityExamsResponseDTO>>> getSelectUniversityExams(
             @AuthUser Member member) {
@@ -46,6 +48,7 @@ public class SelectUniversityController implements SelectUniversityApi {
                 selectUniversityService.getSelectUniversityExams(member)));
     }
 
+    @Override
     @PatchMapping
     public ResponseEntity<ApiResponse<SelectUniversityUpdateResponseDTO>> patchSelectUniversities(
             @AuthUser Member member,
