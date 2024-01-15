@@ -40,7 +40,7 @@ public class SelectUniversityService {
             SelectUniversity curUniv = selectUniversityRepository.findByMemberAndUniversity(member, university)
                     .orElse(null);
 
-            if(curUniv == null){
+            if (curUniv == null) {
                 status = false;
             }
 
@@ -104,11 +104,35 @@ public class SelectUniversityService {
                 .toList();
         List<Long> curUniversityIds = request.stream().map(req -> req.universityId()).toList();
 
-        Map<Long, University> universityMap = new HashMap<>();
+        deleteSelectUniversity(member, prevUniversityIds, curUniversityIds);
+        addSelectUniversity(member, prevUniversityIds, curUniversityIds);
+
+        return SelectUniversityUpdateResponseDTO.of(true);
+    }
+
+    private void deleteSelectUniversity(Member member, List<Long> prevUniversityIds, List<Long> curUniversityIds) {
+
+        prevUniversityIds.stream().forEach(prevUniversityId -> {
+            University foundUniversity = universityRepository.findByUniversityIdOrElseThrowException(prevUniversityId);
+
+            boolean isPresent = false;
+            for (Long curUniversityId : curUniversityIds) {
+                if (prevUniversityId == curUniversityId) {
+                    isPresent = true;
+                }
+            }
+
+            if (!isPresent) {
+                selectUniversityRepository.deleteByMemberAndUniversity(member, foundUniversity);
+            }
+        });
+    }
+
+    private void addSelectUniversity(Member member, List<Long> prevUniversityIds, List<Long> curUniversityIds) {
 
         curUniversityIds.stream().forEach(curUniversityId -> {
-            universityMap.put(curUniversityId,
-                    universityRepository.findByUniversityIdOrElseThrowException(curUniversityId));
+            University foundUniversity = universityRepository.findByUniversityIdOrElseThrowException(
+                    curUniversityId);
 
             boolean isPresent = false;
             for (Long prevUniversityId : prevUniversityIds) {
@@ -121,27 +145,9 @@ public class SelectUniversityService {
                 selectUniversityRepository.save(SelectUniversity
                         .builder()
                         .member(member)
-                        .university(universityMap.get(curUniversityId))
+                        .university(foundUniversity)
                         .build());
             }
         });
-
-        prevUniversityIds.stream().forEach(prevUniversityId -> {
-            universityMap.put(prevUniversityId,
-                    universityRepository.findByUniversityIdOrElseThrowException(prevUniversityId));
-
-            boolean isPresent = false;
-            for (Long curUniversityId : curUniversityIds) {
-                if (prevUniversityId == curUniversityId) {
-                    isPresent = true;
-                }
-            }
-
-            if (!isPresent) {
-                selectUniversityRepository.deleteByMemberAndUniversity(member, universityMap.get(prevUniversityId));
-            }
-        });
-
-        return SelectUniversityUpdateResponseDTO.of(true);
     }
 }
