@@ -42,7 +42,7 @@ public class AuthController implements AuthApi{
     @Override
     @PostMapping("/social/login")
     public ResponseEntity<ApiResponse<MemberAuthResponseDTO>> login(
-            @RequestHeader(value = "authorization-code") final String authorizationCode,
+            final String authorizationCode,
             @RequestBody @Valid final
             MemberRequestDTO request, HttpServletResponse response) {
         MemberSignUpVO vo = authServiceProvider.getAuthService(request.platformType())
