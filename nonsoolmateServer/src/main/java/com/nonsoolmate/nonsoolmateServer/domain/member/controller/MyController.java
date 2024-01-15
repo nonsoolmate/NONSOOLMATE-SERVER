@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MyController implements MemberApi{
     private final MemberService memberService;
 
+    @Override
     @GetMapping("/name")
     public ResponseEntity<ApiResponse<NameResponseDTO>> getName(@AuthUser Member member) {
         return ResponseEntity.ok()
@@ -28,6 +29,7 @@ public class MyController implements MemberApi{
                         memberService.getNickname(member)));
     }
 
+    @Override
     @GetMapping("/ticket")
     public ResponseEntity<ApiResponse<TicketResponseDTO>> getTicket(@AuthUser Member member) {
         return ResponseEntity.ok()
