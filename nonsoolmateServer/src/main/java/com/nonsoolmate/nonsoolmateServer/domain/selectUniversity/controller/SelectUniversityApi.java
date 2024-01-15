@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "SelectUniversity", description = "목표 대학과 관련된 API")
 public interface SelectUniversityApi {
 
+
     @ApiResponses(
             value = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200"),

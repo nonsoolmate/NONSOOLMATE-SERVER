@@ -39,6 +39,7 @@ public class AuthController implements AuthApi{
     @Value("${spring.security.oauth2.client.naver.redirect-uri}")
     private String redirectUri;
 
+    @Override
     @PostMapping("/social/login")
     public ResponseEntity<ApiResponse<MemberAuthResponseDTO>> login(
             @RequestHeader(value = "authorization-code") final String authorizationCode,
@@ -54,6 +55,7 @@ public class AuthController implements AuthApi{
         return ResponseEntity.ok().body(ApiResponse.success(AuthSuccessType.LOGIN_SUCCESS, responseDTO));
     }
 
+    @Override
     @PostMapping("/reissue")
     public ResponseEntity<ApiResponse<MemberReissueResponseDTO>> reissue(HttpServletRequest request,
                                                                          HttpServletResponse response) {
