@@ -45,7 +45,7 @@ public class UniversityExamRecordService {
         String answerUrl = cloudFrontService.createPreSignedGetUrl(EXAM_ANSWER_FOLDER_NAME,
                 universityExam.getUniversityExamAnswerFileName(), universityExam.getUniversityExamTimeLimit());
         String resultUrl = cloudFrontService.createPreSignedGetUrl(EXAM_RESULT_FOLDER_NAME,
-                universityExamRecord.getExamRecordResultFileName(), universityExam.getUniversityExamTimeLimit());
+                universityExamRecord.getExamRecordResultFileName(), 2);
 
         return UniversityExamRecordResponseDTO.of(universityExam.getUniversityExamFullName(), answerUrl, resultUrl);
     }
