@@ -36,7 +36,7 @@ public class SelectUniversityService {
     public List<SelectUniversityResponseDTO> getSelectUniversities(Member member) {
         List<SelectUniversityResponseDTO> selectUniversityResponseDTOS = new ArrayList<>();
 
-        universityRepository.findAllByOrderByUniversityNameAscUniversityCollegeAsc().stream().forEach(university -> {
+        universityRepository.findAllByOrderByUniversityNameAscUniversityCollegeAsc().forEach(university -> {
             boolean status = true;
 
             SelectUniversity curUniv = selectUniversityRepository.findByMemberAndUniversity(member, university)
