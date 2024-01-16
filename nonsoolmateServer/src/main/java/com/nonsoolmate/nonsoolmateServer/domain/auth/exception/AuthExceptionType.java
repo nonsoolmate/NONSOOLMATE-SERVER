@@ -27,7 +27,6 @@ public enum AuthExceptionType implements BusinessExceptionType {
      * 404 Not Found
      */
 
-    NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "유효한 멤버를 찾지 못했습니다."),
     NOT_FOUND_REFRESH_TOKEN(HttpStatus.NOT_FOUND, "유효한 리프레시 토큰을 찾지 못했습니다.");
 
     private final HttpStatus status;
