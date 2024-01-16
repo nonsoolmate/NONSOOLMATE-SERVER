@@ -1,7 +1,7 @@
 package com.nonsoolmate.nonsoolmateServer.external.redis.repository;
 
 
-import static com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType.NOT_FOUND_REFRESH_TOKEN;
+import static com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType.UNAUTHORIZED_REFRESH_TOKEN;
 
 import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthException;
 
@@ -19,6 +19,6 @@ public interface RedisTokenRepository extends CrudRepository<RefreshTokenVO, Str
         return findByMemberId(memberId)
                 .filter(refreshTokenVO -> !refreshTokenVO.isBlack())
                 .orElseThrow(
-                () -> new AuthException(NOT_FOUND_REFRESH_TOKEN));
+                () -> new AuthException(UNAUTHORIZED_REFRESH_TOKEN));
     }
 }
