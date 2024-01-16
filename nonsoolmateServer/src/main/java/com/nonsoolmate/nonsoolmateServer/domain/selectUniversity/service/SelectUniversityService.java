@@ -20,9 +20,11 @@ import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class SelectUniversityService {
     private final SelectUniversityRepository selectUniversityRepository;
     private final UniversityRepository universityRepository;
@@ -95,6 +97,7 @@ public class SelectUniversityService {
         return selectUniversityExamResponseDTOS;
     }
 
+    @Transactional
     public SelectUniversityUpdateResponseDTO patchSelectUniversities(
             Member member,
             List<SelectUniversityRequestDTO> request) {
