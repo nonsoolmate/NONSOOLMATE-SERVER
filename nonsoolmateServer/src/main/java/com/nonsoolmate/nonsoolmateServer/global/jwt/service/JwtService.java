@@ -3,7 +3,7 @@ package com.nonsoolmate.nonsoolmateServer.global.jwt.service;
 
 import static com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType.INVALID_ACCESS_TOKEN;
 import static com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType.INVALID_REFRESH_TOKEN;
-import static com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType.UNAUTHORIZED_ACCESS_TOKEN;
+import static com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType.UNAUTHORIZED_REFRESH_TOKEN;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.response.MemberAuthResponseDTO;
@@ -19,7 +19,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.Optional;
 import lombok.Getter;
@@ -58,7 +57,7 @@ public class JwtService {
     private final RedisTokenRepository redisTokenRepository;
 
     @Transactional
-    public MemberAuthResponseDTO issueToken(MemberSignUpVO vo, HttpServletResponse response) {
+    public MemberAuthResponseDTO issueToken(MemberSignUpVO vo) {
         String accessToken = jwtTokenProvider.createAccessToken(vo.email(), vo.memberId(), accessTokenExpirationPeriod);
 
         if (vo.role().equals(Role.USER)) {
@@ -70,7 +69,7 @@ public class JwtService {
         throw new AuthException(AuthExceptionType.UNAUTHORIZED_MEMBER_LOGIN);
     }
 
-    public MemberReissueResponseDTO reissueToken(HttpServletRequest request, HttpServletResponse response) {
+    public MemberReissueResponseDTO reissueToken(HttpServletRequest request) {
         String refreshToken = extractRefreshToken(request);
         String accessToken = extractAccessToken(request);
 
@@ -111,7 +110,7 @@ public class JwtService {
         } catch (MalformedJwtException e) {
             throw new AuthException(INVALID_ACCESS_TOKEN);
         } catch (ExpiredJwtException e){
-            throw new AuthException(UNAUTHORIZED_ACCESS_TOKEN);
+            throw new AuthException(UNAUTHORIZED_REFRESH_TOKEN);
         }
     }
 
