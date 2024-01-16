@@ -1,11 +1,11 @@
 package com.nonsoolmate.nonsoolmateServer.domain.member.exception;
 
-import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessSucessType;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.SuccessType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
-public enum MemberSuccessType implements BusinessSucessType {
+public enum MemberSuccessType implements SuccessType {
     GET_MEMBER_NAME_SUCCESS(HttpStatus.OK, "이름 조회에 성공하였습니다."),
     GET_MEMBER_TICKET_SUCCESS(HttpStatus.OK, "첨삭권 개수 조회에 성공하였습니다.");
 

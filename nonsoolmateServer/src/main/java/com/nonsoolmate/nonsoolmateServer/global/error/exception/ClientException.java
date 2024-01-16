@@ -3,10 +3,10 @@ package com.nonsoolmate.nonsoolmateServer.global.error.exception;
 import lombok.Getter;
 
 @Getter
-public class BusinessException extends RuntimeException {
-    private final BusinessExceptionType exceptionType;
+public class ClientException extends RuntimeException {
+    private final ExceptionType exceptionType;
 
-    public BusinessException(BusinessExceptionType exceptionType) {
+    public ClientException(ExceptionType exceptionType) {
         super(exceptionType.message());
         this.exceptionType = exceptionType;
     }

@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum CommonErrorType implements BusinessExceptionType {
+public enum CommonErrorType implements ExceptionType {
     /**
      * 404 Not Found
      */
