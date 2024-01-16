@@ -20,6 +20,8 @@ public enum CommonErrorType implements BusinessExceptionType {
 
     // 400 Bad Request
     INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "입력값이 올바르지 않습니다"),
+    // 415 UNSUPPORTED_MEDIA_TYPE
+    INVALID_JSON_TYPE(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "올바른 요청 형식이 아닙니다")
     ;
 
     private final HttpStatus status;
