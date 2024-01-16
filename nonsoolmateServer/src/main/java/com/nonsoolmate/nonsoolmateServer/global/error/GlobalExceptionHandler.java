@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({Exception.class})
     protected ResponseEntity<ErrorResponse> handleServerException(Exception ex) {
-        log.error("🚨 InternalException occurred: {} 🚨", ex.getMessage());
+        log.error("🚨InternalException occurred: {} 🚨", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ErrorResponse.of(CommonErrorType.INTERNAL_SERVER_ERROR));
     }
