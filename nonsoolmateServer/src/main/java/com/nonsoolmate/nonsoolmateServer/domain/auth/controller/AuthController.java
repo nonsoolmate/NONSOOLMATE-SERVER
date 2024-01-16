@@ -43,12 +43,12 @@ public class AuthController implements AuthApi{
     public ResponseEntity<ApiResponse<MemberAuthResponseDTO>> login(
             final String authorizationCode,
             @RequestBody @Valid final
-            MemberRequestDTO request, HttpServletResponse response) {
+            MemberRequestDTO request) {
         PlatformType platformType = PlatformType.of(request.platformType());
 
         MemberSignUpVO vo = authServiceProvider.getAuthService(platformType)
                 .saveMemberOrLogin(authorizationCode, request);
-        MemberAuthResponseDTO responseDTO = jwtService.issueToken(vo, response);
+        MemberAuthResponseDTO responseDTO = jwtService.issueToken(vo);
         if (responseDTO.authType().equals(AuthType.SIGN_UP)) {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(ApiResponse.success(AuthSuccessType.SIGN_UP_SUCCESS, responseDTO));
@@ -58,9 +58,8 @@ public class AuthController implements AuthApi{
 
     @Override
     @PostMapping("/reissue")
-    public ResponseEntity<ApiResponse<MemberReissueResponseDTO>> reissue(HttpServletRequest request,
-                                                                         HttpServletResponse response) {
-        MemberReissueResponseDTO memberReissueResponseDTO = jwtService.reissueToken(request, response);
+    public ResponseEntity<ApiResponse<MemberReissueResponseDTO>> reissue(HttpServletRequest request) {
+        MemberReissueResponseDTO memberReissueResponseDTO = jwtService.reissueToken(request);
         return ResponseEntity.ok().body(ApiResponse.success(AuthSuccessType.REISSUE_SUCCESS, memberReissueResponseDTO));
     }
 
