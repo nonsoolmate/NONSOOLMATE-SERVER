@@ -67,11 +67,11 @@ public class S3Service {
 
             HeadObjectResponse response = s3Client.headObject(request);
             if (response == null) {
-                throw new AWSException(AWSExceptionType.NOT_FOUND_FILE_AWS_S3);
+                throw new AWSException(AWSExceptionType.NOT_FOUND_SHEET_FILE_AWS_S3);
             }
             return fileName;
         } catch (S3Exception e) {
-            throw new AWSException(AWSExceptionType.NOT_FOUND_FILE_AWS_S3);
+            throw new AWSException(AWSExceptionType.NOT_FOUND_SHEET_FILE_AWS_S3);
         }
     }
 
