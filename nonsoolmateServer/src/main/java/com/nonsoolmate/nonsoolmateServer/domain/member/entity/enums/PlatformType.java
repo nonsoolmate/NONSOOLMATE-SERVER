@@ -9,7 +9,7 @@ public enum PlatformType {
     NAVER, NONE;
 
     public static PlatformType of(String platformType) {
-        return Arrays.stream(PlatformType.values()).filter(type -> type.equals(platformType)).findAny()
+        return Arrays.stream(PlatformType.values()).filter(type -> type.toString().equals(platformType)).findAny()
                 .orElseThrow(() -> new AuthException(INVALID_PLATFORM_TYPE));
     }
 }
