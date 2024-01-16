@@ -4,6 +4,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthException;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.AuthService;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
+import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.PlatformType;
 import com.nonsoolmate.nonsoolmateServer.domain.member.repository.MemberRepository;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.request.MemberRequestDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.vo.MemberSignUpVO;
@@ -40,17 +41,17 @@ public class NaverAuthService extends AuthService {
     public MemberSignUpVO saveMemberOrLogin(String authorizationCode, MemberRequestDTO request) {
         String accessToken = getAccessToken(authorizationCode, clientId, clientSecret, state).getAccess_token();
         NaverMemberVO naverMemberInfo = getNaverMemberInfo(accessToken);
-        Member foundMember = getMember(request.platformType(), naverMemberInfo.getResponse().getEmail());
+        Member foundMember = getMember(PlatformType.of(request.platformType()), naverMemberInfo.getResponse().getEmail());
 
         if (foundMember != null) {
-            return MemberSignUpVO.of(foundMember, request.platformType(), AuthType.LOGIN);
+            return MemberSignUpVO.of(foundMember, PlatformType.of(request.platformType()), AuthType.LOGIN);
         }
         Member savedMember = saveUser(request, naverMemberInfo.getResponse().getEmail(),
                 naverMemberInfo.getResponse().getName(),
                 naverMemberInfo.getResponse().getBirthyear(), naverMemberInfo.getResponse().getGender(),
                 naverMemberInfo.getResponse().getMobile());
 
-        return MemberSignUpVO.of(savedMember, request.platformType(), AuthType.SIGN_UP);
+        return MemberSignUpVO.of(savedMember, PlatformType.of(request.platformType()), AuthType.SIGN_UP);
 
     }
 
