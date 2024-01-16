@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public enum CommonSuccessType implements BusinessSucessType {
+public enum CommonSuccessType implements SuccessType {
 
     // 200 OK
     GET_SERVER_PROFILE(HttpStatus.OK, "서버 프로필 확인 완료");

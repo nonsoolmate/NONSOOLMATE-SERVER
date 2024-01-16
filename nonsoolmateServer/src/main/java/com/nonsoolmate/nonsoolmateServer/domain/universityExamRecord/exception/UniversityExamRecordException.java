@@ -1,11 +1,11 @@
 package com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception;
 
-import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessException;
-import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessExceptionType;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.ClientException;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.ExceptionType;
 
-public class UniversityExamRecordException extends BusinessException {
+public class UniversityExamRecordException extends ClientException {
     public UniversityExamRecordException(
-            BusinessExceptionType exceptionType) {
+            ExceptionType exceptionType) {
         super(exceptionType);
     }
 }

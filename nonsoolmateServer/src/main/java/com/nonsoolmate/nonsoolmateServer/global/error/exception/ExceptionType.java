@@ -2,7 +2,7 @@ package com.nonsoolmate.nonsoolmateServer.global.error.exception;
 
 import org.springframework.http.HttpStatus;
 
-public interface BusinessExceptionType {
+public interface ExceptionType {
     HttpStatus status();
 
     String message();

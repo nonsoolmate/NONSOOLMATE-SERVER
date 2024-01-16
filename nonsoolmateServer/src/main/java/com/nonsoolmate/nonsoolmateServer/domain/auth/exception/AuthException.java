@@ -1,10 +1,10 @@
 package com.nonsoolmate.nonsoolmateServer.domain.auth.exception;
 
-import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessException;
-import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessExceptionType;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.ClientException;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.ExceptionType;
 
-public class AuthException extends BusinessException {
-    public AuthException(BusinessExceptionType exceptionType) {
+public class AuthException extends ClientException {
+    public AuthException(ExceptionType exceptionType) {
         super(exceptionType);
     }
 }

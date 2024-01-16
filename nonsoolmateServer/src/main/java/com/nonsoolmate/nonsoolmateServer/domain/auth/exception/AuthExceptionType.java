@@ -1,13 +1,12 @@
 package com.nonsoolmate.nonsoolmateServer.domain.auth.exception;
 
-import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessExceptionType;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.ExceptionType;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum AuthExceptionType implements BusinessExceptionType {
+public enum AuthExceptionType implements ExceptionType {
 
     /**
      * 400 Bad Request

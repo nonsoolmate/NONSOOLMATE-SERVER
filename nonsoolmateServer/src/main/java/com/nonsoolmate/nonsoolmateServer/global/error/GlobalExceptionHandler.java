@@ -5,7 +5,6 @@ import com.nonsoolmate.nonsoolmateServer.global.error.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -19,8 +18,8 @@ import java.util.HashMap;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-    @ExceptionHandler({BusinessException.class})
-    protected ResponseEntity<ApiResponse> handleCustomException(BusinessException ex) {
+    @ExceptionHandler({ClientException.class})
+    protected ResponseEntity<ApiResponse> handleCustomException(ClientException ex) {
         log.error("🚨 BusinessException occured: {} 🚨", ex.getMessage());
         return ResponseEntity.status(ex.getExceptionType().status()).body(ApiResponse.error(ex.getExceptionType()));
     }

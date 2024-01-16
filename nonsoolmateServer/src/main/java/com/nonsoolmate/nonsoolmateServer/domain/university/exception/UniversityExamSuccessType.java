@@ -1,12 +1,12 @@
 package com.nonsoolmate.nonsoolmateServer.domain.university.exception;
 
-import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessSucessType;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.SuccessType;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum UniversityExamSuccessType implements BusinessSucessType {
+public enum UniversityExamSuccessType implements SuccessType {
     /**
      * 200 OK
      */

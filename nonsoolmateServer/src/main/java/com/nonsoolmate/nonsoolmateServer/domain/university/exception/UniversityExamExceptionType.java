@@ -1,12 +1,12 @@
 package com.nonsoolmate.nonsoolmateServer.domain.university.exception;
 
-import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessExceptionType;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.ExceptionType;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum UniversityExamExceptionType implements BusinessExceptionType {
+public enum UniversityExamExceptionType implements ExceptionType {
 
     /**
      * 404 Not Found
