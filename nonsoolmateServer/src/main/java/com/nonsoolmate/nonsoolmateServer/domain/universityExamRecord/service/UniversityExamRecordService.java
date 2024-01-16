@@ -40,9 +40,7 @@ public class UniversityExamRecordService {
         UniversityExam universityExam = getUniversityExam(universityExamId);
         UniversityExamRecord universityExamRecord = getUniversityExamByUniversityExamAndMember(universityExam, member);
 
-        if(universityExamRecord.getExamRecordResultFileName() == null){
-            throw new UniversityExamRecordException(INVALID_UNIVERSITY_EXAM_RECORD_RESULT_FILE_NAME);
-        }
+        validateCorrection(universityExamRecord);
 
         String answerUrl = cloudFrontService.createPreSignedGetUrl(EXAM_ANSWER_FOLDER_NAME,
                 universityExam.getUniversityExamAnswerFileName(), universityExam.getUniversityExamTimeLimit());
@@ -57,10 +55,18 @@ public class UniversityExamRecordService {
         UniversityExam universityExam = getUniversityExam(universityExamId);
         UniversityExamRecord universityExamRecord = getUniversityExamByUniversityExamAndMember(universityExam, member);
 
+        validateCorrection(universityExamRecord);
+
         String resultUrl = cloudFrontService.createPreSignedGetUrl(EXAM_RESULT_FOLDER_NAME,
                 universityExamRecord.getExamRecordResultFileName(), universityExam.getUniversityExamTimeLimit());
 
         return UniversityExamRecordResultResponseDTO.of(resultUrl);
+    }
+
+    private void validateCorrection(UniversityExamRecord universityExamRecord) {
+        if(universityExamRecord.getExamRecordResultFileName() == null){
+            throw new UniversityExamRecordException(INVALID_UNIVERSITY_EXAM_RECORD_RESULT_FILE_NAME);
+        }
     }
 
     @Transactional
