@@ -25,6 +25,7 @@ public interface UniversityExamRecordApi {
     @ApiResponses(
             value = {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200"),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", content = @Content),
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", content = @Content)
             }
     )
