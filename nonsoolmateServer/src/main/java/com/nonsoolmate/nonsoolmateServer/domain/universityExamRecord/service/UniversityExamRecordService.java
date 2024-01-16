@@ -19,6 +19,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.entity.enum
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.UniversityExamRecordException;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.repository.UniversityExamRecordRepository;
 import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSBusinessException;
+import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSClientException;
 import com.nonsoolmate.nonsoolmateServer.external.aws.service.CloudFrontService;
 import com.nonsoolmate.nonsoolmateServer.external.aws.service.S3Service;
 import lombok.RequiredArgsConstructor;
@@ -83,7 +84,7 @@ public class UniversityExamRecordService {
                     universityexamRecord);
             decreaseMemberTicketCount(member);
             return UniversityExamRecordIdResponse.of(saveUniversityUniversityExamRecord.getUniversityExamRecordId());
-        } catch (AWSBusinessException | MemberException e) {
+        } catch (AWSClientException | MemberException e) {
             throw e;
         } catch (RuntimeException e) {
             s3Service.deleteFile(EXAM_SHEET_FOLDER_NAME, request.memberSheetFileName());

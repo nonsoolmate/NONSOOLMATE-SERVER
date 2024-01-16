@@ -62,14 +62,10 @@ public class S3Service {
                     .bucket(bucketName)
                     .key(zipUrl)
                     .build();
-
-            HeadObjectResponse response = s3Client.headObject(request);
-            if (response == null) {
-                throw new AWSClientException(AWSExceptionType.NOT_FOUND_SHEET_FILE_AWS_S3);
-            }
+            s3Client.headObject(request);
             return fileName;
         } catch (S3Exception e) {
-            throw new AWSBusinessException(AWSExceptionType.AWS_S3_SERVICE_ERROR);
+            throw new AWSClientException(AWSExceptionType.NOT_FOUND_SHEET_FILE_AWS_S3);
         }
     }
 
