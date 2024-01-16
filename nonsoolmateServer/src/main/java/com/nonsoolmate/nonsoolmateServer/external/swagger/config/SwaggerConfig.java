@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition(
@@ -16,6 +17,10 @@ import org.springframework.context.annotation.Configuration;
         security = {
                 @SecurityRequirement(name = "Authorization"),
                 @SecurityRequirement(name = "Authorization-refresh")
+        },
+        servers = {
+                @Server(url = "http://localhost:8080", description = "local server"),
+                @Server(url = "https://api.nonsoolmate.com", description = "prd server")
         })
 @SecuritySchemes({
         @SecurityScheme(name = "Authorization",
