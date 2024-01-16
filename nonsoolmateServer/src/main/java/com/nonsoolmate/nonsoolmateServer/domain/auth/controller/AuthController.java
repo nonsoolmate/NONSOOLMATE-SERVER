@@ -3,14 +3,13 @@ package com.nonsoolmate.nonsoolmateServer.domain.auth.controller;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.request.MemberRequestDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.response.MemberAuthResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.response.MemberReissueResponseDTO;
+import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.PlatformType;
 import com.nonsoolmate.nonsoolmateServer.external.oauth.service.vo.enums.AuthType;
 import com.nonsoolmate.nonsoolmateServer.global.jwt.service.JwtService;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.AuthServiceProvider;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.vo.MemberSignUpVO;
 import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthSuccessType;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -45,7 +44,9 @@ public class AuthController implements AuthApi{
             final String authorizationCode,
             @RequestBody @Valid final
             MemberRequestDTO request, HttpServletResponse response) {
-        MemberSignUpVO vo = authServiceProvider.getAuthService(request.platformType())
+        PlatformType platformType = PlatformType.of(request.platformType());
+
+        MemberSignUpVO vo = authServiceProvider.getAuthService(platformType)
                 .saveMemberOrLogin(authorizationCode, request);
         MemberAuthResponseDTO responseDTO = jwtService.issueToken(vo, response);
         if (responseDTO.authType().equals(AuthType.SIGN_UP)) {
