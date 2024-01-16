@@ -30,11 +30,11 @@ public class CloudFrontService {
     @Value("${aws-property.key-pair-id}")
     private String keyPairId;
 
-    public String createPreSignedGetUrl(String path, String fileName, int expireTime) {
+    public String createPreSignedGetUrl(String path, String fileName) {
         try {
             String resourcePath = getEncodedResourcePath(path, fileName);
             String cloudFrontUrl = "https://" + distributionDomain + "/" + resourcePath;
-            Instant expirationTime = Instant.now().plus(expireTime, ChronoUnit.MINUTES);
+            Instant expirationTime = Instant.now().plus(30, ChronoUnit.SECONDS);
             Path keyPath = Paths.get(privateKeyFilePath);
 
             CloudFrontUtilities cloudFrontUtilities = CloudFrontUtilities.create();
