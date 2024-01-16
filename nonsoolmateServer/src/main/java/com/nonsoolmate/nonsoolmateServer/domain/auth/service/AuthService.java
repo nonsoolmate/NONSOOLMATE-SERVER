@@ -25,7 +25,7 @@ public abstract class AuthService {
 
     protected Member saveUser(MemberRequestDTO request, String email, String name, String birthday, String gender,
                               String phoneNumber) {
-        Member newMember = createSocialMember(email, name, request.platformType(), birthday, gender, phoneNumber);
+        Member newMember = createSocialMember(email, name, PlatformType.of(request.platformType()), birthday, gender, phoneNumber);
         return memberRepository.saveAndFlush(newMember);
     }
 
