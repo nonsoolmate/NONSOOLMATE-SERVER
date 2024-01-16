@@ -29,16 +29,13 @@ public class SecurityConfig {
     private static final String[] AUTH_WHITELIST = {
             "/", "/error", "/webjars/**",
 
-            // Swagger
             "/swagger-resources/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/webjars/**",
 
-            // Authentication
             "/auth/**", "/login/**","/authTest",
 
-            // client
             "/","/css/**","/images/**","/js/**","/favicon.ico","/h2-console/**", "/actuator/health"
     };
 
@@ -54,8 +51,6 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtExceptionFilter jwtExceptionFilter;
 
-
-    //cors 에러를 대응하기 위한 메소드
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -104,15 +99,12 @@ public class SecurityConfig {
                                 frameOptionsConfig.disable()
                         )
                 )
-              //  .userDetailsService(memberAuthService)
         ;
 
-        //== URL별 권한 관리 옵션 ==//
         http.authorizeHttpRequests(auth -> {
                     auth.requestMatchers(AUTH_WHITELIST).permitAll();
                     auth.anyRequest().authenticated();
                 })
-                // 원래 스프링 시큐리티 필터 순서가 LogoutFilter 이후에 로그인 필터 동작
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
 
