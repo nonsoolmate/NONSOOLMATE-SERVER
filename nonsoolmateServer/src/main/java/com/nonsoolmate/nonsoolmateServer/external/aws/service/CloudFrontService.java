@@ -1,6 +1,6 @@
 package com.nonsoolmate.nonsoolmateServer.external.aws.service;
 
-import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSException;
+import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSBusinessException;
 import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSExceptionType;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -48,9 +48,10 @@ public class CloudFrontService {
                     .build();
             SignedUrl signedUrl = cloudFrontUtilities.getSignedUrlWithCannedPolicy(cannedSignerRequest);
             return signedUrl.url();
+        } catch(AWSBusinessException e){
+            throw new AWSBusinessException(AWSExceptionType.GET_PRESIGNED_URL_AWS_CLOUDFRONT_FAIL);
         } catch (Exception e) {
-            log.info("createPreSignedGetUrl = {}", e);
-            throw new AWSException(AWSExceptionType.GET_PRESIGNED_URL_AWS_CLOUDFRONT_FAIL);
+            throw new AWSBusinessException(AWSExceptionType.NOT_FOUND_AWS_PRIVATE_KEY);
         }
     }
 

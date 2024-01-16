@@ -1,8 +1,7 @@
 package com.nonsoolmate.nonsoolmateServer.external.aws.service;
 
 import com.nonsoolmate.nonsoolmateServer.external.aws.config.AWSConfig;
-import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSException;
-import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSExceptionType;
+import com.nonsoolmate.nonsoolmateServer.external.aws.error.*;
 import com.nonsoolmate.nonsoolmateServer.external.aws.service.vo.PreSignedUrlVO;
 import java.time.Duration;
 import java.util.UUID;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
-import software.amazon.awssdk.services.s3.model.GetUrlRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
 import software.amazon.awssdk.services.s3.model.S3Exception;
@@ -67,11 +65,11 @@ public class S3Service {
 
             HeadObjectResponse response = s3Client.headObject(request);
             if (response == null) {
-                throw new AWSException(AWSExceptionType.NOT_FOUND_SHEET_FILE_AWS_S3);
+                throw new AWSClientException(AWSExceptionType.NOT_FOUND_SHEET_FILE_AWS_S3);
             }
             return fileName;
         } catch (S3Exception e) {
-            throw new AWSException(AWSExceptionType.NOT_FOUND_SHEET_FILE_AWS_S3);
+            throw new AWSBusinessException(AWSExceptionType.AWS_S3_SERVICE_ERROR);
         }
     }
 
@@ -85,7 +83,7 @@ public class S3Service {
                             .build()
             );
         } catch (S3Exception e) {
-            throw new AWSException(AWSExceptionType.DELETE_FILE_AWS_S3_FAIL);
+            throw new AWSBusinessException(AWSExceptionType.DELETE_FILE_AWS_S3_FAIL);
         }
     }
 }
