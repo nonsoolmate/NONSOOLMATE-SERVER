@@ -7,9 +7,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.respon
 import com.nonsoolmate.nonsoolmateServer.domain.university.controller.dto.response.UniversityExamInfoResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamSuccessType;
 import com.nonsoolmate.nonsoolmateServer.domain.university.service.UniversityExamService;
-import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.nonsoolmate.nonsoolmateServer.global.response.SuccessResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,28 +27,28 @@ public class UniversityExamController implements UniversityApi{
 
     @Override
     @GetMapping("/{id}/info")
-    public ResponseEntity<ApiResponse<UniversityExamInfoResponseDTO>> getUniversityExam(
+    public ResponseEntity<SuccessResponse<UniversityExamInfoResponseDTO>> getUniversityExam(
             @PathVariable("id") Long universityExamId) {
-        return ResponseEntity.ok().body(ApiResponse.success(UniversityExamSuccessType.GET_UNIVERSITY_EXAM_SUCCESS,
+        return ResponseEntity.ok().body(SuccessResponse.of(UniversityExamSuccessType.GET_UNIVERSITY_EXAM_SUCCESS,
                 universityExamService.getUniversityExam(universityExamId)));
     }
 
     @Override
     @GetMapping("{id}/image")
-    public ResponseEntity<ApiResponse<Page<UniversityExamImageResponseDTO>>> getUniversityExamImages(
+    public ResponseEntity<SuccessResponse<Page<UniversityExamImageResponseDTO>>> getUniversityExamImages(
             @PathVariable("id") Long id, @RequestParam(defaultValue = "0") int page, Pageable pageable) {
         PageRequest pageRequest = PageRequest.of(page, 1);
         Page<UniversityExamImageResponseDTO> images = universityExamService.getUniversityExamImages(id, pageRequest);
         return ResponseEntity.ok()
-                .body(ApiResponse.success(UniversityExamSuccessType.GET_UNIVERSITY_EXAM_IMAGE_SUCCESS, images));
+                .body(SuccessResponse.of(UniversityExamSuccessType.GET_UNIVERSITY_EXAM_IMAGE_SUCCESS, images));
     }
 
     @Override
     @GetMapping("{id}/answer")
-    public ResponseEntity<ApiResponse<UniversityExamImageAndAnswerResponseDTO>> getUniversityExamImageAndAnswer(
+    public ResponseEntity<SuccessResponse<UniversityExamImageAndAnswerResponseDTO>> getUniversityExamImageAndAnswer(
             @PathVariable("id") Long universityExamId
     ) {
-        return ResponseEntity.ok().body(ApiResponse.success(GET_UNIVERSITY_EXAM_IMAGE_AND_ANSWER_SUCCESS,
+        return ResponseEntity.ok().body(SuccessResponse.of(GET_UNIVERSITY_EXAM_IMAGE_AND_ANSWER_SUCCESS,
                 universityExamService.getUniversityExamImageAndAnswer(universityExamId)));
     }
 }

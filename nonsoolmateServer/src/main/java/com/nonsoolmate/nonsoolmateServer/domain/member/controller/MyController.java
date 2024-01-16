@@ -5,10 +5,8 @@ import com.nonsoolmate.nonsoolmateServer.domain.member.controller.dto.response.T
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.Member;
 import com.nonsoolmate.nonsoolmateServer.domain.member.exception.MemberSuccessType;
 import com.nonsoolmate.nonsoolmateServer.domain.member.service.MemberService;
-import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
+import com.nonsoolmate.nonsoolmateServer.global.response.SuccessResponse;
 import com.nonsoolmate.nonsoolmateServer.global.security.AuthUser;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,17 +21,17 @@ public class MyController implements MemberApi{
 
     @Override
     @GetMapping("/name")
-    public ResponseEntity<ApiResponse<NameResponseDTO>> getName(@AuthUser Member member) {
+    public ResponseEntity<SuccessResponse<NameResponseDTO>> getName(@AuthUser Member member) {
         return ResponseEntity.ok()
-                .body(ApiResponse.success(MemberSuccessType.GET_MEMBER_NAME_SUCCESS,
+                .body(SuccessResponse.of(MemberSuccessType.GET_MEMBER_NAME_SUCCESS,
                         memberService.getNickname(member)));
     }
 
     @Override
     @GetMapping("/ticket")
-    public ResponseEntity<ApiResponse<TicketResponseDTO>> getTicket(@AuthUser Member member) {
+    public ResponseEntity<SuccessResponse<TicketResponseDTO>> getTicket(@AuthUser Member member) {
         return ResponseEntity.ok()
-                .body(ApiResponse.success(MemberSuccessType.GET_MEMBER_TICKET_SUCCESS,
+                .body(SuccessResponse.of(MemberSuccessType.GET_MEMBER_TICKET_SUCCESS,
                         memberService.getTicket(member)));
     }
 }

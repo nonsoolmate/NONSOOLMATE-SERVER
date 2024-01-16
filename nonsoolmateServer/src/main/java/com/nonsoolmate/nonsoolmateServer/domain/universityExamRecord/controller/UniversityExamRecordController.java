@@ -13,10 +13,8 @@ import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.U
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.service.UniversityExamRecordService;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.service.UniversityExamRecordSheetService;
 import com.nonsoolmate.nonsoolmateServer.external.aws.service.vo.PreSignedUrlVO;
-import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
+import com.nonsoolmate.nonsoolmateServer.global.response.SuccessResponse;
 import com.nonsoolmate.nonsoolmateServer.global.security.AuthUser;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,25 +36,25 @@ public class UniversityExamRecordController implements UniversityExamRecordApi {
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<UniversityExamRecordResponseDTO>> getUniversityExamRecord(
+    public ResponseEntity<SuccessResponse<UniversityExamRecordResponseDTO>> getUniversityExamRecord(
             @PathVariable("id") Long universityExamId, @AuthUser Member member) {
-        return ResponseEntity.ok().body(ApiResponse.success(GET_UNIVERSITY_EXAM_RECORD_SUCCESS,
+        return ResponseEntity.ok().body(SuccessResponse.of(GET_UNIVERSITY_EXAM_RECORD_SUCCESS,
                 universityExamRecordService.getUniversityExamRecord(universityExamId, member)));
     }
 
     @Override
     @GetMapping("/result/{id}")
-    public ResponseEntity<ApiResponse<UniversityExamRecordResultResponseDTO>> getUniversityExamRecordResult(
+    public ResponseEntity<SuccessResponse<UniversityExamRecordResultResponseDTO>> getUniversityExamRecordResult(
             @PathVariable("id") Long universityExamId, @AuthUser Member member) {
-        return ResponseEntity.ok().body(ApiResponse.success(GET_UNIVERSITY_EXAM_RECORD_RESULT_SUCCESS,
+        return ResponseEntity.ok().body(SuccessResponse.of(GET_UNIVERSITY_EXAM_RECORD_RESULT_SUCCESS,
                 universityExamRecordService.getUniversityExamRecordResult(universityExamId, member)));
     }
 
     @Override
     @GetMapping("/sheet/presigned")
-    public ResponseEntity<ApiResponse<UniversityExamSheetPreSignedUrlResponseDTO>> getUniversityExamSheetPreSignedUrl() {
+    public ResponseEntity<SuccessResponse<UniversityExamSheetPreSignedUrlResponseDTO>> getUniversityExamSheetPreSignedUrl() {
         PreSignedUrlVO universityExamRecordSheetPreSignedUrlVO = universityExamRecordSheetService.getUniversityExamRecordSheetPreSignedUrl();
-        return ResponseEntity.ok().body(ApiResponse.success(
+        return ResponseEntity.ok().body(SuccessResponse.of(
                 UniversityExamRecordSuccessType.GET_UNIVERSITY_EXAM_RECORD_SHEET_PRESIGNED_SUCCESS,
                 UniversityExamSheetPreSignedUrlResponseDTO.of(universityExamRecordSheetPreSignedUrlVO.getFileName(),
                         universityExamRecordSheetPreSignedUrlVO.getUrl())));
@@ -64,10 +62,10 @@ public class UniversityExamRecordController implements UniversityExamRecordApi {
 
     @Override
     @PostMapping("/sheet")
-    public ResponseEntity<ApiResponse<UniversityExamRecordIdResponse>> createUniversityExamRecord(
+    public ResponseEntity<SuccessResponse<UniversityExamRecordIdResponse>> createUniversityExamRecord(
             @Valid @RequestBody CreateUniversityExamRequestDTO createUniversityExamRequestDTO,
             @AuthUser Member member) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(
+        return ResponseEntity.status(HttpStatus.CREATED).body(SuccessResponse.of(
                 UniversityExamRecordSuccessType.CREATE_UNIVERSITY_EXAM_RECORD_SUCCESS,
                 universityExamRecordService.createUniversityExamRecord(
                         createUniversityExamRequestDTO, member)));
