@@ -2,7 +2,8 @@ package com.nonsoolmate.nonsoolmateServer.global.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthException;
-import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
+import com.nonsoolmate.nonsoolmateServer.global.response.ErrorResponse;
+import com.nonsoolmate.nonsoolmateServer.global.response.SuccessResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("UTF-8");
-            String error = objectMapper.writeValueAsString(ApiResponse.error(e.getExceptionType()));
+            String error = objectMapper.writeValueAsString(ErrorResponse.of(e.getExceptionType()));
             response.getWriter().write(error);
         }
     }

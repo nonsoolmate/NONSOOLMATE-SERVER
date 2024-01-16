@@ -10,10 +10,8 @@ import com.nonsoolmate.nonsoolmateServer.domain.selectUniversity.controller.dto.
 import com.nonsoolmate.nonsoolmateServer.domain.selectUniversity.controller.dto.response.SelectUniversityResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.selectUniversity.controller.dto.response.SelectUniversityUpdateResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.selectUniversity.service.SelectUniversityService;
-import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
+import com.nonsoolmate.nonsoolmateServer.global.response.SuccessResponse;
 import com.nonsoolmate.nonsoolmateServer.global.security.AuthUser;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -33,28 +31,28 @@ public class SelectUniversityController implements SelectUniversityApi {
 
     @Override
     @GetMapping
-    public ResponseEntity<ApiResponse<List<SelectUniversityResponseDTO>>> getSelectUniversities(
+    public ResponseEntity<SuccessResponse<List<SelectUniversityResponseDTO>>> getSelectUniversities(
             @AuthUser Member member) {
 
-        return ResponseEntity.ok().body(ApiResponse.success(GET_SELECT_UNIVERSITIES_SUCCESS,
+        return ResponseEntity.ok().body(SuccessResponse.of(GET_SELECT_UNIVERSITIES_SUCCESS,
                 selectUniversityService.getSelectUniversities(member)));
     }
 
     @Override
     @GetMapping("/exam")
-    public ResponseEntity<ApiResponse<List<SelectUniversityExamsResponseDTO>>> getSelectUniversityExams(
+    public ResponseEntity<SuccessResponse<List<SelectUniversityExamsResponseDTO>>> getSelectUniversityExams(
             @AuthUser Member member) {
-        return ResponseEntity.ok().body(ApiResponse.success(GET_SELECT_UNIVERSITY_EXAMS_SUCCESS,
+        return ResponseEntity.ok().body(SuccessResponse.of(GET_SELECT_UNIVERSITY_EXAMS_SUCCESS,
                 selectUniversityService.getSelectUniversityExams(member)));
     }
 
     @Override
     @PatchMapping
-    public ResponseEntity<ApiResponse<SelectUniversityUpdateResponseDTO>> patchSelectUniversities(
+    public ResponseEntity<SuccessResponse<SelectUniversityUpdateResponseDTO>> patchSelectUniversities(
             @AuthUser Member member,
             @RequestBody @Valid final List<SelectUniversityRequestDTO> request) {
 
-        return ResponseEntity.ok().body(ApiResponse.success(PATCH_SELECT_UNIVERSITIES_SUCCESS,
+        return ResponseEntity.ok().body(SuccessResponse.of(PATCH_SELECT_UNIVERSITIES_SUCCESS,
                 selectUniversityService.patchSelectUniversities(member, request)));
     }
 }

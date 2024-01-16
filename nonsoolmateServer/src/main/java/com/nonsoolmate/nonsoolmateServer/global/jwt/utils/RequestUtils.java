@@ -8,7 +8,8 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthSuccessType;
-import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
+import com.nonsoolmate.nonsoolmateServer.global.response.ErrorResponse;
+import com.nonsoolmate.nonsoolmateServer.global.response.SuccessResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public abstract class RequestUtils {
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
         try {
-            String body = objectMapper.writeValueAsString(ApiResponse.success(success, bodyData));
+            String body = objectMapper.writeValueAsString(SuccessResponse.of(success, bodyData));
             response.getWriter().write(body);
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,7 +54,7 @@ public abstract class RequestUtils {
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
         try {
-            String body = objectMapper.writeValueAsString(ApiResponse.error(error));
+            String body = objectMapper.writeValueAsString(ErrorResponse.of(error));
             response.getWriter().write(body);
         } catch (IOException e) {
             e.printStackTrace();

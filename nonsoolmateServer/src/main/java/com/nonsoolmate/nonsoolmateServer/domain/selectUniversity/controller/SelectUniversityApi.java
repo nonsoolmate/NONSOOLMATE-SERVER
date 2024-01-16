@@ -5,7 +5,7 @@ import com.nonsoolmate.nonsoolmateServer.domain.selectUniversity.controller.dto.
 import com.nonsoolmate.nonsoolmateServer.domain.selectUniversity.controller.dto.response.SelectUniversityExamsResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.selectUniversity.controller.dto.response.SelectUniversityResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.selectUniversity.controller.dto.response.SelectUniversityUpdateResponseDTO;
-import com.nonsoolmate.nonsoolmateServer.global.response.ApiResponse;
+import com.nonsoolmate.nonsoolmateServer.global.response.SuccessResponse;
 import com.nonsoolmate.nonsoolmateServer.global.security.AuthUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,15 +31,15 @@ public interface SelectUniversityApi {
     )
 
     @Operation(summary = "목표대학 설정: 리스트 조회", description = "내 목표 대학 리스트를 조회합니다.")
-    ResponseEntity<ApiResponse<List<SelectUniversityResponseDTO>>> getSelectUniversities(
+    ResponseEntity<SuccessResponse<List<SelectUniversityResponseDTO>>> getSelectUniversities(
             @AuthUser Member member);
 
     @Operation(summary = "마이 페이지: 대학별 시험 리스트 조회", description = "내 목표 대학들의 시험 리스트를 조회합니다.")
-    ResponseEntity<ApiResponse<List<SelectUniversityExamsResponseDTO>>> getSelectUniversityExams(
+    ResponseEntity<SuccessResponse<List<SelectUniversityExamsResponseDTO>>> getSelectUniversityExams(
             @AuthUser Member member);
 
     @Operation(summary = "목표대학 설정: 리스트 선택", description = "내 목표 대학들 리스트를 업데이트(수정) 합니다.")
-    ResponseEntity<ApiResponse<SelectUniversityUpdateResponseDTO>> patchSelectUniversities(
+    ResponseEntity<SuccessResponse<SelectUniversityUpdateResponseDTO>> patchSelectUniversities(
             @AuthUser Member member,
             @Parameter(description = "선택 대학교 Id", required = true) @RequestBody @Valid List<SelectUniversityRequestDTO> request);
 }
