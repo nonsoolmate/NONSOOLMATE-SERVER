@@ -49,8 +49,7 @@ public class UniversityExamService {
                 pageable);
         return universityExamImages.map(image ->
                 UniversityExamImageResponseDTO.of(cloudFrontService.createPreSignedGetUrl(EXAM_IMAGE_FOLDER_NAME,
-                        image.getUniversityExamImageFileName(),
-                        image.getUniversityExam().getUniversityExamTimeLimit())));
+                        image.getUniversityExamImageFileName())));
     }
 
     public UniversityExamImageAndAnswerResponseDTO getUniversityExamImageAndAnswer(Long universityExamId) {
@@ -59,7 +58,7 @@ public class UniversityExamService {
                         UniversityExamExceptionType.NOT_FOUND_UNIVERSITY_EXAM));
 
         String examAnswerUrl = cloudFrontService.createPreSignedGetUrl(EXAM_ANSWER_FOLDER_NAME,
-                universityExam.getUniversityExamAnswerFileName(), universityExam.getUniversityExamTimeLimit());
+                universityExam.getUniversityExamAnswerFileName());
         List<UniversityExamImageResponseDTO> examImageUrls = new ArrayList<>();
 
         List<UniversityExamImage> UniversityExamImages = universityExamImageRepository.findAllByUniversityExamOrderByPageAsc(
@@ -67,7 +66,7 @@ public class UniversityExamService {
 
         UniversityExamImages.stream().forEach(universityExamImage -> {
             String preSignedGetUrl = cloudFrontService.createPreSignedGetUrl(EXAM_IMAGE_FOLDER_NAME,
-                    universityExamImage.getUniversityExamImageFileName(), universityExam.getUniversityExamTimeLimit());
+                    universityExamImage.getUniversityExamImageFileName());
             examImageUrls.add(
                     UniversityExamImageResponseDTO.of(preSignedGetUrl));
         });

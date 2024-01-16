@@ -43,9 +43,9 @@ public class UniversityExamRecordService {
         validateCorrection(universityExamRecord);
 
         String answerUrl = cloudFrontService.createPreSignedGetUrl(EXAM_ANSWER_FOLDER_NAME,
-                universityExam.getUniversityExamAnswerFileName(), universityExam.getUniversityExamTimeLimit());
+                universityExam.getUniversityExamAnswerFileName());
         String resultUrl = cloudFrontService.createPreSignedGetUrl(EXAM_RESULT_FOLDER_NAME,
-                universityExamRecord.getExamRecordResultFileName(), 2);
+                universityExamRecord.getExamRecordResultFileName());
 
         return UniversityExamRecordResponseDTO.of(universityExam.getUniversityExamFullName(), answerUrl, resultUrl);
     }
@@ -58,7 +58,7 @@ public class UniversityExamRecordService {
         validateCorrection(universityExamRecord);
 
         String resultUrl = cloudFrontService.createPreSignedGetUrl(EXAM_RESULT_FOLDER_NAME,
-                universityExamRecord.getExamRecordResultFileName(), universityExam.getUniversityExamTimeLimit());
+                universityExamRecord.getExamRecordResultFileName());
 
         return UniversityExamRecordResultResponseDTO.of(resultUrl);
     }
