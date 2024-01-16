@@ -22,12 +22,12 @@ public enum AuthExceptionType implements BusinessExceptionType {
      */
     UNAUTHORIZED_MEMBER_LOGIN(HttpStatus.UNAUTHORIZED, "로그인에 실패하였습니다."),
     UNAUTHORIZED_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "기한이 만료된 액세스 토큰입니다."),
+    UNAUTHORIZED_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "기한이 만료된 리프레시 토큰입니다.");
+
 
     /**
      * 404 Not Found
      */
-
-    NOT_FOUND_REFRESH_TOKEN(HttpStatus.NOT_FOUND, "유효한 리프레시 토큰을 찾지 못했습니다.");
 
     private final HttpStatus status;
     private final String message;
