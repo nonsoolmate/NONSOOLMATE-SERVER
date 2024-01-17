@@ -33,7 +33,7 @@ public class UniversityExamService {
     public UniversityExamInfoResponseDTO getUniversityExam(Long universityExamId) {
         UniversityExam universityExam = universityExamRepository.findByUniversityExamId(universityExamId)
                 .orElseThrow(() -> new UniversityExamException(
-                        UniversityExamExceptionType.NOT_FOUND_UNIVERSITY_EXAM));
+                        UniversityExamExceptionType.INVALID_UNIVERSITY_EXAM));
         String universityExamName = universityExam.getUniversityExamFullName();
         return UniversityExamInfoResponseDTO.of(universityExam.getUniversityExamId(),
                 universityExamName,
@@ -43,7 +43,7 @@ public class UniversityExamService {
     public Page<UniversityExamImageResponseDTO> getUniversityExamImages(Long id, Pageable pageable) {
         UniversityExam universityExam = universityExamRepository.findByUniversityExamId(id)
                 .orElseThrow(() -> new UniversityExamException(
-                        UniversityExamExceptionType.NOT_FOUND_UNIVERSITY_EXAM));
+                        UniversityExamExceptionType.INVALID_UNIVERSITY_EXAM));
         Page<UniversityExamImage> universityExamImages = universityExamImageRepository.findAllByUniversityExamOrderByPageAsc(
                 universityExam,
                 pageable);
@@ -55,7 +55,7 @@ public class UniversityExamService {
     public UniversityExamImageAndAnswerResponseDTO getUniversityExamImageAndAnswer(Long universityExamId) {
         UniversityExam universityExam = universityExamRepository.findByUniversityExamId(universityExamId)
                 .orElseThrow(() -> new UniversityExamException(
-                        UniversityExamExceptionType.NOT_FOUND_UNIVERSITY_EXAM));
+                        UniversityExamExceptionType.INVALID_UNIVERSITY_EXAM));
 
         String examAnswerUrl = cloudFrontService.createPreSignedGetUrl(EXAM_ANSWER_FOLDER_NAME,
                 universityExam.getUniversityExamAnswerFileName());
