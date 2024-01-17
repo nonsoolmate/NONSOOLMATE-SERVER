@@ -23,17 +23,26 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private static final String[] AUTH_WHITELIST = {
-            "/", "/error", "/webjars/**",
+    public static final String[] AUTH_WHITELIST = {
+            "/", "/error",
+
+             "/favicon.ico",
+
+            "/actuator/health", "/check/profile"
+    };
+
+    public static final String[] AUTH_WHITELIST_WILDCARD = {
+            "/webjars/**",
 
             "/swagger-resources/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/webjars/**",
+            "/auth/**", "/login/**",
 
-            "/auth/**", "/login/**", "/authTest",
+            "/css/**", "/images/**", "/js/**",
 
-            "/", "/css/**", "/images/**", "/js/**", "/favicon.ico", "/h2-console/**", "/actuator/health", "/check/profile"
+            "/h2-console/**",
     };
 
     @Value("${spring.web.domain.server}")
@@ -86,6 +95,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(auth -> {
                     auth.requestMatchers(AUTH_WHITELIST).permitAll();
+                    auth.requestMatchers(AUTH_WHITELIST_WILDCARD).permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
