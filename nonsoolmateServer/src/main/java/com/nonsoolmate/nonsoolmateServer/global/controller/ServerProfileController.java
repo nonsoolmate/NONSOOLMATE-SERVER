@@ -14,7 +14,7 @@ public class ServerProfileController {
 
     private final Environment env;
 
-    @GetMapping("/profile")
+    @GetMapping("/check/profile")
     public ResponseEntity<SuccessResponse<String>> getProfile() {
         return ResponseEntity.ok()
                 .body(SuccessResponse.of(CommonSuccessType.GET_SERVER_PROFILE, env.getActiveProfiles()[0]));
