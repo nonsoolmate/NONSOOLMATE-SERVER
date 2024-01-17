@@ -61,7 +61,7 @@ public class JwtService {
         String accessToken = jwtTokenProvider.createAccessToken(vo.email(), vo.memberId(), accessTokenExpirationPeriod);
 
         if (vo.role().equals(Role.USER)) {
-            String refreshToken = jwtTokenProvider.createRefreshToken(refreshTokenExpirationPeriod);
+            String refreshToken = jwtTokenProvider.createRefreshToken(vo.memberId(), refreshTokenExpirationPeriod);
             updateRefreshTokenByMemberId(vo.memberId(), refreshToken);
             return MemberAuthResponseDTO.of(vo.memberId(), vo.authType(), vo.name(), accessToken, refreshToken);
         }
@@ -71,13 +71,16 @@ public class JwtService {
 
     public MemberReissueResponseDTO reissueToken(HttpServletRequest request) {
         String refreshToken = extractRefreshToken(request);
-        String accessToken = extractAccessToken(request);
 
-        if (!validateToken(refreshToken)) {
+        try {
+            validateToken(refreshToken);
+        } catch (MalformedJwtException e) {
             throw new AuthException(INVALID_REFRESH_TOKEN);
+        } catch (ExpiredJwtException e){
+            throw new AuthException(UNAUTHORIZED_REFRESH_TOKEN);
         }
 
-        Claims tokenClaims = jwtTokenProvider.getTokenClaims(accessToken);
+        Claims tokenClaims = jwtTokenProvider.getTokenClaims(refreshToken);
         RefreshTokenVO foundRefreshToken = redisTokenRepository.findByMemberIdOrElseThrowException(
                 String.valueOf(tokenClaims.get(MEMBER_ID_CLAIM)));
 
@@ -90,7 +93,7 @@ public class JwtService {
         String email = (String) tokenClaims.get(EMAIL_CLAIM);
 
         String newAccessToken = jwtTokenProvider.createAccessToken(email, memberId, accessTokenExpirationPeriod);
-        String newRefreshToken = jwtTokenProvider.createRefreshToken(refreshTokenExpirationPeriod);
+        String newRefreshToken = jwtTokenProvider.createRefreshToken(memberId, refreshTokenExpirationPeriod);
 
         updateRefreshTokenByMemberId(memberId, newRefreshToken);
 
@@ -103,15 +106,9 @@ public class JwtService {
         return jwtTokenProvider.getMemberIdFromClaim(tokenClaims, AUTH_USER);
     }
 
-    public Boolean validateToken(final String atk) {
-        try {
-            Claims tokenClaims = jwtTokenProvider.getTokenClaims(atk);
-            return !tokenClaims.getExpiration().before(new Date());
-        } catch (MalformedJwtException e) {
-            throw new AuthException(INVALID_ACCESS_TOKEN);
-        } catch (ExpiredJwtException e){
-            throw new AuthException(UNAUTHORIZED_REFRESH_TOKEN);
-        }
+    public Boolean validateToken(final String atk) throws ExpiredJwtException, MalformedJwtException {
+        Claims tokenClaims = jwtTokenProvider.getTokenClaims(atk);
+        return !tokenClaims.getExpiration().before(new Date());
     }
 
     private String extractRefreshToken(HttpServletRequest request) {
