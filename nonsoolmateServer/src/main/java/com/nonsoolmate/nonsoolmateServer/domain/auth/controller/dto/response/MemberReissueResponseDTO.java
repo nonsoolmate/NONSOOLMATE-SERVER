@@ -1,6 +1,5 @@
 package com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.response;
 
-import com.nonsoolmate.nonsoolmateServer.external.oauth.service.vo.enums.AuthType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
