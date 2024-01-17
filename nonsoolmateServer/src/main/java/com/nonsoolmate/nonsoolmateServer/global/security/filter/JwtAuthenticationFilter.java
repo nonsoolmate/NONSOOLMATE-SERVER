@@ -3,18 +3,22 @@ package com.nonsoolmate.nonsoolmateServer.global.security.filter;
 
 import static com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType.INVALID_ACCESS_TOKEN;
 import static com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthExceptionType.UNAUTHORIZED_ACCESS_TOKEN;
+import static com.nonsoolmate.nonsoolmateServer.global.security.config.SecurityConfig.AUTH_WHITELIST;
+import static com.nonsoolmate.nonsoolmateServer.global.security.config.SecurityConfig.AUTH_WHITELIST_WILDCARD;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.exception.AuthException;
 import com.nonsoolmate.nonsoolmateServer.global.jwt.service.JwtService;
 import com.nonsoolmate.nonsoolmateServer.global.security.service.MemberAuthService;
 import com.nonsoolmate.nonsoolmateServer.global.jwt.utils.RequestUtils;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,17 +40,28 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        if (Arrays.stream(AUTH_WHITELIST)
+                .anyMatch(whiteUrl -> request.getRequestURI().equals(whiteUrl))) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        if (Arrays.stream(AUTH_WHITELIST_WILDCARD)
+                .anyMatch(
+                        whiteUrl -> request.getRequestURI().startsWith(whiteUrl.substring(0, whiteUrl.length() - 3)))) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if (!RequestUtils.isContainsAccessToken(request)) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        String authorizationAccessToken = RequestUtils.getAuthorizationAccessToken((HttpServletRequest) request);
+        String authorizationAccessToken = RequestUtils.getAuthorizationAccessToken(request);
 
         try {
-            if (!jwtService.validateToken(authorizationAccessToken)) {
-                throw new AuthException(UNAUTHORIZED_ACCESS_TOKEN);
-            }
+            jwtService.validateToken(authorizationAccessToken);
 
             Long memberId = jwtService.extractMemberIdFromAccessToken(authorizationAccessToken);
             UserDetails userDetails = memberAuthService.loadUserByUsername(String.valueOf(memberId));
@@ -56,9 +71,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.info("Authentication Principal : {}", authentication.getPrincipal().toString());
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException | MalformedJwtException e) {
             throw new AuthException(INVALID_ACCESS_TOKEN);
-        } catch (AuthException e) {
+        } catch (ExpiredJwtException e){
+            throw new AuthException(UNAUTHORIZED_ACCESS_TOKEN);
+        }
+        catch (AuthException e) {
             throw new AuthException(e.getExceptionType());
         }
 
