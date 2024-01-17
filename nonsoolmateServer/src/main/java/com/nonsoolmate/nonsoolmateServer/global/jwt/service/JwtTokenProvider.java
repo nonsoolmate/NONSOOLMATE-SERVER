@@ -45,11 +45,12 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String createRefreshToken(Long expirationTime) {
+    public String createRefreshToken(Long memberId, Long expirationTime) {
         Date now = new Date();
 
         return Jwts.builder()
                 .setSubject(REFRESH_TOKEN_SUBJECT)
+                .claim(MEMBER_ID_CLAIM, memberId)
                 .setIssuedAt(now)   //토큰 발행 시간 정보
                 .setExpiration(new Date(now.getTime() + expirationTime))  //토큰 만료 시간 설정
                 .signWith(key, SignatureAlgorithm.HS256)
