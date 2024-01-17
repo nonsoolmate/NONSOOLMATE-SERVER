@@ -1,6 +1,6 @@
 package com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.service;
 
-import static com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamExceptionType.NOT_FOUND_UNIVERSITY_EXAM;
+import static com.nonsoolmate.nonsoolmateServer.domain.university.exception.UniversityExamExceptionType.INVALID_UNIVERSITY_EXAM;
 import static com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.UniversityExamRecordExceptionType.*;
 import static com.nonsoolmate.nonsoolmateServer.external.aws.FolderName.*;
 
@@ -18,7 +18,6 @@ import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.entity.Univ
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.entity.enums.ExamResultStatus;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.exception.UniversityExamRecordException;
 import com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.repository.UniversityExamRecordRepository;
-import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSBusinessException;
 import com.nonsoolmate.nonsoolmateServer.external.aws.error.AWSClientException;
 import com.nonsoolmate.nonsoolmateServer.external.aws.service.CloudFrontService;
 import com.nonsoolmate.nonsoolmateServer.external.aws.service.S3Service;
@@ -121,7 +120,7 @@ public class UniversityExamRecordService {
 
     private UniversityExam getUniversityExam(Long universityExamId) {
         return universityExamRepository.findByUniversityExamId(universityExamId)
-                .orElseThrow(() -> new UniversityExamException(NOT_FOUND_UNIVERSITY_EXAM));
+                .orElseThrow(() -> new UniversityExamException(INVALID_UNIVERSITY_EXAM));
     }
 
     private UniversityExamRecord getUniversityExamByUniversityExamAndMember(UniversityExam universityExam,
