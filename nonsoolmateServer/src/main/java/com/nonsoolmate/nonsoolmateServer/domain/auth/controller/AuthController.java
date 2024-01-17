@@ -5,6 +5,8 @@ import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.response.Mem
 import com.nonsoolmate.nonsoolmateServer.domain.auth.controller.dto.response.MemberReissueResponseDTO;
 import com.nonsoolmate.nonsoolmateServer.domain.member.entity.enums.PlatformType;
 import com.nonsoolmate.nonsoolmateServer.external.oauth.service.vo.enums.AuthType;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.BusinessException;
+import com.nonsoolmate.nonsoolmateServer.global.error.exception.CommonErrorType;
 import com.nonsoolmate.nonsoolmateServer.global.jwt.service.JwtService;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.AuthServiceProvider;
 import com.nonsoolmate.nonsoolmateServer.domain.auth.service.vo.MemberSignUpVO;
@@ -74,5 +76,10 @@ public class AuthController implements AuthApi{
         }
 
         return "SUCCESS";
+    }
+
+    @GetMapping("/error")
+    public String error(){
+        throw new BusinessException(CommonErrorType.INTERNAL_SERVER_ERROR);
     }
 }
