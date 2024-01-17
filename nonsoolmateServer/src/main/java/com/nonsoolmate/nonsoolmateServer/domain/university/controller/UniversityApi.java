@@ -45,7 +45,7 @@ public interface UniversityApi {
 
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "대학 시험 이미지 및 해제 PDF 조회에 성공했습니다"),
+                    @ApiResponse(responseCode = "201", description = "대학 시험 이미지 및 해제 PDF 조회에 성공했습니다"),
                     @ApiResponse(responseCode = "400", description = "존재하지 않는 대학 시험입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
             }
     )

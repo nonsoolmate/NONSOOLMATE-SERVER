@@ -1,7 +1,10 @@
 package com.nonsoolmate.nonsoolmateServer.domain.universityExamRecord.controller.dto.response;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(name = "UniversityExamRecordResultResponseDTO", description = "첨삭 PDF 저장 응답 DTO")
 public record UniversityExamRecordResultResponseDTO(
-        String examResultUrl
+        @Schema(description = "첨삭 결과 PDF URL") String examResultUrl
 ) {
     public static UniversityExamRecordResultResponseDTO of(String examResultUrl) {
         return new UniversityExamRecordResultResponseDTO(examResultUrl);
