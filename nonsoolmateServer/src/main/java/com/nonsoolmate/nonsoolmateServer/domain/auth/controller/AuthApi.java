@@ -32,7 +32,7 @@ public interface AuthApi {
     @Operation(summary = "소셜 로그인", description = "네이버 소셜 로그인을 합니다.")
     ResponseEntity<SuccessResponse<MemberAuthResponseDTO>> login(
             @Parameter(description = "네이버로부터 발급받은 인가 코드", required = true) @RequestHeader(value = "authorization-code") final String authorizationCode,
-            @Parameter(description = "소셜 플랫폼 타입 (ex.'NAVER')", required = true) @RequestBody @Valid final MemberRequestDTO request);
+            @RequestBody @Valid final MemberRequestDTO request);
 
     @ApiResponses(
             value = {
