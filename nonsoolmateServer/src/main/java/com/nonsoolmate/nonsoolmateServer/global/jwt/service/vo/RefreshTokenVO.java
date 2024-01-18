@@ -17,8 +17,6 @@ public class RefreshTokenVO {
     @Indexed
     private String memberId;
 
-    private boolean black;
-
     private String refreshToken;
 
 
@@ -26,14 +24,9 @@ public class RefreshTokenVO {
         this.refreshToken = refreshToken;
     }
 
-    public void updateBlack(boolean black) {
-        this.black = black;
-    }
-
     @Builder
-    public RefreshTokenVO(String memberId, boolean black, String refreshToken) {
+    public RefreshTokenVO(String memberId, String refreshToken) {
         this.memberId = memberId;
-        this.black = black;
         this.refreshToken = refreshToken;
     }
 }
