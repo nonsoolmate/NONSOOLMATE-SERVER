@@ -70,7 +70,7 @@ public class SelectUniversityService {
                                                                                  Member member) {
         List<SelectUniversityExamResponseDTO> selectUniversityExamResponseDTOS;
 
-        List<UniversityExam> universityExams = universityExamRepository.findAllByUniversity(
+        List<UniversityExam> universityExams = universityExamRepository.findAllByUniversityOrderByUniversityExamYearDesc(
                 selectUniversity.getUniversity());
 
         selectUniversityExamResponseDTOS = getSelectUniversityExamResponseDTOS(universityExams, member);
