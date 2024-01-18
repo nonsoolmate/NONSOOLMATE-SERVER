@@ -1,4 +1,4 @@
-package com.nonsoolmate.nonsoolmateServer.external.swagger.config;
+package com.nonsoolmate.nonsoolmateServer.global.swagger.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
