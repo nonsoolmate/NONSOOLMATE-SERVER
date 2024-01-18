@@ -13,6 +13,7 @@ import com.nonsoolmate.nonsoolmateServer.global.security.service.MemberAuthServi
 import com.nonsoolmate.nonsoolmateServer.global.jwt.utils.RequestUtils;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -71,7 +72,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.info("Authentication Principal : {}", authentication.getPrincipal().toString());
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        } catch (JsonProcessingException | MalformedJwtException e) {
+        } catch (JsonProcessingException | MalformedJwtException | SignatureException e) {
             throw new AuthException(INVALID_ACCESS_TOKEN);
         } catch (ExpiredJwtException e){
             throw new AuthException(UNAUTHORIZED_ACCESS_TOKEN);

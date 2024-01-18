@@ -18,6 +18,7 @@ import com.nonsoolmate.nonsoolmateServer.global.jwt.service.vo.RefreshTokenVO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Optional;
@@ -74,7 +75,7 @@ public class JwtService {
 
         try {
             validateToken(refreshToken);
-        } catch (MalformedJwtException e) {
+        } catch (MalformedJwtException | SignatureException e) {
             throw new AuthException(INVALID_REFRESH_TOKEN);
         } catch (ExpiredJwtException e){
             throw new AuthException(UNAUTHORIZED_REFRESH_TOKEN);
@@ -106,7 +107,7 @@ public class JwtService {
         return jwtTokenProvider.getMemberIdFromClaim(tokenClaims, AUTH_USER);
     }
 
-    public Boolean validateToken(final String atk) throws ExpiredJwtException, MalformedJwtException {
+    public Boolean validateToken(final String atk) throws ExpiredJwtException, MalformedJwtException, SignatureException {
         Claims tokenClaims = jwtTokenProvider.getTokenClaims(atk);
         return !tokenClaims.getExpiration().before(new Date());
     }
