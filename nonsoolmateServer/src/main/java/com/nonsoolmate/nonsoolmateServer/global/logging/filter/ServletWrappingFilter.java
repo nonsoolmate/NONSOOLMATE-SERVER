@@ -1,6 +1,5 @@
 package com.nonsoolmate.nonsoolmateServer.global.logging.filter;
 
-import com.nonsoolmate.nonsoolmateServer.global.logging.filter.CachedBodyRequestWrapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
