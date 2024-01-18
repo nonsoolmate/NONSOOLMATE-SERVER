@@ -9,9 +9,9 @@
   <th>김성은 @sung-silver</th>
 	<th>송민규 @mikekks</th>
 	<tr>
-		<td><img width="300" alt="성은" src="https://github.com/nonsoolmate/NONSOOLMATE-SERVER/assets/81363864/1bde6fb7-4fa0-4900-99de-919ae8bace48">
+		<td><img width="300" alt="성은" src="https://github.com/nonsoolmate/NONSOOLMATE-SERVER/assets/81363864/ae53eebf-39ba-4264-a143-102c348c124b">
     </td>
-		<td><img width="300" alt="민규" src="https://github.com/nonsoolmate/NONSOOLMATE-SERVER/assets/81363864/1d7e8712-af94-4e9e-9879-f587b8713482">
+		<td><img width="300" alt="민규" src="https://github.com/nonsoolmate/NONSOOLMATE-SERVER/assets/81363864/6b0af5a7-f20f-4ee9-a129-d98b142ea37f">
     </td>
 	</tr>
 <th> 역할</th>
