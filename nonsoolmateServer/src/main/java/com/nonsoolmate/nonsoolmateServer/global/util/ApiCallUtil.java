@@ -1,35 +1,34 @@
 package com.nonsoolmate.nonsoolmateServer.global.util;
 
 import com.nonsoolmate.nonsoolmateServer.external.discord.model.JsonObject;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URL;
-import javax.net.ssl.HttpsURLConnection;
+
+import io.jsonwebtoken.io.IOException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApiCallUtil {
 
-    public static void callDiscordAppenderPostAPI(String urlString, JsonObject json) throws IOException {
-        URL url = new URL(urlString);
-        HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
-        connection.addRequestProperty("Content-Type", "application/json");
-        connection.addRequestProperty("User-Agent", "Java-DiscordWebhook-BY-Gelox_");
-        connection.setDoOutput(true);
-        connection.setRequestMethod("POST");
-
-        try (OutputStream stream = connection.getOutputStream()) {
-            stream.write(json.toString().getBytes());
-            stream.flush();
-
-            connection.getInputStream().close();
-            connection.disconnect();
-
-        } catch (IOException ioException) {
-            throw ioException;
+    public static void callDiscordAppenderPostAPI(String urlString, JsonObject json) {
+        WebClient webClient = WebClient.create();
+        try {
+            webClient.post()
+                    .uri(urlString)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("User-Agent", "Java-DiscordWebhook-BY-Gelox_")
+                    .body(Mono.just(json.toString()), String.class)
+                    .retrieve()
+                    .bodyToMono(Void.class)
+                    .block();
+        } catch (IOException e) {
+            log.error("Discord Appender API 호출 실패", e.getMessage());
+            throw e;
         }
     }
 }
+

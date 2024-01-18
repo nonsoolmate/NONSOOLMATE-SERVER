@@ -40,15 +40,11 @@ public class DiscordWebHook {
             throw new RuntimeException("컨텐츠를 설정하거나 하나 이상의 Embed Object를 추가해야 합니다.");
         }
 
-        try {
-            ApiCallUtil.callDiscordAppenderPostAPI(
-                    this.urlString, createDiscordEmbedObject(
-                            this.embeds, initializerDiscordSendForJsonObject(new JsonObject())
-                    ));
+        ApiCallUtil.callDiscordAppenderPostAPI(
+                this.urlString, createDiscordEmbedObject(
+                        this.embeds, initializerDiscordSendForJsonObject(new JsonObject())
+                ));
 
-        } catch (IOException ioException) {
-            throw ioException;
-        }
     }
 
     private JsonObject initializerDiscordSendForJsonObject(JsonObject json) {
