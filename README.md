@@ -1,6 +1,5 @@
 <br>
-<img width="1728" alt="논술메이트_서비스설명" src="https://github.com/nonsoolmate/NONSOOLMATE-SERVER/assets/81363864/5064e60e-def9-4109-8a0f-8d3e62619dbb">
-
+<img width="1728" alt="논술메이트_서비스설명" src="https://github.com/nonsoolmate/NONSOOLMATE-SERVER/assets/100754581/d67cc993-2aa6-4998-821a-8e1dd8d6fbb2">
 <br>
 
 
@@ -102,12 +101,10 @@
 │   │  └─ 📂 service
 │   ├─ 📂 oauth
 │   │  └─ 📂 service
-│   ├─ 📂 redis
-│   │  ├─ 📂 config
-│   │  ├─ 📂 repository
-│   │  └─ 📂 service
-│   └─ 📂 swagger
-│      └─ 📂 config     
+│   └─ 📂 redis
+│      ├─ 📂 config
+│      ├─ 📂 repository
+│      └─ 📂 service
 └─ 📂 global
     ├─ 📂 controller
     ├─ 📂 response
@@ -120,6 +117,8 @@
     │  ├─ 📂 service
     │  ├─ 📂 filter
     │  └─ 📂 config
+    ├─ 📂 swagger
+    │  └─ 📂 config     
     └─ 📂 util
        └─ 📂 mapper
 ~~~
