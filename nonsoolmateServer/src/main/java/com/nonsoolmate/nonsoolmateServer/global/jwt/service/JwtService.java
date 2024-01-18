@@ -62,7 +62,7 @@ public class JwtService {
 
         if (vo.role().equals(Role.USER)) {
             String refreshToken = jwtTokenProvider.createRefreshToken(vo.memberId(), refreshTokenExpirationPeriod);
-            updateRefreshTokenByMemberId(vo.memberId(), refreshToken);
+            updateRefreshToken(vo.memberId(), refreshToken);
             return MemberAuthResponseDTO.of(vo.memberId(), vo.authType(), vo.name(), accessToken, refreshToken);
         }
 
@@ -95,7 +95,7 @@ public class JwtService {
         String newAccessToken = jwtTokenProvider.createAccessToken(email, memberId, accessTokenExpirationPeriod);
         String newRefreshToken = jwtTokenProvider.createRefreshToken(memberId, refreshTokenExpirationPeriod);
 
-        updateRefreshTokenByMemberId(memberId, newRefreshToken);
+        updateRefreshToken(memberId, newRefreshToken);
 
         return MemberReissueResponseDTO.of(memberId, newAccessToken, newRefreshToken);
     }
@@ -118,24 +118,18 @@ public class JwtService {
                 .orElseThrow(() -> new AuthException(INVALID_REFRESH_TOKEN));
     }
 
-    private String extractAccessToken(HttpServletRequest request) {
-        return Optional.ofNullable(request.getHeader(accessHeader))
-                .filter(refreshToken -> refreshToken.startsWith(BEARER))
-                .map(refreshToken -> refreshToken.replace(BEARER, ""))
-                .orElseThrow(() -> new AuthException(INVALID_ACCESS_TOKEN));
-    }
-
-
     @Transactional
-    public void updateRefreshTokenByMemberId(Long memberId, String newRefreshToken) {
-        redisTokenRepository.findByMemberId(String.valueOf(memberId))
-                .ifPresent(refreshToken -> {
-                    refreshToken.updateBlack(true);
-                });
-        log.info("newRefreshToken = {}", newRefreshToken);
+    public void updateRefreshToken(Long memberId, String newRefreshToken) {
+        RefreshTokenVO refreshTokenVO = redisTokenRepository.findByMemberId(String.valueOf(memberId)).orElse(null);
+
+        if(refreshTokenVO != null){
+            refreshTokenVO.updateRefreshToken(newRefreshToken);
+            redisTokenRepository.save(refreshTokenVO);
+            return;
+        }
+
         redisTokenRepository.save(RefreshTokenVO.builder()
                 .memberId(String.valueOf(memberId))
-                .black(false)
                 .refreshToken(newRefreshToken)
                 .build());
     }
