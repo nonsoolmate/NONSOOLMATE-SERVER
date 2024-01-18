@@ -41,4 +41,8 @@ public class UniversityExam {
     public String getUniversityExamFullName(){
         return this.getUniversity().getUniversityName() + " - " + this.getUniversityExamYear() + " " + this.getUniversityExamName();
     }
+
+    public String getUniversityExamListName(){
+        return this.getUniversityExamYear() + " " + this.getUniversityExamName();
+    }
 }
