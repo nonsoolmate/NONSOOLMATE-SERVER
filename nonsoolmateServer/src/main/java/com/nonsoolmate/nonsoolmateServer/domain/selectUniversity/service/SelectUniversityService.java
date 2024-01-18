@@ -91,7 +91,7 @@ public class SelectUniversityService {
                     universityExamRecord == null ? BEFORE_EXAM : universityExamRecord.getExamResultStatus().getStatus();
             selectUniversityExamResponseDTOS.add(
                     SelectUniversityExamResponseDTO.of(universityExam.getUniversityExamId(),
-                            universityExam.getUniversityExamName(), universityExam.getUniversityExamTimeLimit(),
+                            universityExam.getUniversityExamFullName(), universityExam.getUniversityExamTimeLimit(),
                             status));
         }
         return selectUniversityExamResponseDTOS;
