@@ -11,11 +11,13 @@ import com.nonsoolmate.nonsoolmateServer.global.util.MDCUtil;
 import com.nonsoolmate.nonsoolmateServer.global.util.StringUtil;
 import io.micrometer.core.instrument.util.StringEscapeUtils;
 import com.nonsoolmate.nonsoolmateServer.external.discord.model.EmbedObject;
+
 import java.awt.Color;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -59,52 +61,16 @@ public class DiscordAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
             exceptionBrief = "EXCEPTION 정보가 남지 않았습니다.";
         }
 
-        discordWebhook.addEmbed(new EmbedObject()
-                .setTitle("[" + level + " - 문제 간략 내용]")
-                .setColor(messageColor)
-                .setDescription(exceptionBrief)
-                .addField("[" + "Exception Level" + "]",
-                        StringEscapeUtils.escapeJson(level),
-                        true)
-                .addField("[문제 발생 시각]",
-                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-                        false)
-                .addField(
-                        "[" + MDCUtil.REQUEST_URI_MDC + "]",
-                        StringEscapeUtils.escapeJson(mdcPropertyMap.get(MDCUtil.REQUEST_URI_MDC)),
-                        false)
-                .addField(
-                        "[" + MDCUtil.USER_IP_MDC + "]",
-                        StringEscapeUtils.escapeJson(mdcPropertyMap.get(MDCUtil.USER_IP_MDC)),
-                        false)
-                .addField(
-                        "[" + MDCUtil.HEADER_MAP_MDC + "]",
-                        StringEscapeUtils.escapeJson(mdcPropertyMap.get(MDCUtil.HEADER_MAP_MDC).replaceAll("[\\{\\{\\}]", "")),
-                        true)
-                .addField(
-                        "[" + MDCUtil.USER_REQUEST_COOKIES + "]",
-                        StringEscapeUtils.escapeJson(
-                                mdcPropertyMap.get(MDCUtil.USER_REQUEST_COOKIES).replaceAll("[\\{\\{\\}]", "")),
-                        false)
-                .addField(
-                        "[" + MDCUtil.PARAMETER_MAP_MDC + "]",
-                        StringEscapeUtils.escapeJson(
-                                mdcPropertyMap.get(MDCUtil.PARAMETER_MAP_MDC).replaceAll("[\\{\\{\\}]", "")),
-                        false)
-                .addField("[" + MDCUtil.BODY_MDC + "]",
-                        StringEscapeUtils.escapeJson(StringUtil.translateEscapes(mdcPropertyMap.get(MDCUtil.BODY_MDC))),
-                        false)
-        );
+        if (exceptionBrief.length() > 183) {
+            exceptionBrief = exceptionBrief.substring(0, 183);
+        }
+
+        discordWebhook.addEmbed(new EmbedObject().setTitle("[" + level + " - 문제 간략 내용]").setColor(messageColor).setDescription(exceptionBrief).addField("[" + "Exception Level" + "]", StringEscapeUtils.escapeJson(level), true).addField("[문제 발생 시각]", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), false).addField("[" + MDCUtil.REQUEST_URI_MDC + "]", StringEscapeUtils.escapeJson(mdcPropertyMap.get(MDCUtil.REQUEST_URI_MDC)), false).addField("[" + MDCUtil.USER_IP_MDC + "]", StringEscapeUtils.escapeJson(mdcPropertyMap.get(MDCUtil.USER_IP_MDC)), false).addField("[" + MDCUtil.HEADER_MAP_MDC + "]", StringEscapeUtils.escapeJson(mdcPropertyMap.get(MDCUtil.HEADER_MAP_MDC).replaceAll("[\\{\\{\\}]", "")), true).addField("[" + MDCUtil.USER_REQUEST_COOKIES + "]", StringEscapeUtils.escapeJson(mdcPropertyMap.get(MDCUtil.USER_REQUEST_COOKIES).replaceAll("[\\{\\{\\}]", "")), false).addField("[" + MDCUtil.PARAMETER_MAP_MDC + "]", StringEscapeUtils.escapeJson(mdcPropertyMap.get(MDCUtil.PARAMETER_MAP_MDC).replaceAll("[\\{\\{\\}]", "")), false).addField("[" + MDCUtil.BODY_MDC + "]", StringEscapeUtils.escapeJson(StringUtil.translateEscapes(mdcPropertyMap.get(MDCUtil.BODY_MDC))), false));
 
         if (throwable != null) {
             exceptionDetail = ThrowableProxyUtil.asString(throwable);
             String exception = exceptionDetail.substring(0, 4000);
-            discordWebhook.addEmbed(
-                    new EmbedObject()
-                            .setTitle("[Exception 상세 내용]")
-                            .setColor(messageColor)
-                            .setDescription(StringEscapeUtils.escapeJson(exception))
-            );
+            discordWebhook.addEmbed(new EmbedObject().setTitle("[Exception 상세 내용]").setColor(messageColor).setDescription(StringEscapeUtils.escapeJson(exception)));
         }
 
         try {
