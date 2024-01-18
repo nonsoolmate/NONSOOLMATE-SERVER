@@ -37,7 +37,7 @@ public interface AuthApi {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "리프레시 토큰 재발급에 성공하였습니다."),
-                    @ApiResponse(responseCode = "400", description = "서비스에서 발급되지 않은 리프레시 토큰입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                    @ApiResponse(responseCode = "400", description = "서비스에서 발급되지 않거나 이미 사용된 리프레시 토큰입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
                     @ApiResponse(responseCode = "401", description = "기한이 만료된 리프레시 토큰입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
             }
     )
