@@ -17,7 +17,6 @@ public interface RedisTokenRepository extends CrudRepository<RefreshTokenVO, Str
 
     default RefreshTokenVO findByMemberIdOrElseThrowException(String memberId) {
         return findByMemberId(memberId)
-                .filter(refreshTokenVO -> !refreshTokenVO.isBlack())
                 .orElseThrow(
                 () -> new AuthException(UNAUTHORIZED_REFRESH_TOKEN));
     }
