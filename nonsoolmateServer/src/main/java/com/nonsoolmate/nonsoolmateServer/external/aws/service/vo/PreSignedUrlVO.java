@@ -9,7 +9,7 @@ public class PreSignedUrlVO {
     private String fileName;
     private String url;
 
-    public static PreSignedUrlVO of(String fileName, String url) {
+    public static PreSignedUrlVO of(final String fileName, final String url) {
         return new PreSignedUrlVO(fileName, url);
     }
 }

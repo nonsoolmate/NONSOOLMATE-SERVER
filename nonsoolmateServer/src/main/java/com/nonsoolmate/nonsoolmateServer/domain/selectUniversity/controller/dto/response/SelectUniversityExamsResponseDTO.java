@@ -8,9 +8,9 @@ public record SelectUniversityExamsResponseDTO(@Schema(description = "대학 id"
                                                @Schema(description = "대학 이름", example = "중앙대학교") String universityName,
                                                @Schema(description = "단과대학 이름", example = "경영경제") String universityCollege,
                                                @Schema(description = "시험 리스트") List<SelectUniversityExamResponseDTO> examList) {
-    public static SelectUniversityExamsResponseDTO of(Long universityId, String universityName,
-                                                      String universityCollege,
-                                                      List<SelectUniversityExamResponseDTO> examList) {
+    public static SelectUniversityExamsResponseDTO of(final Long universityId, final String universityName,
+                                                      final String universityCollege,
+                                                      final List<SelectUniversityExamResponseDTO> examList) {
         return new SelectUniversityExamsResponseDTO(universityId, universityName, universityCollege, examList);
     }
 }

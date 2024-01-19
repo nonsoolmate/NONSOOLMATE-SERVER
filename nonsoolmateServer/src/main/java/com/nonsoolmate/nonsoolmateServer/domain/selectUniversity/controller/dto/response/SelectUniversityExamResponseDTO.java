@@ -7,8 +7,8 @@ public record SelectUniversityExamResponseDTO(@Schema(description = "시험 id",
                                               @Schema(description = "시험 이름", example = "경영경제1") String examName,
                                               @Schema(description = "시험 제한 시간(초)", example = "3600") int examTimeLimit,
                                               @Schema(description = "시험 응시 상태", example = "시험 응시 전") String examStatus) {
-    public static SelectUniversityExamResponseDTO of(Long examId, String examName, int examTimeLimit,
-                                                     String examStatus) {
+    public static SelectUniversityExamResponseDTO of(final Long examId, final String examName, final int examTimeLimit,
+                                                     final String examStatus) {
         return new SelectUniversityExamResponseDTO(examId, examName, examTimeLimit, examStatus);
     }
 }

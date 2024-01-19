@@ -9,7 +9,7 @@ public record SelectUniversityResponseDTO(
         @Schema(description = "단과대학 이름", example = "경영경제") String collegeName,
         @Schema(description = "대학 선택 여부", example = "true") boolean memberStatus
 ) {
-    public static SelectUniversityResponseDTO of(Long universityId, String universityName, String collegeName, boolean memberStatus) {
+    public static SelectUniversityResponseDTO of(final Long universityId, final String universityName, final String collegeName, final boolean memberStatus) {
         return new SelectUniversityResponseDTO(universityId, universityName, collegeName, memberStatus);
     }
 }

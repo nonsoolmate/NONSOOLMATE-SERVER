@@ -10,9 +10,9 @@ public record UniversityExamImageAndAnswerResponseDTO(
         @Schema(description = "시험 문제 이미지 리스트") List<UniversityExamImageResponseDTO> examQuestionList,
         @Schema(description = "이미지 해제 PDF URL") String examAnswerUrl
 ) {
-    static public UniversityExamImageAndAnswerResponseDTO of(String universityExamName,
-                                                             List<UniversityExamImageResponseDTO> examQuestionList,
-                                                             String examAnswerUrl) {
+    static public UniversityExamImageAndAnswerResponseDTO of(final String universityExamName,
+                                                             final List<UniversityExamImageResponseDTO> examQuestionList,
+                                                             final String examAnswerUrl) {
         return new UniversityExamImageAndAnswerResponseDTO(universityExamName, examQuestionList, examAnswerUrl);
     }
 }
