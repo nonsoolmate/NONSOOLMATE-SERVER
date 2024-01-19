@@ -16,21 +16,21 @@ public abstract class AuthService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public abstract MemberSignUpVO saveMemberOrLogin(String platformType, MemberRequestDTO request);
+    public abstract MemberSignUpVO saveMemberOrLogin(final String platformType, final MemberRequestDTO request);
 
-    protected Member getMember(PlatformType platformType, String email) {
+    protected Member getMember(final PlatformType platformType, final String email) {
         return memberRepository.findByPlatformTypeAndEmail(platformType, email)
                 .orElse(null);
     }
 
-    protected Member saveUser(MemberRequestDTO request, String email, String name, String birthday, String gender,
-                              String phoneNumber) {
+    protected Member saveUser(final MemberRequestDTO request, final String email, final String name, final String birthday, final String gender,
+                              final String phoneNumber) {
         Member newMember = createSocialMember(email, name, PlatformType.of(request.platformType()), birthday, gender, phoneNumber);
         return memberRepository.saveAndFlush(newMember);
     }
 
-    private static Member createSocialMember(String email, String name, PlatformType platformType, String birthYear,
-                                             String gender, String phoneNumber) {
+    private static Member createSocialMember(final String email, final String name, final PlatformType platformType, final String birthYear,
+                                             final String gender, final String phoneNumber) {
         return Member.builder().email(email).name(name).platformType(platformType).role(Role.USER)
                 .birthYear(birthYear)
                 .gender(gender).phoneNumber(phoneNumber).build();

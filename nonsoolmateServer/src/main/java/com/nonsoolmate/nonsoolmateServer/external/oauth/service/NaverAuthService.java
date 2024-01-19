@@ -38,7 +38,7 @@ public class NaverAuthService extends AuthService {
     }
 
     @Override
-    public MemberSignUpVO saveMemberOrLogin(String authorizationCode, MemberRequestDTO request) {
+    public MemberSignUpVO saveMemberOrLogin(final String authorizationCode, final MemberRequestDTO request) {
         String accessToken = getAccessToken(authorizationCode, clientId, clientSecret, state).getAccess_token();
         NaverMemberVO naverMemberInfo = getNaverMemberInfo(accessToken);
         Member foundMember = getMember(PlatformType.of(request.platformType()), naverMemberInfo.getResponse().getEmail());
@@ -55,7 +55,7 @@ public class NaverAuthService extends AuthService {
 
     }
 
-    public NaverMemberVO getNaverMemberInfo(String accessToken) {
+    public NaverMemberVO getNaverMemberInfo(final String accessToken) {
         WebClient webClient = WebClient.builder().build();
         try {
             return webClient.post()
