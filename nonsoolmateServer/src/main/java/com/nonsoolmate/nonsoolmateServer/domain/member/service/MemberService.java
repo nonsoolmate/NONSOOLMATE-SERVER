@@ -15,11 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    public NameResponseDTO getNickname(Member member) {
+    public NameResponseDTO getNickname(final Member member) {
         return NameResponseDTO.of(member.getName());
     }
 
-    public TicketResponseDTO getTicket(Member member) {
+    public TicketResponseDTO getTicket(final Member member) {
         return TicketResponseDTO.of(member.getName(), member.getTicketCount());
     }
 }

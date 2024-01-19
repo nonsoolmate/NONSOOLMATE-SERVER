@@ -21,7 +21,7 @@ public class MyController implements MemberApi{
 
     @Override
     @GetMapping("/name")
-    public ResponseEntity<SuccessResponse<NameResponseDTO>> getName(@AuthUser Member member) {
+    public ResponseEntity<SuccessResponse<NameResponseDTO>> getName(final @AuthUser Member member) {
         return ResponseEntity.ok()
                 .body(SuccessResponse.of(MemberSuccessType.GET_MEMBER_NAME_SUCCESS,
                         memberService.getNickname(member)));
@@ -29,7 +29,7 @@ public class MyController implements MemberApi{
 
     @Override
     @GetMapping("/ticket")
-    public ResponseEntity<SuccessResponse<TicketResponseDTO>> getTicket(@AuthUser Member member) {
+    public ResponseEntity<SuccessResponse<TicketResponseDTO>> getTicket(final @AuthUser Member member) {
         return ResponseEntity.ok()
                 .body(SuccessResponse.of(MemberSuccessType.GET_MEMBER_TICKET_SUCCESS,
                         memberService.getTicket(member)));
