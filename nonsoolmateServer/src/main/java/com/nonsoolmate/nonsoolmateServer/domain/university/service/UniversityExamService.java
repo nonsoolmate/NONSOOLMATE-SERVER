@@ -30,7 +30,7 @@ public class UniversityExamService {
     private final CloudFrontService cloudFrontService;
 
 
-    public UniversityExamInfoResponseDTO getUniversityExam(Long universityExamId) {
+    public UniversityExamInfoResponseDTO getUniversityExam(final Long universityExamId) {
         UniversityExam universityExam = universityExamRepository.findByUniversityExamId(universityExamId)
                 .orElseThrow(() -> new UniversityExamException(
                         UniversityExamExceptionType.INVALID_UNIVERSITY_EXAM));
@@ -40,7 +40,7 @@ public class UniversityExamService {
                 universityExam.getUniversityExamTimeLimit());
     }
 
-    public Page<UniversityExamImageResponseDTO> getUniversityExamImages(Long id, Pageable pageable) {
+    public Page<UniversityExamImageResponseDTO> getUniversityExamImages(final Long id, final Pageable pageable) {
         UniversityExam universityExam = universityExamRepository.findByUniversityExamId(id)
                 .orElseThrow(() -> new UniversityExamException(
                         UniversityExamExceptionType.INVALID_UNIVERSITY_EXAM));
