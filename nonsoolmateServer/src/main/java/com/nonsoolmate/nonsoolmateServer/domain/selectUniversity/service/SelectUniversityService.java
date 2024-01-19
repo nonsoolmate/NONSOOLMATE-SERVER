@@ -54,9 +54,9 @@ public class SelectUniversityService {
         return selectUniversityResponseDTOS;
     }
 
-    public List<SelectUniversityExamsResponseDTO> getSelectUniversityExams(Member member) {
+    public List<SelectUniversityExamsResponseDTO> getSelectUniversityExams(final Member member) {
         List<SelectUniversityExamsResponseDTO> selectUniversityExamsResponseDTOS = new ArrayList<>();
-        List<SelectUniversity> selectUniversities = selectUniversityRepository.findAllByMemberOrderByUniversityNameASCUniversityCollegeAsc(
+        final List<SelectUniversity> selectUniversities = selectUniversityRepository.findAllByMemberOrderByUniversityNameASCUniversityCollegeAsc(
                 member);
 
         for (SelectUniversity selectUniversity : selectUniversities) {
@@ -66,14 +66,13 @@ public class SelectUniversityService {
         return selectUniversityExamsResponseDTOS;
     }
 
-    private SelectUniversityExamsResponseDTO getSelectUniversityExamsResponseDTO(SelectUniversity selectUniversity,
-                                                                                 Member member) {
-        List<SelectUniversityExamResponseDTO> selectUniversityExamResponseDTOS;
+    private SelectUniversityExamsResponseDTO getSelectUniversityExamsResponseDTO(final SelectUniversity selectUniversity,
+                                                                                 final Member member) {
 
-        List<UniversityExam> universityExams = universityExamRepository.findAllByUniversityOrderByUniversityExamYearDesc(
+        final List<UniversityExam> universityExams = universityExamRepository.findAllByUniversityOrderByUniversityExamYearDesc(
                 selectUniversity.getUniversity());
 
-        selectUniversityExamResponseDTOS = getSelectUniversityExamResponseDTOS(universityExams, member);
+        final List<SelectUniversityExamResponseDTO> selectUniversityExamResponseDTOS = getSelectUniversityExamResponseDTOS(universityExams, member);
 
         return SelectUniversityExamsResponseDTO.of(selectUniversity.getUniversity().getUniversityId(),
                 selectUniversity.getUniversity().getUniversityName(),
@@ -81,7 +80,7 @@ public class SelectUniversityService {
     }
 
     private List<SelectUniversityExamResponseDTO> getSelectUniversityExamResponseDTOS(
-            List<UniversityExam> universityExams, Member member) {
+            final List<UniversityExam> universityExams, final Member member) {
         UniversityExamRecord universityExamRecord;
         List<SelectUniversityExamResponseDTO> selectUniversityExamResponseDTOS = new ArrayList<>();
         for (UniversityExam universityExam : universityExams) {
