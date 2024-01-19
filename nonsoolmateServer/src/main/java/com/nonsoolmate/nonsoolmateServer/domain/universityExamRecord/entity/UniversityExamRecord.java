@@ -48,8 +48,8 @@ public class UniversityExamRecord {
     private String examRecordResultFileName;  // 첨삭
 
     @Builder
-    public UniversityExamRecord(UniversityExam universityExam, Member member, ExamResultStatus examResultStatus,
-                                int timeTakeExam, String examRecordSheetFileName) {
+    public UniversityExamRecord(final UniversityExam universityExam, final Member member, final ExamResultStatus examResultStatus,
+                                final int timeTakeExam, final String examRecordSheetFileName) {
         this.universityExam = universityExam;
         this.member = member;
         this.examResultStatus = examResultStatus;

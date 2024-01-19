@@ -55,8 +55,8 @@ public class Member {
     private LocalDateTime ticketPreviousPublicationTime;
 
     @Builder
-    public Member(String email, String name, PlatformType platformType, Role role, String birthYear,
-                  String gender, String phoneNumber) {
+    public Member(final String email, final String name, final PlatformType platformType, final Role role, final String birthYear,
+                  final String gender, final String phoneNumber) {
         this.email = email;
         this.name = name;
         this.platformType = platformType;
