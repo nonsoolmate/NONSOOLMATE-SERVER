@@ -8,7 +8,7 @@ public record UniversityExamRecordResponseDTO(
         @Schema(description = "시험 해제 PDF URL", example = "1") String examAnswerUrl,
         @Schema(description = "시험 첨삭 결과 PDF URL", example = "1") String examResultUrl
 ) {
-    public static UniversityExamRecordResponseDTO of(String universityExamName, String examAnswerUrl, String examResultUrl) {
+    public static UniversityExamRecordResponseDTO of(final String universityExamName, final String examAnswerUrl, final String examResultUrl) {
         return new UniversityExamRecordResponseDTO(universityExamName, examAnswerUrl, examResultUrl);
     }
 }

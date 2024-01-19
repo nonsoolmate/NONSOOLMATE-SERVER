@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record SelectUniversityUpdateResponseDTO(
         @Schema(description="선택 완료 여부", example="true") boolean isSelected
 ) {
-    public static SelectUniversityUpdateResponseDTO of(boolean isSelected) {
+    public static SelectUniversityUpdateResponseDTO of(final boolean isSelected) {
         return new SelectUniversityUpdateResponseDTO(isSelected);
     }
 }

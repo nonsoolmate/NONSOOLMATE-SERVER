@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record UniversityExamRecordResultResponseDTO(
         @Schema(description = "첨삭 결과 PDF URL") String examResultUrl
 ) {
-    public static UniversityExamRecordResultResponseDTO of(String examResultUrl) {
+    public static UniversityExamRecordResultResponseDTO of(final String examResultUrl) {
         return new UniversityExamRecordResultResponseDTO(examResultUrl);
     }
 }
