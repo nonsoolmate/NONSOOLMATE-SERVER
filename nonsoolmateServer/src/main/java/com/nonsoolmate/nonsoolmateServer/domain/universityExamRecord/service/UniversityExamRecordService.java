@@ -71,15 +71,15 @@ public class UniversityExamRecordService {
 
     @Transactional
     public UniversityExamRecordIdResponse createUniversityExamRecord(
-            CreateUniversityExamRequestDTO request, Member member) {
-        UniversityExam universityExam = getUniversityExam(request.universityExamId());
+            final CreateUniversityExamRequestDTO request, final Member member) {
+        final UniversityExam universityExam = getUniversityExam(request.universityExamId());
         validateUniversityExam(universityExam, member);
         try {
-            String fileName = s3Service.validateURL(EXAM_SHEET_FOLDER_NAME, request.memberSheetFileName());
-            UniversityExamRecord universityexamRecord = createUniversityExamRecord(universityExam, member,
+            final String fileName = s3Service.validateURL(EXAM_SHEET_FOLDER_NAME, request.memberSheetFileName());
+            final UniversityExamRecord universityexamRecord = createUniversityExamRecord(universityExam, member,
                     request.memberTakeTimeExam(),
                     fileName);
-            UniversityExamRecord saveUniversityUniversityExamRecord = universityExamRecordRepository.save(
+            final UniversityExamRecord saveUniversityUniversityExamRecord = universityExamRecordRepository.save(
                     universityexamRecord);
             decreaseMemberTicketCount(member);
             return UniversityExamRecordIdResponse.of(saveUniversityUniversityExamRecord.getUniversityExamRecordId());
@@ -91,14 +91,14 @@ public class UniversityExamRecordService {
         }
     }
 
-    private void validateUniversityExam(UniversityExam universityExam, Member member){
-        UniversityExamRecord existUniversityExamRecord = universityExamRecordRepository.findByUniversityExamAndMember(universityExam, member).orElse(null);
+    private void validateUniversityExam(final UniversityExam universityExam, final Member member){
+        final UniversityExamRecord existUniversityExamRecord = universityExamRecordRepository.findByUniversityExamAndMember(universityExam, member).orElse(null);
         if (existUniversityExamRecord != null) {
             throw new UniversityExamRecordException(ALREADY_CREATE_EXAM_RECORD);
         }
     }
 
-    private void decreaseMemberTicketCount(Member member) {
+    private void decreaseMemberTicketCount(final Member member) {
         try {
             member.decreaseTicket();
             memberRepository.save(member);
@@ -107,8 +107,8 @@ public class UniversityExamRecordService {
         }
     }
 
-    private UniversityExamRecord createUniversityExamRecord(UniversityExam universityExam, Member member,
-                                                            int takeTimeExam, String sheetFileName) {
+    private UniversityExamRecord createUniversityExamRecord(final UniversityExam universityExam, final Member member,
+                                                            final int takeTimeExam, final String sheetFileName) {
         return UniversityExamRecord.builder()
                 .universityExam(universityExam)
                 .examResultStatus(ExamResultStatus.ONGOING)
@@ -118,13 +118,13 @@ public class UniversityExamRecordService {
                 .build();
     }
 
-    private UniversityExam getUniversityExam(Long universityExamId) {
+    private UniversityExam getUniversityExam(final Long universityExamId) {
         return universityExamRepository.findByUniversityExamId(universityExamId)
                 .orElseThrow(() -> new UniversityExamException(INVALID_UNIVERSITY_EXAM));
     }
 
-    private UniversityExamRecord getUniversityExamByUniversityExamAndMember(UniversityExam universityExam,
-                                                                            Member member) {
+    private UniversityExamRecord getUniversityExamByUniversityExamAndMember(final UniversityExam universityExam,
+                                                                            final Member member) {
         return universityExamRecordRepository.findByUniversityExamAndMemberOrElseThrowException(
                 universityExam, member);
     }
