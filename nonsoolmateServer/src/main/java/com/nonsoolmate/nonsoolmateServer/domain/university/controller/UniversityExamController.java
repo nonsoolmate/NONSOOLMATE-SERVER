@@ -28,7 +28,7 @@ public class UniversityExamController implements UniversityApi{
     @Override
     @GetMapping("/{id}/info")
     public ResponseEntity<SuccessResponse<UniversityExamInfoResponseDTO>> getUniversityExam(
-            @PathVariable("id") Long universityExamId) {
+            @PathVariable("id") final Long universityExamId) {
         return ResponseEntity.ok().body(SuccessResponse.of(UniversityExamSuccessType.GET_UNIVERSITY_EXAM_SUCCESS,
                 universityExamService.getUniversityExam(universityExamId)));
     }
@@ -36,7 +36,7 @@ public class UniversityExamController implements UniversityApi{
     @Override
     @GetMapping("{id}/image")
     public ResponseEntity<SuccessResponse<Page<UniversityExamImageResponseDTO>>> getUniversityExamImages(
-            @PathVariable("id") Long id, @RequestParam(defaultValue = "0") int page, Pageable pageable) {
+            @PathVariable("id") final Long id, @RequestParam(defaultValue = "0") final int page, final Pageable pageable) {
         PageRequest pageRequest = PageRequest.of(page, 1);
         Page<UniversityExamImageResponseDTO> images = universityExamService.getUniversityExamImages(id, pageRequest);
         return ResponseEntity.ok()
