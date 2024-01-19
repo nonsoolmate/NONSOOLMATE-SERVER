@@ -20,7 +20,7 @@ public class AuthServiceProvider {
         authServiceMap.put(PlatformType.NAVER, naverAuthService);
     }
 
-    public AuthService getAuthService(PlatformType platformType) {
+    public AuthService getAuthService(final PlatformType platformType) {
         return authServiceMap.get(platformType);
     }
 }
