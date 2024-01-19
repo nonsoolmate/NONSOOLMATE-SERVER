@@ -41,7 +41,7 @@ public class SelectUniversityController implements SelectUniversityApi {
     @Override
     @GetMapping("/exam")
     public ResponseEntity<SuccessResponse<List<SelectUniversityExamsResponseDTO>>> getSelectUniversityExams(
-            @AuthUser Member member) {
+            @AuthUser final Member member) {
         return ResponseEntity.ok().body(SuccessResponse.of(GET_SELECT_UNIVERSITY_EXAMS_SUCCESS,
                 selectUniversityService.getSelectUniversityExams(member)));
     }
