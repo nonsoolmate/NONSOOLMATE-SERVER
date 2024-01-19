@@ -63,8 +63,8 @@ public class UniversityExamRecordController implements UniversityExamRecordApi {
     @Override
     @PostMapping("/sheet")
     public ResponseEntity<SuccessResponse<UniversityExamRecordIdResponse>> createUniversityExamRecord(
-            @Valid @RequestBody CreateUniversityExamRequestDTO createUniversityExamRequestDTO,
-            @AuthUser Member member) {
+            @Valid @RequestBody final CreateUniversityExamRequestDTO createUniversityExamRequestDTO,
+            @AuthUser final Member member) {
         return ResponseEntity.status(HttpStatus.CREATED).body(SuccessResponse.of(
                 UniversityExamRecordSuccessType.CREATE_UNIVERSITY_EXAM_RECORD_SUCCESS,
                 universityExamRecordService.createUniversityExamRecord(
