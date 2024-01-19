@@ -31,7 +31,7 @@ public class SelectUniversity {
     private University university;
 
     @Builder
-    public SelectUniversity(Member member, University university) {
+    public SelectUniversity(final Member member, final University university) {
         this.member = member;
         this.university = university;
     }
