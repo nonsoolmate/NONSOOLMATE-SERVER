@@ -26,7 +26,6 @@ jobs:
         echo "${{ secrets.DEV_APPLICATION }}" > src/main/resources/application.yaml
         mkdir -p src/main/resources/key
         echo "${{ secrets.CLOUDFRONT_PRIVATE_KEY }}" > src/main/resources/key/cloudfront-private-key.pem
-        ls src/main/resources/key
       working-directory: ${{ env.working-directory }}
 
     - name: build
